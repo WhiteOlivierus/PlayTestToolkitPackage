@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:Editor/UI/Data/WindowState.cs","WindowState.cs");NDSummary.OnSummaryLoaded("File:Editor/UI/Data/WindowState.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1,0,1,"Types","PlayTestToolkit.Editor.UI.Data.Types"],[2,0,0,"WindowState","PlayTestToolkit.Editor.UI.Data.WindowState"]]);

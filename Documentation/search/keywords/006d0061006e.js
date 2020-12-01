@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("man",["Class"],[["ManagerUIPanel",,[["PlayTestToolkit.Editor.UI",,,,0,"File:Editor/UI/ManagerUIPanel.cs:PlayTestToolkit.Editor.UI.ManagerUIPanel","CSharpClass:PlayTestToolkit.Editor.UI.ManagerUIPanel"]]]]);

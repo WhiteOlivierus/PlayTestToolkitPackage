@@ -1,0 +1,9 @@
+{
+  "name": "com.dutchskull.playtesttoolkit",
+  "displayName": "Play Test Toolkit",
+  "version": "0.0.1",
+  "unity": "2018.4",
+  "description": "Play test setup made easy!",
+  "type": "tool",
+  "hideInEditor": false
+}

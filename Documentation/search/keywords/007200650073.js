@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("res",["Variable"],[["researchQuestion",,[["PlayTestToolkit.Runtime.Data.PlayTest",,,,0,"File:Runtime/Data/PlayTest.cs:PlayTestToolkit.Runtime.Data.PlayTest.researchQuestion","CSharpClass:PlayTestToolkit.Runtime.Data.PlayTest:researchQuestion"]]]]);

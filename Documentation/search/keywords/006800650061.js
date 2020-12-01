@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("hea",["Variable"],[["headerTexture",,[["PlayTestToolkit.Editor.UI.ManagerUIPanel",,,,0,"File:Editor/UI/ManagerUIPanel.cs:PlayTestToolkit.Editor.UI.ManagerUIPanel.headerTexture","CSharpClass:PlayTestToolkit.Editor.UI.ManagerUIPanel:headerTexture"]]]]);

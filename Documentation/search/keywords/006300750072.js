@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("cur",["Variable"],[["currentPanel",,[["PlayTestToolkit.Editor.UI.PlayTestToolkitWindow",,,,0,"File:Editor/UI/PlayTestToolkitWindow.cs:PlayTestToolkit.Editor.UI.PlayTestToolkitWindow.currentPanel","CSharpClass:PlayTestToolkit.Editor.UI.PlayTestToolkitWindow:currentPanel"]]]]);

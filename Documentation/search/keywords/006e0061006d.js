@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("nam",["Property"],[["name",,[["PlayTestToolkit.Runtime.Data.DataCollector",,,,0,"File:Runtime/Data/DataCollector.cs:PlayTestToolkit.Runtime.Data.DataCollector.name","CSharpClass:PlayTestToolkit.Runtime.Data.DataCollector:name"]]]]);

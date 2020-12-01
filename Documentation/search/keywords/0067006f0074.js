@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("got",["Variable"],[["goToData",,[["PlayTestToolkit.Editor.UI.ManagerUIPanel",,,,0,"File:Editor/UI/ManagerUIPanel.cs:PlayTestToolkit.Editor.UI.ManagerUIPanel.goToData","CSharpClass:PlayTestToolkit.Editor.UI.ManagerUIPanel:goToData"]]]]);

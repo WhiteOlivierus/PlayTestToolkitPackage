@@ -1,0 +1,17 @@
+{
+    "name": "PlayTestToolkitEditor",
+    "references": [
+        "GUID:2ffe9584416b9f345ae9cfc004d2b8cc",
+        "GUID:c7bbf32958cc63e408477354cafde131",
+        "GUID:dca9556ac05c2104a944d9a5069d10b8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

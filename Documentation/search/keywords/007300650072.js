@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ser",["Variable"],[["serializedObject",,[["PlayTestToolkit.Editor.UI.SetupUIPanel",,,,0,"File:Editor/UI/SetupUIPanel.cs:PlayTestToolkit.Editor.UI.SetupUIPanel.serializedObject","CSharpClass:PlayTestToolkit.Editor.UI.SetupUIPanel:serializedObject"]]]]);
