@@ -26,6 +26,7 @@ namespace PlayTestToolkit.Editor.UI
 
         public override void OnGUI()
         {
+            RenderButton("Open presistent path", () => System.Diagnostics.Process.Start(Application.persistentDataPath));
             RenderHeader();
 
             EditorGUILayout.BeginHorizontal();

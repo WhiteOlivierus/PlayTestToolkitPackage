@@ -9,6 +9,7 @@
     }
   ],
   "dependencies": {
+    "com.dutchskull.singletons": "1.0.0",
     "com.unity.ide.vscode": "1.2.3",
     "com.unity.test-framework": "1.1.19",
     "com.unity.textmeshpro": "2.1.3",

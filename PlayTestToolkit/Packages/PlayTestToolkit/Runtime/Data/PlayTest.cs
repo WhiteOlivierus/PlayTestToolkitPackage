@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayTestToolkit.Runtime.DataRecorders;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -11,12 +12,17 @@ namespace PlayTestToolkit.Runtime.Data
     {
         [HideInInspector] public bool active = false;
         [HideInInspector] public int version = 0;
-        [HideInInspector] public List<DataCollector> dataCollectors = new List<DataCollector>();
 
         public string title = string.Empty;
         public string researchQuestion = string.Empty;
         public string description = string.Empty;
         public List<SceneAsset> scenesToBuild = new List<SceneAsset>();
+
+        public Dictionary<string, bool> dataCollectors = new Dictionary<string, bool>()
+        {
+            { nameof(InputRecorder) , false}
+        };
+
         public string tutorialDescription = string.Empty;
         public Dictionary<KeyCode, string> input = new Dictionary<KeyCode, string>();
         public UnityEvent gameOverEvent = default;

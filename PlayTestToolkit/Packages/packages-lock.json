@@ -6,6 +6,13 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.dutchskull.singletons": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitypackages.dutchskull.com"
+    },
     "com.dutchskull.utilities": {
       "version": "file:DSUtilities",
       "depth": 0,

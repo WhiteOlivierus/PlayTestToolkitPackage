@@ -2,7 +2,9 @@
     "name": "PlayTestToolkitRuntime",
     "references": [
         "GUID:c7bbf32958cc63e408477354cafde131",
-        "GUID:dca9556ac05c2104a944d9a5069d10b8"
+        "GUID:dca9556ac05c2104a944d9a5069d10b8",
+        "GUID:89e164c143f46724c89f55b60dc2d507",
+        "GUID:4a0747ac3a6ecc2428d2faa28f2715a8"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
