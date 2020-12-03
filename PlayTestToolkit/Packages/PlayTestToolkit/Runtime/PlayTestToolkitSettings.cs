@@ -11,5 +11,7 @@ namespace PlayTestToolkit.Runtime
         public const string WEB_INTERFACE_URL = "http://google.com";
         public const string PLAY_TEST_RESOURCES_PATH = "Assets/Plugins/PlayTestToolkit/Runtime/Resources/";
         public const string PLAY_TEST_CACHE_PATH = "Assets/Plugins/PlayTestToolkit/Runtime/Resources/Cache/";
+        public const string PLAY_TEST_CONFIG_PATH = "Assets/Plugins/PlayTestToolkit/Runtime/Resources/";
+        public const string PLAY_TEST_CONFIG_FILE = "PlayTestConfig";
     }
 }

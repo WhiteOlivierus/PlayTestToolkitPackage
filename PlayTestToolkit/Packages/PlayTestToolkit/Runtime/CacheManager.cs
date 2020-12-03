@@ -64,9 +64,17 @@ namespace PlayTestToolkit.Runtime
             AssetDatabase.Refresh();
         }
 
-        private static string FolderPath(PlayTest test) => $"{PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH}{test.title.OnlyLettersAndNumbers()}/";
+        public static void ConfigPlayTest(PlayTest playtest)
+        {
+            AssetDatabase.CopyAsset(AssetPath(playtest), $"{PlayTestToolkitSettings.PLAY_TEST_CONFIG_PATH}{PlayTestToolkitSettings.PLAY_TEST_CONFIG_FILE}.asset");
+            AssetDatabase.Refresh();
+        }
 
-        private static string AssetPath(PlayTest test) => $"{FolderPath(test)}{test.version}.asset";
+        private static string FolderPath(PlayTest test) =>
+            $"{PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH}{test.title.OnlyLettersAndNumbers()}/";
+
+        private static string AssetPath(PlayTest test) =>
+            $"{FolderPath(test)}{test.version}.asset";
 
         private static PlayTestCollection GetCollection(PlayTest test)
         {

@@ -1,37 +1,82 @@
 ﻿using DutchSkull.Singleton;
+using PlayTestToolkit.Runtime.Data;
 using PlayTestToolkit.Runtime.DataRecorders;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class RecorderManager : Singleton<RecorderManager>
+namespace PlayTestToolkit.Runtime
 {
-    private readonly List<DataRecorder> recorders = new List<DataRecorder>();
-
-    public void Awake()
+    public class RecorderManager : Singleton<RecorderManager>
     {
-        InitialRecorder initialRecorder = new InitialRecorder("initial");
+        private readonly List<DataRecorder> recorders = new List<DataRecorder>();
 
-        initialRecorder.Record();
-        initialRecorder.Save();
+        public void Awake()
+        {
+            PlayTest playTestConfig = GetPlayTestConfig();
 
-        recorders.Add(new InputRecorder("input", new List<KeyCode>()));
+            Init();
 
-        string output = "Recording: \n";
-        for (int i = 0; i < recorders.Count; i++)
-            output = $"{output}    {recorders[i].GetType().Name} \n";
+            InitRecorders(playTestConfig);
 
-        Debug.Log(output);
-    }
+            LogRecorders();
+        }
 
-    public void Update()
-    {
-        for (int i = 0; i < recorders.Count; i++)
-            recorders[i].Record();
-    }
+        public void Update()
+        {
+            for (int i = 0; i < recorders.Count; i++)
+                recorders[i].Record();
+        }
 
-    public void OnApplicationQuit()
-    {
-        for (int i = 0; i < recorders.Count; i++)
-            recorders[i].Save();
+        public void OnApplicationQuit()
+        {
+            for (int i = 0; i < recorders.Count; i++)
+                recorders[i].Save();
+        }
+
+        private static void Init()
+        {
+            InitialRecorder initialRecorder = new InitialRecorder("initial");
+
+            initialRecorder.Record();
+            initialRecorder.Save();
+        }
+
+        private void InitRecorders(PlayTest playTestConfig)
+        {
+            foreach (KeyValuePair<string, bool> collector in playTestConfig.dataCollectors)
+            {
+                if (!collector.Value)
+                    continue;
+
+                switch (collector.Key)
+                {
+                    case nameof(InputRecorder):
+                        recorders.Add(new InputRecorder(nameof(collector.Key), playTestConfig.input.Keys.ToList()));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void LogRecorders()
+        {
+            string output = "Recording: \n";
+            for (int i = 0; i < recorders.Count; i++)
+                output = $"{output}    {recorders[i].GetType().Name} \n";
+
+            Debug.Log(output);
+        }
+
+        private static PlayTest GetPlayTestConfig()
+        {
+            PlayTest playTest = Resources.Load<PlayTest>(PlayTestToolkitSettings.PLAY_TEST_CONFIG_FILE);
+
+            if (!playTest)
+                throw new NullReferenceException("No config file found. Please build a play test.");
+            return playTest;
+        }
     }
 }

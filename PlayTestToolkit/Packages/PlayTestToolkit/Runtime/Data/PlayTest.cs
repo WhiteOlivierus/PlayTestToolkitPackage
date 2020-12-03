@@ -20,7 +20,7 @@ namespace PlayTestToolkit.Runtime.Data
 
         public Dictionary<string, bool> dataCollectors = new Dictionary<string, bool>()
         {
-            { nameof(InputRecorder) , false}
+            { nameof(InputRecorder), false}
         };
 
         public string tutorialDescription = string.Empty;

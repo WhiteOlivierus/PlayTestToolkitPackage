@@ -12,8 +12,8 @@ namespace PlayTestToolkit.Runtime.DataRecorders
     {
         private const string FORMAT_EXTENSION = ".json";
 
-        private List<InputObject> captured = new List<InputObject>();
-        private List<KeyCode> keys = new List<KeyCode>();
+        private readonly List<InputObject> captured = new List<InputObject>();
+        private readonly List<KeyCode> keys = new List<KeyCode>();
 
         public InputRecorder(string cacheFileName, List<KeyCode> lists) : base(AddExtension(cacheFileName)) =>
             keys = lists.IsNullOrEmpty() ? Enum.GetValues(typeof(KeyCode)).OfType<KeyCode>().ToList() : lists;
