@@ -15,13 +15,15 @@ namespace PlayTestToolkit.Editor.UI
         private readonly Action goToData;
         private Action removePlaytest;
 
-        private PlayTestToolkitCache Cache => ScriptableSingleton.GetInstance<PlayTestToolkitCache>();
+        private readonly PlayTestToolkitCache cache;
 
         public ManagerUIPanel(PlayTestToolkitWindow playTestToolkitWindow) : base(playTestToolkitWindow)
         {
             headerTexture = Resources.Load<Texture>(PlayTestToolkitSettings.PROJECT_TITLE_NO_SPACES);
 
             goToData = () => Debug.Log("Go to web for data");
+
+            cache = ScriptableSingleton.GetInstance<PlayTestToolkitCache>();
         }
 
         public override void OnGUI()
@@ -36,7 +38,7 @@ namespace PlayTestToolkit.Editor.UI
 
             GUILayout.Label("List of play tests");
 
-            RenderCollections(Cache.playTestCollections);
+            RenderCollections(cache.playTestCollections);
         }
 
         private void RenderHeader()

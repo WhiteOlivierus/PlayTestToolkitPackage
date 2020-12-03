@@ -23,13 +23,11 @@ namespace PlayTestToolkit.Editor.UI
             window.Show();
         }
 
-        private void OnGUI() =>
-            currentPanel.OnGUI();
-
-        private void OnEnable() =>
+        private void Awake() =>
             SetCurrentState(WindowState.manager);
 
-        private void OnDisable() { }
+        private void OnGUI() =>
+            currentPanel.OnGUI();
 
         public void SetCurrentState(WindowState state, PlayTest playtest = default)
         {

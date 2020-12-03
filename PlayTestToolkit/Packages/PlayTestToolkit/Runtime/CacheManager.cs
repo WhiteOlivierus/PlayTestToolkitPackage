@@ -3,12 +3,25 @@ using PlayTestToolkit.Runtime.Data;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 
 namespace PlayTestToolkit.Runtime
 {
     public class CacheManager
     {
-        private static PlayTestToolkitCache Cache => ScriptableSingleton.GetInstance<PlayTestToolkitCache>();
+        private static PlayTestToolkitCache cache;
+
+        public static PlayTestToolkitCache Cache
+        {
+            get
+            {
+                if (!cache)
+                    cache = ScriptableSingleton.GetInstance<PlayTestToolkitCache>();
+
+                return cache;
+            }
+            set => cache = value;
+        }
 
         public static void AddPlayTest(PlayTest test)
         {
@@ -18,18 +31,40 @@ namespace PlayTestToolkit.Runtime
             {
                 case null:
                     {
-                        PlayTestCollection newCollection = new PlayTestCollection { title = test.title };
+                        PlayTestCollection newCollection = ScriptableObject.CreateInstance<PlayTestCollection>();
+
+                        newCollection.title = test.title;
+                        SavePlayTestCollection(newCollection);
 
                         Cache.playTestCollections.Add(newCollection);
                         newCollection.playtests.Add(test);
+                        EditorUtility.SetDirty(newCollection);
                         break;
                     }
 
                 default:
                     test.version = collection.playtests.Count();
                     collection.playtests.Add(test);
+                    EditorUtility.SetDirty(collection);
                     break;
             }
+        }
+
+        // TODO make this generic, the save load and remove class. Weird that unity does not do this.
+        public static void SavePlayTestCollection(PlayTestCollection collection)
+        {
+            if (!Directory.Exists(PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH))
+            {
+                Directory.CreateDirectory(PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH);
+                AssetDatabase.Refresh();
+            }
+
+            AssetDatabase.CreateAsset(collection, PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH + "test.asset");
+
+            EditorUtility.SetDirty(collection);
+            EditorUtility.SetDirty(Cache);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         public static void SavePlayTest(PlayTest test)
@@ -42,6 +77,9 @@ namespace PlayTestToolkit.Runtime
 
             AssetDatabase.CreateAsset(test, AssetPath(test));
 
+            EditorUtility.SetDirty(test);
+            EditorUtility.SetDirty(Cache);
+            AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
 

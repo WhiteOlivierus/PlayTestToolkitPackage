@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,22 +14,12 @@ namespace PlayTestToolkit.Runtime
 
         public static U GetInstance<U>() where U : ScriptableObjectSingleton
         {
-            U instance = Resources.FindObjectsOfTypeAll<U>().FirstOrDefault();
+            U instance = LoadInstance<U>();
 
             if (instance)
                 return instance;
 
-            instance = ScriptableObjectSingleton.CreateInstance<U>();
-
-            DirectoryInfo info = new DirectoryInfo(GetPath<U>());
-            Directory.CreateDirectory(info.Parent.FullName);
-
-            AssetDatabase.Refresh();
-
-            AssetDatabase.CreateAsset(instance, $"{GetPath<U>()}.asset");
-            AssetDatabase.SaveAssets();
-
-            AssetDatabase.Refresh();
+            instance = CreateInstance<U>();
 
             return instance;
         }
@@ -51,6 +40,32 @@ namespace PlayTestToolkit.Runtime
             Directory.Delete(info.Parent.FullName);
 
             AssetDatabase.Refresh();
+        }
+
+        private static U LoadInstance<U>() where U : ScriptableObjectSingleton
+        {
+            string path = GetPath<U>();
+            int v = path.IndexOf("Resources/");
+            int startIndex = v + "Resources/".Length;
+            int length = path.Length - (v + "Resources/".Length);
+            string path1 = path.Substring(startIndex, length);
+            U instance = Resources.Load<U>(path1); ;
+            return instance;
+        }
+
+        private static U CreateInstance<U>() where U : ScriptableObjectSingleton
+        {
+            DirectoryInfo info = new DirectoryInfo(GetPath<U>());
+            Directory.CreateDirectory(info.Parent.FullName);
+
+            AssetDatabase.Refresh();
+
+            U instance = ScriptableObjectSingleton.CreateInstance<U>();
+            AssetDatabase.CreateAsset(instance, $"{GetPath<U>()}.asset");
+            AssetDatabase.SaveAssets();
+
+            AssetDatabase.Refresh();
+            return instance;
         }
 
         private static string GetPath<U>() where U : ScriptableObjectSingleton =>

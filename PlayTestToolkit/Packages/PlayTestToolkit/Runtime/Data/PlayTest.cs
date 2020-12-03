@@ -27,27 +27,5 @@ namespace PlayTestToolkit.Runtime.Data
         public Dictionary<KeyCode, string> input = new Dictionary<KeyCode, string>();
         public UnityEvent gameOverEvent = default;
         public string googleForm = string.Empty;
-
-        public void Init(PlayTest playtest)
-        {
-            active = playtest.active;
-            version = playtest.version;
-            dataCollectors = playtest.dataCollectors;
-            title = playtest.title;
-            researchQuestion = playtest.researchQuestion;
-            description = playtest.description;
-            scenesToBuild = playtest.scenesToBuild;
-            tutorialDescription = playtest.tutorialDescription;
-            input = playtest.input;
-            gameOverEvent = playtest.gameOverEvent;
-            googleForm = playtest.googleForm;
-        }
-    }
-
-    [Serializable]
-    public struct Collectors
-    {
-        public string name;
-        public bool active;
     }
 }
