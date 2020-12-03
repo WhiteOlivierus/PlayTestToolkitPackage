@@ -18,9 +18,9 @@ namespace PlayTestToolkit.Runtime.Data
         public string description = string.Empty;
         public List<SceneAsset> scenesToBuild = new List<SceneAsset>();
 
-        public Dictionary<string, bool> dataCollectors = new Dictionary<string, bool>()
+        public List<Collectors> dataCollectors = new List<Collectors>()
         {
-            { nameof(InputRecorder), false}
+            { new Collectors{name = nameof(InputRecorder), active =false} }
         };
 
         public string tutorialDescription = string.Empty;
@@ -42,5 +42,12 @@ namespace PlayTestToolkit.Runtime.Data
             gameOverEvent = playtest.gameOverEvent;
             googleForm = playtest.googleForm;
         }
+    }
+
+    [Serializable]
+    public struct Collectors
+    {
+        public string name;
+        public bool active;
     }
 }

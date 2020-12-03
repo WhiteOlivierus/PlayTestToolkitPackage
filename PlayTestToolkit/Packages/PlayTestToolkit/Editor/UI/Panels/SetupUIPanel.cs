@@ -1,6 +1,7 @@
 ﻿using PlayTestToolkit.Editor.UI.Data;
 using PlayTestToolkit.Runtime;
 using PlayTestToolkit.Runtime.Data;
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,12 +38,29 @@ namespace PlayTestToolkit.Editor.UI
             {
                 if (serializedProperty.name == "m_Script")
                     continue;
+                else if (serializedProperty.name == "dataCollectors")
+                {
+                    RenderCollectors(serializedObject);
+                    continue;
+                }
 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty(serializedProperty.name), true);
             }
             while (serializedProperty.NextVisible(false));
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private void RenderCollectors(SerializedObject serializedObject)
+        {
+            SerializedProperty items = serializedObject.FindProperty("dataCollectors");
+
+            for (int i = 0; i < items.arraySize; i++)
+            {
+                SerializedProperty items1 = items.GetArrayElementAtIndex(i);
+
+                items1.FindPropertyRelative("active").boolValue = GUILayout.Toggle(items1.FindPropertyRelative("active").boolValue, items1.FindPropertyRelative("name").stringValue);
+            }
         }
 
         private void RenderSaveAndBuild()
@@ -65,7 +83,7 @@ namespace PlayTestToolkit.Editor.UI
         private void Create()
         {
             if (string.IsNullOrEmpty(playtest.title))
-                throw new System.Exception("Please give a name to the play test");
+                throw new Exception("Please give a name to the play test");
 
             CacheManager.AddPlayTest(playtest);
             CacheManager.SavePlayTest(playtest);

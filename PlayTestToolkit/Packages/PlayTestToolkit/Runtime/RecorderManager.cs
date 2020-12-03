@@ -45,15 +45,15 @@ namespace PlayTestToolkit.Runtime
 
         private void InitRecorders(PlayTest playTestConfig)
         {
-            foreach (KeyValuePair<string, bool> collector in playTestConfig.dataCollectors)
+            foreach (Collectors collector in playTestConfig.dataCollectors)
             {
-                if (!collector.Value)
+                if (!collector.active)
                     continue;
 
-                switch (collector.Key)
+                switch (collector.name)
                 {
                     case nameof(InputRecorder):
-                        recorders.Add(new InputRecorder(nameof(collector.Key), playTestConfig.input.Keys.ToList()));
+                        recorders.Add(new InputRecorder(nameof(collector.name), playTestConfig.input.Keys.ToList()));
                         break;
                     default:
                         break;
