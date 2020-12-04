@@ -91,13 +91,21 @@ namespace PlayTestToolkit.Editor.UI
             GUILayout.Label(playtest.active.ToString());
             GUILayout.Label(fullName);
 
-            RenderButton("Data", goToData);
-            RenderButton("Share", () => Debug.Log(JsonUtility.ToJson(playtest)));
-
             RenderButton("Copy", () => playTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
 
+            EditorGUI.BeginDisabledGroup(playtest.active);
+            RenderButton("Edit", () => playTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
+            EditorGUI.EndDisabledGroup();
+
+            EditorGUI.BeginDisabledGroup(!playtest.active);
+            RenderButton("Data", goToData);
+            EditorGUI.EndDisabledGroup();
+
+            EditorGUI.BeginDisabledGroup(playtest.active);
+            RenderButton("Share", () => Debug.Log(JsonUtility.ToJson(playtest)));
             removePlaytest = () => CacheManager.RemovePlayTest(playtest);
             RenderButton("X", removePlaytest);
+            EditorGUI.EndDisabledGroup();
 
             GUILayout.EndHorizontal();
         }

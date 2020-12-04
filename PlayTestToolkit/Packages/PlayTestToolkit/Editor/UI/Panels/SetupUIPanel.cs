@@ -1,5 +1,4 @@
 ﻿using PlayTestToolkit.Editor.UI.Data;
-using PlayTestToolkit.Runtime;
 using PlayTestToolkit.Runtime.Data;
 using System;
 using UnityEditor;
@@ -86,7 +85,6 @@ namespace PlayTestToolkit.Editor.UI
                 throw new Exception("Please give a name to the play test");
 
             CacheManager.AddPlayTest(playtest);
-            CacheManager.SavePlayTest(playtest);
 
             playTestToolkitWindow.SetCurrentState(WindowState.manager);
         }

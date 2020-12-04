@@ -1,9 +1,5 @@
-﻿using UnityEditor;
-
-namespace PlayTestToolkit.Runtime
+﻿namespace PlayTestToolkit.Runtime
 {
-    [InitializeOnLoad]
-    // TODO make this a singleton and project setting
     public static class PlayTestToolkitSettings
     {
         public const string PROJECT_TITLE_NO_SPACES = "PlayTestToolkit";

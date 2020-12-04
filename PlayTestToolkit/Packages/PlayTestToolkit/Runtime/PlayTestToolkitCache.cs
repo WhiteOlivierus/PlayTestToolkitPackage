@@ -6,7 +6,9 @@ namespace PlayTestToolkit.Runtime
 {
     public class PlayTestToolkitCache : ScriptableObjectSingleton
     {
+#if UNITY_EDITOR
         [InitializeOnLoadMethod]
+#endif
         public static void Init() => ScriptableSingleton.RegisterPath<PlayTestToolkitCache>($"{PlayTestToolkitSettings.PLAY_TEST_RESOURCES_PATH}cache");
 
         public List<PlayTestCollection> playTestCollections = new List<PlayTestCollection>();

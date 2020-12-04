@@ -10,6 +10,17 @@ namespace PlayTestToolkit.Editor.UI
     {
         private UIPanel currentPanel;
 
+        public UIPanel CurrentPanel
+        {
+            get
+            {
+                if (currentPanel is null)
+                    currentPanel = new ManagerUIPanel(this);
+                return currentPanel;
+            }
+            set => currentPanel = value;
+        }
+
         // TODO don't forget to remove the short cut or change it to something that is not used
         [MenuItem("Window/Play Test Toolkit %#q")]
         public static void CreateWindow()
@@ -27,20 +38,20 @@ namespace PlayTestToolkit.Editor.UI
             SetCurrentState(WindowState.manager);
 
         private void OnGUI() =>
-            currentPanel.OnGUI();
+            CurrentPanel.OnGUI();
 
         public void SetCurrentState(WindowState state, PlayTest playtest = default)
         {
             switch (state)
             {
                 case WindowState.manager:
-                    currentPanel = new ManagerUIPanel(this);
+                    CurrentPanel = new ManagerUIPanel(this);
                     break;
                 case WindowState.setup:
-                    currentPanel = new SetupUIPanel(this);
+                    CurrentPanel = new SetupUIPanel(this);
                     break;
                 case WindowState.edit:
-                    currentPanel = new EditUIPanel(this, playtest);
+                    CurrentPanel = new EditUIPanel(this, playtest);
                     break;
                 default:
                     break;

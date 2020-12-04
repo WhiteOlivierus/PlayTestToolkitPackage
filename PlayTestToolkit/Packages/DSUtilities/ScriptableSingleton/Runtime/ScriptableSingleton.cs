@@ -5,7 +5,9 @@ using UnityEngine;
 
 namespace PlayTestToolkit.Runtime
 {
+#if UNITY_EDITOR
     [InitializeOnLoad]
+#endif
     public static class ScriptableSingleton
     {
         static ScriptableSingleton() { }
@@ -18,8 +20,9 @@ namespace PlayTestToolkit.Runtime
 
             if (instance)
                 return instance;
-
+#if UNITY_EDITOR
             instance = CreateInstance<U>();
+#endif
 
             return instance;
         }
@@ -31,6 +34,7 @@ namespace PlayTestToolkit.Runtime
 
             PATHS.Add(typeof(U).GetHashCode(), path);
         }
+#if UNITY_EDITOR
 
         public static void UnRegisterPath<U>() where U : ScriptableObjectSingleton
         {
@@ -40,17 +44,6 @@ namespace PlayTestToolkit.Runtime
             Directory.Delete(info.Parent.FullName);
 
             AssetDatabase.Refresh();
-        }
-
-        private static U LoadInstance<U>() where U : ScriptableObjectSingleton
-        {
-            string path = GetPath<U>();
-            int v = path.IndexOf("Resources/");
-            int startIndex = v + "Resources/".Length;
-            int length = path.Length - (v + "Resources/".Length);
-            string path1 = path.Substring(startIndex, length);
-            U instance = Resources.Load<U>(path1); ;
-            return instance;
         }
 
         private static U CreateInstance<U>() where U : ScriptableObjectSingleton
@@ -67,7 +60,18 @@ namespace PlayTestToolkit.Runtime
             AssetDatabase.Refresh();
             return instance;
         }
+#endif
 
+        private static U LoadInstance<U>() where U : ScriptableObjectSingleton
+        {
+            string path = GetPath<U>();
+            int v = path.IndexOf("Resources/");
+            int startIndex = v + "Resources/".Length;
+            int length = path.Length - (v + "Resources/".Length);
+            string path1 = path.Substring(startIndex, length);
+            U instance = Resources.Load<U>(path1); ;
+            return instance;
+        }
         private static string GetPath<U>() where U : ScriptableObjectSingleton =>
             PATHS.TryGetValue(typeof(U).GetHashCode(), out string path) ? path : path;
     }
