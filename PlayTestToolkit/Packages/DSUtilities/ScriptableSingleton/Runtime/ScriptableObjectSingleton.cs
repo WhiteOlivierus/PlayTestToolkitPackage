@@ -2,8 +2,5 @@
 
 namespace PlayTestToolkit.Runtime
 {
-    public class ScriptableObjectSingleton : ScriptableObject
-    {
-
-    }
+    public class ScriptableObjectSingleton : ScriptableObject { }
 }

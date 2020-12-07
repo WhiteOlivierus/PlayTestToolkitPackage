@@ -10,8 +10,6 @@ namespace PlayTestToolkit.Runtime
 #endif
     public static class ScriptableSingleton
     {
-        static ScriptableSingleton() { }
-
         private static readonly Dictionary<int, string> PATHS = new Dictionary<int, string>();
 
         public static U GetInstance<U>() where U : ScriptableObjectSingleton
@@ -69,9 +67,10 @@ namespace PlayTestToolkit.Runtime
             int startIndex = v + "Resources/".Length;
             int length = path.Length - (v + "Resources/".Length);
             string path1 = path.Substring(startIndex, length);
-            U instance = Resources.Load<U>(path1); ;
+            U instance = Resources.Load<U>(path1);
             return instance;
         }
+
         private static string GetPath<U>() where U : ScriptableObjectSingleton =>
             PATHS.TryGetValue(typeof(U).GetHashCode(), out string path) ? path : path;
     }
