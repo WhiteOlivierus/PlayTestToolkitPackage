@@ -10,6 +10,7 @@ namespace PlayTestToolkit.Runtime
 #endif
     public static class ScriptableSingleton
     {
+        private const string ROOT_FOLDER = "Resources/";
         private static readonly Dictionary<int, string> PATHS = new Dictionary<int, string>();
 
         public static U GetInstance<U>() where U : ScriptableObjectSingleton
@@ -62,12 +63,16 @@ namespace PlayTestToolkit.Runtime
 
         private static U LoadInstance<U>() where U : ScriptableObjectSingleton
         {
-            string path = GetPath<U>();
-            int v = path.IndexOf("Resources/");
-            int startIndex = v + "Resources/".Length;
-            int length = path.Length - (v + "Resources/".Length);
-            string path1 = path.Substring(startIndex, length);
-            U instance = Resources.Load<U>(path1);
+            string instancePath = GetPath<U>();
+
+            int rootIndex = instancePath.IndexOf(ROOT_FOLDER);
+            int rootLength = ROOT_FOLDER.Length;
+
+            int startIndex = rootIndex + rootLength;
+            int length = instancePath.Length - (rootIndex + rootLength);
+
+            instancePath = instancePath.Substring(startIndex, length);
+            U instance = Resources.Load<U>(instancePath);
             return instance;
         }
 

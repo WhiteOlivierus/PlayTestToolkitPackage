@@ -6,11 +6,11 @@ namespace Tests
 {
     public class TestScriptableSingleton
     {
-        private DerivedClassA a;
-
         [Test, Order(0)]
         public void LoadScriptableSingleton()
         {
+            DerivedClassA a;
+
             a = ScriptableSingleton.GetInstance<DerivedClassA>();
 
             Assert.IsNotNull(a);
@@ -19,6 +19,8 @@ namespace Tests
         [Test, Order(1)]
         public void EditScriptableSingleton()
         {
+            DerivedClassA a;
+
             a = ScriptableSingleton.GetInstance<DerivedClassA>();
 
             string randomstring = Generate.String(20);

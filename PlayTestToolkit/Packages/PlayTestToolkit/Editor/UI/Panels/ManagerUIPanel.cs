@@ -13,7 +13,6 @@ namespace PlayTestToolkit.Editor.UI
     {
         private readonly Texture headerTexture;
         private readonly Action goToData;
-        private Action removePlaytest;
 
         private readonly PlayTestToolkitCache cache;
 
@@ -60,11 +59,11 @@ namespace PlayTestToolkit.Editor.UI
                 if (!playTestCollection.fold)
                     continue;
 
-                RenderPlayTests(playTestCollection.playtests, playTestCollection.title);
+                RenderPlayTests(playTestCollection.playtests);
             }
         }
 
-        private void RenderPlayTests(List<PlayTest> playTests, string name)
+        private void RenderPlayTests(List<PlayTest> playTests)
         {
             if (playTests.IsNullOrEmpty())
                 throw new ArgumentNullException(nameof(playTests));
@@ -103,8 +102,7 @@ namespace PlayTestToolkit.Editor.UI
 
             EditorGUI.BeginDisabledGroup(playtest.active);
             RenderButton("Share", () => Debug.Log(JsonUtility.ToJson(playtest)));
-            removePlaytest = () => CacheManager.RemovePlayTest(playtest);
-            RenderButton("X", removePlaytest);
+            RenderButton("X", () => CacheManager.RemovePlayTest(playtest));
             EditorGUI.EndDisabledGroup();
 
             GUILayout.EndHorizontal();

@@ -3,9 +3,12 @@
 namespace PlayTestToolkit.Runtime.Data
 {
     [Serializable]
-    public struct Collectors
+    public struct Collectors : IEquatable<Collectors>
     {
         public string name;
         public bool active;
+
+        public bool Equals(Collectors other) =>
+            (other.name, other.active) == (name, active);
     }
 }

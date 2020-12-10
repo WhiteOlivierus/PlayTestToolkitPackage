@@ -16,10 +16,12 @@ namespace PlayTestToolkit.Runtime.Data
         public string title = string.Empty;
         public string researchQuestion = string.Empty;
         public string description = string.Empty;
+
 #if UNITY_EDITOR
         public List<SceneAsset> scenesToBuild = new List<SceneAsset>();
 #endif
-        public List<Collectors> dataCollectors = new List<Collectors>()
+
+        public List<Collectors> dataCollectors = new List<Collectors>
         {
             { new Collectors{name = nameof(InputRecorder), active =false} }
         };

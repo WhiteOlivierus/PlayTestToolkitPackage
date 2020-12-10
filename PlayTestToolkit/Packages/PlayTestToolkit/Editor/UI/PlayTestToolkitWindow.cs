@@ -53,6 +53,7 @@ namespace PlayTestToolkit.Editor.UI
                     CurrentPanel = new EditUIPanel(this, playtest);
                     break;
                 default:
+                    CurrentPanel = new ManagerUIPanel(this);
                     break;
             }
         }

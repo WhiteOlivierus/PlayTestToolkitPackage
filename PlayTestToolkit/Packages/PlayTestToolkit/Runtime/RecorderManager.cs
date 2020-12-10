@@ -56,6 +56,7 @@ namespace PlayTestToolkit.Runtime
                         recorders.Add(new InputRecorder(nameof(collector.name), playTestConfig.input.Keys.ToList()));
                         break;
                     default:
+                        Debug.LogWarning("No recorders found!");
                         break;
                 }
             }

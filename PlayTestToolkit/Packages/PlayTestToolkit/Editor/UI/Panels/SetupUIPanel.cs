@@ -37,7 +37,7 @@ namespace PlayTestToolkit.Editor.UI
 
             do
             {
-                if (!FilterPropertyRenders(serializedProperty))
+                if (FilterPropertyRenders(serializedProperty))
                     continue;
 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty(serializedProperty.name), true);
@@ -93,7 +93,7 @@ namespace PlayTestToolkit.Editor.UI
         private void Create()
         {
             if (string.IsNullOrEmpty(playtest.title))
-                throw new Exception("Please give a name to the play test");
+                throw new ArgumentNullException("Please give a name to the play test");
 
             CacheManager.AddPlayTest(playtest);
 
