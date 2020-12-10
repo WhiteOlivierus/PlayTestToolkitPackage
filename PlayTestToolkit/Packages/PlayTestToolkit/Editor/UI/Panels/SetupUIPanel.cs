@@ -56,9 +56,9 @@ namespace PlayTestToolkit.Editor.UI
                 case "dataCollectors":
                     RenderCollectors(serializedObject);
                     return true;
+                default:
+                    return false;
             }
-
-            return false;
         }
 
         private void RenderCollectors(SerializedObject serializedObject)

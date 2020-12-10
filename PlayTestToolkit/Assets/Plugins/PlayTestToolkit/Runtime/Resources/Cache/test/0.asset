@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 0
   version: 0
-  dataCollectors: []
   title: test
   researchQuestion: 
   description: 
   scenesToBuild: []
+  dataCollectors:
+  - name: InputRecorder
+    active: 1
   tutorialDescription: 
   gameOverEvent:
     m_PersistentCalls:
