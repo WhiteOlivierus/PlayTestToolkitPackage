@@ -6,7 +6,8 @@ namespace PlayTestToolkit.Runtime.DataRecorders
     [Serializable]
     public class InputObject
     {
-        public float time;
+        public float startTime;
+        public float duration;
         public KeyCode key;
     }
 }
