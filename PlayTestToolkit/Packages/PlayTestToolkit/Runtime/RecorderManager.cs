@@ -1,7 +1,6 @@
 ﻿using DutchSkull.Singleton;
 using PlayTestToolkit.Runtime.Data;
 using PlayTestToolkit.Runtime.DataRecorders;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -76,7 +75,8 @@ namespace PlayTestToolkit.Runtime
             PlayTest playTest = Resources.Load<PlayTest>(PlayTestToolkitSettings.PLAY_TEST_CONFIG_FILE);
 
             if (!playTest)
-                throw new NullReferenceException("No config file found. Please build a play test.");
+                Debug.LogError("No config file found. Please build a play test.");
+
             return playTest;
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PlayTestToolkit.Runtime.DataRecorders
 {
     [Serializable]
-    public abstract class DataRecorder
+    public abstract class DataRecorder : IDisposable
     {
         private readonly string path;
 
@@ -26,5 +26,8 @@ namespace PlayTestToolkit.Runtime.DataRecorders
         }
 
         public virtual void Upload() { }
+
+        public void Dispose() =>
+            outStream.Dispose();
     }
 }

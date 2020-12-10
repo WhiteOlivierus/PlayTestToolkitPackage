@@ -26,7 +26,8 @@ namespace PlayTestToolkit.Editor.UI
         {
             Type inspectorType = Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
 
-            PlayTestToolkitWindow window = GetWindow<PlayTestToolkitWindow>(new Type[] { inspectorType });
+            Type[] desiredDockNextTo = new[] { inspectorType };
+            PlayTestToolkitWindow window = GetWindow<PlayTestToolkitWindow>(desiredDockNextTo);
 
             window.titleContent.text = PlayTestToolkitSettings.PROJECT_TITLE;
 
@@ -39,7 +40,10 @@ namespace PlayTestToolkit.Editor.UI
         private void OnGUI() =>
             CurrentPanel.OnGUI();
 
-        public void SetCurrentState(WindowState state, PlayTest playtest = default)
+        public void SetCurrentState(WindowState state) =>
+            SetCurrentState(state, default);
+
+        public void SetCurrentState(WindowState state, PlayTest playtest)
         {
             switch (state)
             {

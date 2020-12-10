@@ -8,7 +8,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
     {
         private const string FORMAT_EXTENSION = ".json";
 
-        private InitialData captured = new InitialData();
+        private readonly InitialData captured = new InitialData();
 
         public InitialRecorder(string cacheFileName) : base(AddExtension(cacheFileName)) { }
 

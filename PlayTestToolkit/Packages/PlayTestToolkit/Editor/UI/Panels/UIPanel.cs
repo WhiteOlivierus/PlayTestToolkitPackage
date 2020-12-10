@@ -5,10 +5,10 @@ namespace PlayTestToolkit.Editor.UI
 {
     public abstract class UIPanel
     {
-        public PlayTestToolkitWindow playTestToolkitWindow;
+        protected PlayTestToolkitWindow PlayTestToolkitWindow { get; set; }
 
-        public UIPanel(PlayTestToolkitWindow playTestToolkitWindow) =>
-            this.playTestToolkitWindow = playTestToolkitWindow;
+        protected UIPanel(PlayTestToolkitWindow playTestToolkitWindow) =>
+            PlayTestToolkitWindow = playTestToolkitWindow;
 
         public abstract void OnGUI();
 

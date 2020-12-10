@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace PlayTestToolkit.Editor
 {
-    public class CacheManager
+    public static class CacheManager
     {
         private static PlayTestToolkitCache cache;
 

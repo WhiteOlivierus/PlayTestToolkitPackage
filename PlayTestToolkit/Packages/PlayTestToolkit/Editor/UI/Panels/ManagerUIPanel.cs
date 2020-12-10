@@ -31,7 +31,7 @@ namespace PlayTestToolkit.Editor.UI
             RenderHeader();
 
             EditorGUILayout.BeginHorizontal();
-            RenderButton("Setup play test", () => playTestToolkitWindow.SetCurrentState(WindowState.setup));
+            RenderButton("Setup play test", () => PlayTestToolkitWindow.SetCurrentState(WindowState.setup));
             RenderButton("Web interface", () => System.Diagnostics.Process.Start(PlayTestToolkitSettings.WEB_INTERFACE_URL));
             EditorGUILayout.EndHorizontal();
 
@@ -90,10 +90,10 @@ namespace PlayTestToolkit.Editor.UI
             GUILayout.Label(playtest.active.ToString());
             GUILayout.Label(fullName);
 
-            RenderButton("Copy", () => playTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
+            RenderButton("Copy", () => PlayTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
 
             EditorGUI.BeginDisabledGroup(playtest.active);
-            RenderButton("Edit", () => playTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
+            RenderButton("Edit", () => PlayTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
             EditorGUI.EndDisabledGroup();
 
             EditorGUI.BeginDisabledGroup(!playtest.active);

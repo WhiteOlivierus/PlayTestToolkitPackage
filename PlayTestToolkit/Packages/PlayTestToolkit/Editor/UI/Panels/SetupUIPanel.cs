@@ -78,7 +78,7 @@ namespace PlayTestToolkit.Editor.UI
             EditorGUILayout.BeginHorizontal();
             RenderButton("Save", () => Create());
             RenderButton("Save and build", () => CreateAndBuild());
-            RenderButton("Cancel", () => playTestToolkitWindow.SetCurrentState(WindowState.manager));
+            RenderButton("Cancel", () => PlayTestToolkitWindow.SetCurrentState(WindowState.manager));
             EditorGUILayout.EndHorizontal();
         }
 
@@ -97,7 +97,7 @@ namespace PlayTestToolkit.Editor.UI
 
             CacheManager.AddPlayTest(playtest);
 
-            playTestToolkitWindow.SetCurrentState(WindowState.manager);
+            PlayTestToolkitWindow.SetCurrentState(WindowState.manager);
         }
     }
 }
