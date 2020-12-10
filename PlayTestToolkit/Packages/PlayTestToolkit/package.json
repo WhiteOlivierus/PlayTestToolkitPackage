@@ -5,5 +5,12 @@
   "unity": "2018.4",
   "description": "Play test setup made easy!",
   "type": "tool",
-  "hideInEditor": false
+  "hideInEditor": false,
+  "samples": [
+    {
+      "displayName": "Resources",
+      "description": "Assets that are needed by this package",
+      "path": "Samples~/Resources"
+    }
+  ]
 }

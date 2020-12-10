@@ -87,6 +87,8 @@ namespace PlayTestToolkit.Editor.UI
             Create();
 
             // TODO add build functionality
+            Builder.Build();
+
             CacheManager.ConfigPlayTest(playtest);
         }
 
