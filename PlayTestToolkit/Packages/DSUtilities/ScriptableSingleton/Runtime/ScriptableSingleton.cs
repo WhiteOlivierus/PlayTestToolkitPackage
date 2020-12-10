@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -65,7 +66,7 @@ namespace PlayTestToolkit.Runtime
         {
             string instancePath = GetPath<U>();
 
-            int rootIndex = instancePath.IndexOf(ROOT_FOLDER);
+            int rootIndex = instancePath.IndexOf(ROOT_FOLDER, StringComparison.Ordinal);
             int rootLength = ROOT_FOLDER.Length;
 
             int startIndex = rootIndex + rootLength;
