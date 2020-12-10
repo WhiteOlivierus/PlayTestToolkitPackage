@@ -9,8 +9,7 @@ namespace PlayTestToolkit.Editor.UI
     public class PlayTestToolkitWindow : EditorWindow
     {
         private UIPanel currentPanel;
-
-        public UIPanel CurrentPanel
+        private UIPanel CurrentPanel
         {
             get
             {

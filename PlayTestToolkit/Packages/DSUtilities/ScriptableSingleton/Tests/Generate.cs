@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Tests
 {
-    public class Generate
+    public static class Generate
     {
         private const string CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         private static readonly Random RANDOM = new Random();

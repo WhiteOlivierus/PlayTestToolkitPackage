@@ -30,18 +30,15 @@ namespace PlayTestToolkit.Editor.UI
         {
             SerializedProperty serializedProperty = serializedObject.GetIterator();
 
-            if (!serializedProperty.NextVisible(true))
+            bool itteratorEmpty = !serializedProperty.NextVisible(true);
+
+            if (itteratorEmpty)
                 return;
 
             do
             {
-                if (serializedProperty.name == "m_Script")
+                if (!FilterPropertyRenders(serializedProperty))
                     continue;
-                else if (serializedProperty.name == "dataCollectors")
-                {
-                    RenderCollectors(serializedObject);
-                    continue;
-                }
 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty(serializedProperty.name), true);
             }
@@ -50,15 +47,29 @@ namespace PlayTestToolkit.Editor.UI
             serializedObject.ApplyModifiedProperties();
         }
 
+        private bool FilterPropertyRenders(SerializedProperty serializedProperty)
+        {
+            switch (serializedProperty.name)
+            {
+                case "m_Script":
+                    return true;
+                case "dataCollectors":
+                    RenderCollectors(serializedObject);
+                    return true;
+            }
+
+            return false;
+        }
+
         private void RenderCollectors(SerializedObject serializedObject)
         {
-            SerializedProperty items = serializedObject.FindProperty("dataCollectors");
+            SerializedProperty dataCollectors = serializedObject.FindProperty("dataCollectors");
 
-            for (int i = 0; i < items.arraySize; i++)
+            for (int i = 0; i < dataCollectors.arraySize; i++)
             {
-                SerializedProperty items1 = items.GetArrayElementAtIndex(i);
+                SerializedProperty dataCollector = dataCollectors.GetArrayElementAtIndex(i);
 
-                items1.FindPropertyRelative("active").boolValue = GUILayout.Toggle(items1.FindPropertyRelative("active").boolValue, items1.FindPropertyRelative("name").stringValue);
+                dataCollector.FindPropertyRelative("active").boolValue = GUILayout.Toggle(dataCollector.FindPropertyRelative("active").boolValue, dataCollector.FindPropertyRelative("name").stringValue);
             }
         }
 

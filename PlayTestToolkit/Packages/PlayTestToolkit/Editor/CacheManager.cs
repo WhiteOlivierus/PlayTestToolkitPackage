@@ -25,31 +25,28 @@ namespace PlayTestToolkit.Editor
 
         public static void AddPlayTest(PlayTest playtest)
         {
-            PlayTestCollection selectedCollection = GetCollection(playtest);
+            PlayTestCollection selectedCollection = FindCollection(playtest);
 
-            switch (selectedCollection)
+            if (selectedCollection is null)
             {
-                case null:
-                    PlayTestCollection createdCollection = ScriptableObject.CreateInstance<PlayTestCollection>();
+                PlayTestCollection createdCollection = ScriptableObject.CreateInstance<PlayTestCollection>();
 
-                    createdCollection.title = playtest.title;
+                createdCollection.title = playtest.title;
 
-                    string collectionPath = PathBuilder(PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH, new string[] { playtest.title.OnlyLettersAndNumbers() }, $"{createdCollection.title}.asset");
-                    SafeAssetHandeling.CreateAsset(createdCollection, collectionPath);
-                    Cache.playTestCollections.Add(createdCollection);
+                string collectionPath = PathBuilder(PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH, new string[] { playtest.title.OnlyLettersAndNumbers() }, $"{createdCollection.title}.asset");
+                SafeAssetHandeling.CreateAsset(createdCollection, collectionPath);
+                Cache.playTestCollections.Add(createdCollection);
 
-                    CreatePlayTestAsset(playtest, createdCollection);
-
-                    break;
-
-                default:
-                    playtest.version = selectedCollection.playtests.Count();
-
-                    CreatePlayTestAsset(playtest, selectedCollection);
-
-                    SafeAssetHandeling.SaveAsset(selectedCollection);
-                    break;
+                selectedCollection = createdCollection;
             }
+            else
+            {
+                playtest.version = selectedCollection.playtests.Count();
+            }
+
+            CreatePlayTestAsset(playtest, selectedCollection);
+
+            SafeAssetHandeling.SaveAsset(selectedCollection);
         }
 
         private static void CreatePlayTestAsset(PlayTest playtest, PlayTestCollection createdCollection)
@@ -68,7 +65,7 @@ namespace PlayTestToolkit.Editor
 
         public static void RemovePlayTest(PlayTest playtest)
         {
-            PlayTestCollection collection = GetCollection(playtest);
+            PlayTestCollection collection = FindCollection(playtest);
 
             string playtestPath = PathBuilder(PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH, new string[] { playtest.title.OnlyLettersAndNumbers() }, $"{playtest.version}.asset");
             collection.playtests.Remove(playtest);
@@ -88,7 +85,7 @@ namespace PlayTestToolkit.Editor
             SafeAssetHandeling.RemoveAsset(playtestCacheFolder);
         }
 
-        private static PlayTestCollection GetCollection(PlayTest test)
+        private static PlayTestCollection FindCollection(PlayTest test)
         {
             return (from selected in Cache.playTestCollections
                     where selected.title == test.title
