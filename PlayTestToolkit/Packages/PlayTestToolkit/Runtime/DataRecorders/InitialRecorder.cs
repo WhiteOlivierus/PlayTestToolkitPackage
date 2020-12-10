@@ -15,8 +15,12 @@ namespace PlayTestToolkit.Runtime.DataRecorders
         private static string AddExtension(string cacheFileName) =>
             cacheFileName + FORMAT_EXTENSION;
 
-        public override void Record() =>
-            captured.time = DateTime.Now.Millisecond;
+        public override void Record()
+        {
+            DateTime value = new DateTime(1970, 1, 1);
+            int totalMilliseconds = (int)DateTime.UtcNow.Subtract(value).TotalMilliseconds;
+            captured.startTime = Math.Abs(totalMilliseconds);
+        }
 
         public override void Save()
         {

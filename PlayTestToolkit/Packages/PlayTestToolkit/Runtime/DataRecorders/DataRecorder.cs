@@ -18,7 +18,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
 
         public virtual void Save()
         {
-            using (var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
                 outStream.Position = 0;
                 outStream.CopyTo(fileStream);

@@ -36,7 +36,7 @@ namespace PlayTestToolkit.Runtime
 
         private static void Init()
         {
-            InitialRecorder initialRecorder = new InitialRecorder("initial");
+            InitialRecorder initialRecorder = new InitialRecorder(nameof(InitialRecorder));
 
             initialRecorder.Record();
             initialRecorder.Save();
@@ -52,7 +52,7 @@ namespace PlayTestToolkit.Runtime
                 switch (collector.name)
                 {
                     case nameof(InputRecorder):
-                        recorders.Add(new InputRecorder(nameof(collector.name), playTestConfig.input.Keys.ToList()));
+                        recorders.Add(new InputRecorder(nameof(InputRecorder), playTestConfig.input.Keys.ToList()));
                         break;
                     default:
                         Debug.LogWarning("No recorders found!");
