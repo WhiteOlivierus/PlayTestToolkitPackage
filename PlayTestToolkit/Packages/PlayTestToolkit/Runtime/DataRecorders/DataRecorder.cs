@@ -27,7 +27,15 @@ namespace PlayTestToolkit.Runtime.DataRecorders
 
         public virtual void Upload() { }
 
-        public void Dispose() =>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
             outStream.Dispose();
+        }
     }
 }
