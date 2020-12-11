@@ -10,8 +10,10 @@ namespace PlayTestToolkit.Runtime.Data
     [Serializable]
     public class PlayTest : ScriptableObject
     {
-        [HideInInspector] public bool active = false;
-        [HideInInspector] public int version = 0;
+        [HideInInspector]
+        public bool active = false;
+        [HideInInspector]
+        public int version = 0;
 
         public string title = string.Empty;
         public string researchQuestion = string.Empty;

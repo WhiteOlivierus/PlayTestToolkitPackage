@@ -11,10 +11,18 @@ namespace PlayTestToolkit.Editor.UI
         protected PlayTest playtest;
         protected SerializedObject serializedObject;
 
+        protected Action save;
+        protected Action saveAndBuild;
+        protected Action cancel;
+
         public SetupUIPanel(PlayTestToolkitWindow playTestToolkitWindow) : base(playTestToolkitWindow)
         {
             playtest = ScriptableObject.CreateInstance<PlayTest>();
             serializedObject = new SerializedObject(playtest);
+
+            save = () => Create();
+            saveAndBuild = () => CreateAndBuild();
+            cancel = () => PlayTestToolkitWindow.SetCurrentState(WindowState.manager);
         }
 
         public override void OnGUI()
@@ -76,30 +84,31 @@ namespace PlayTestToolkit.Editor.UI
         private void RenderSaveAndBuild()
         {
             EditorGUILayout.BeginHorizontal();
-            RenderButton("Save", () => Create());
-            RenderButton("Save and build", () => CreateAndBuild());
-            RenderButton("Cancel", () => PlayTestToolkitWindow.SetCurrentState(WindowState.manager));
+            RenderButton("Save", save);
+            RenderButton("Save and build", saveAndBuild);
+            RenderButton("Cancel", cancel);
             EditorGUILayout.EndHorizontal();
         }
 
         private void CreateAndBuild()
         {
-            Create();
+            playtest.active = true;
 
-            // TODO add build functionality
-            Builder.Build();
+            save.Invoke();
 
             CacheManager.ConfigPlayTest(playtest);
+
+            Builder.Build(playtest);
         }
 
-        private void Create()
+        protected virtual void Create()
         {
             if (string.IsNullOrEmpty(playtest.title))
                 throw new ArgumentNullException("Please give a name to the play test");
 
             CacheManager.AddPlayTest(playtest);
 
-            PlayTestToolkitWindow.SetCurrentState(WindowState.manager);
+            cancel.Invoke();
         }
     }
 }

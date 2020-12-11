@@ -1,29 +1,42 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
-public static class StringExtension
+namespace Dutchskull.Utilities.Extensions
 {
-    public static string RemoveSpecialCharacters(this string inputString)
+    public static class StringExtension
     {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (int i = 0; i < inputString.Length; i++)
+        public static string RemoveSpecialCharacters(this string inputString)
         {
-            if ((inputString[i] < '0' || inputString[i] > '9') &&
-                (inputString[i] < 'A' || inputString[i] > 'Z') &&
-                (inputString[i] < 'a' || inputString[i] > 'z') &&
-                inputString[i] != '.' &&
-                inputString[i] != '_')
-                continue;
+            StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.Append(inputString[i]);
+            for (int i = 0; i < inputString.Length; i++)
+            {
+                if ((inputString[i] < '0' || inputString[i] > '9') &&
+                    (inputString[i] < 'A' || inputString[i] > 'Z') &&
+                    (inputString[i] < 'a' || inputString[i] > 'z') &&
+                    inputString[i] != '.' &&
+                    inputString[i] != '_')
+                    continue;
+
+                stringBuilder.Append(inputString[i]);
+            }
+
+            return stringBuilder.ToString();
         }
 
-        return stringBuilder.ToString();
-    }
+        public static string OnlyLettersAndNumbers(this string inputString)
+        {
+            inputString.RemoveSpecialCharacters();
+            return inputString.Trim();
+        }
 
-    public static string OnlyLettersAndNumbers(this string inputString)
-    {
-        inputString.RemoveSpecialCharacters();
-        return inputString.Trim();
+        public static string SubStringAfter(this string path, string devider)
+        {
+            int deviderStart = path.IndexOf(devider, StringComparison.Ordinal);
+
+            int indexAfterDevider = deviderStart + devider.Length;
+
+            return path.Substring(indexAfterDevider);
+        }
     }
 }

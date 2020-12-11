@@ -10,6 +10,14 @@ namespace PlayTestToolkit.Editor.UI
         {
             this.playtest = Object.Instantiate(playtest);
             serializedObject = new SerializedObject(this.playtest);
+            save = () => Create();
+        }
+
+        protected override void Create()
+        {
+            SafeAssetHandeling.SaveAsset(playtest);
+
+            cancel.Invoke();
         }
     }
 }

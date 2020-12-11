@@ -14,15 +14,26 @@ namespace PlayTestToolkit.Editor.UI
         private readonly Texture headerTexture;
         private readonly Action goToData;
 
-        private readonly PlayTestToolkitCache cache;
+        private static PlayTestToolkitCache cache;
+        private static PlayTestToolkitCache Cache
+        {
+            get
+            {
+                if (cache)
+                    return cache;
+
+                cache = ScriptableSingleton.GetInstance<PlayTestToolkitCache>();
+
+                return cache;
+            }
+            set => cache = value;
+        }
 
         public ManagerUIPanel(PlayTestToolkitWindow playTestToolkitWindow) : base(playTestToolkitWindow)
         {
             headerTexture = Resources.Load<Texture>(PlayTestToolkitSettings.PROJECT_TITLE_NO_SPACES);
 
             goToData = () => Debug.Log("Go to web for data");
-
-            cache = ScriptableSingleton.GetInstance<PlayTestToolkitCache>();
         }
 
         public override void OnGUI()
@@ -37,7 +48,7 @@ namespace PlayTestToolkit.Editor.UI
 
             GUILayout.Label("List of play tests");
 
-            RenderCollections(cache.playTestCollections);
+            RenderCollections(Cache.playTestCollections);
         }
 
         private void RenderHeader()
@@ -71,6 +82,9 @@ namespace PlayTestToolkit.Editor.UI
             for (int i = 0; i < playTests.Count; i++)
             {
                 PlayTest playtest = playTests[i];
+
+                // TODO if cache is deleted try to rebuilt the cache other wise reload empty cache
+
                 RenderPlayTest(playtest, $"{playtest.title} V{playtest.version}");
             }
         }
@@ -94,16 +108,14 @@ namespace PlayTestToolkit.Editor.UI
 
             EditorGUI.BeginDisabledGroup(playtest.active);
             RenderButton("Edit", () => PlayTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
+            RenderButton("Share", () => Debug.Log(JsonUtility.ToJson(playtest)));
             EditorGUI.EndDisabledGroup();
 
             EditorGUI.BeginDisabledGroup(!playtest.active);
             RenderButton("Data", goToData);
             EditorGUI.EndDisabledGroup();
 
-            EditorGUI.BeginDisabledGroup(playtest.active);
-            RenderButton("Share", () => Debug.Log(JsonUtility.ToJson(playtest)));
             RenderButton("X", () => CacheManager.RemovePlayTest(playtest));
-            EditorGUI.EndDisabledGroup();
 
             GUILayout.EndHorizontal();
         }

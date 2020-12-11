@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dutchskull.Utilities.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -64,17 +65,9 @@ namespace PlayTestToolkit.Runtime
 
         private static U LoadInstance<U>() where U : ScriptableObjectSingleton
         {
-            string instancePath = GetPath<U>();
+            string instancePath = GetPath<U>().SubStringAfter(ROOT_FOLDER);
 
-            int rootIndex = instancePath.IndexOf(ROOT_FOLDER, StringComparison.Ordinal);
-            int rootLength = ROOT_FOLDER.Length;
-
-            int startIndex = rootIndex + rootLength;
-            int length = instancePath.Length - (rootIndex + rootLength);
-
-            instancePath = instancePath.Substring(startIndex, length);
-            U instance = Resources.Load<U>(instancePath);
-            return instance;
+            return Resources.Load<U>(instancePath);
         }
 
         private static string GetPath<U>() where U : ScriptableObjectSingleton =>
