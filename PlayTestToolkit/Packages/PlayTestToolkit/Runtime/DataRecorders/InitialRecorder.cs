@@ -19,7 +19,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
         {
             DateTime value = new DateTime(1970, 1, 1);
             int totalMilliseconds = (int)DateTime.UtcNow.Subtract(value).TotalMilliseconds;
-            captured.startTime = Math.Abs(totalMilliseconds);
+            captured.startTime = totalMilliseconds * -1;
         }
 
         public override void Save()

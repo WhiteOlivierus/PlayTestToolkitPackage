@@ -98,6 +98,12 @@ namespace PlayTestToolkit.Editor.UI
 
             CacheManager.ConfigPlayTest(playtest);
 
+            if (!EditorUtility.DisplayDialog("Start build",
+                                             "This will start a build of your game. Are you sure you want to do this now?",
+                                             "Yes",
+                                             "No"))
+                return;
+
             Builder.Build(playtest);
         }
 

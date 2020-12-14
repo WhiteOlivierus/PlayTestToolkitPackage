@@ -29,7 +29,7 @@ namespace PlayTestToolkit.Runtime.Data
         };
 
         public string tutorialDescription = string.Empty;
-        public Dictionary<KeyCode, string> input = new Dictionary<KeyCode, string>();
+        public List<InputKey> input = new List<InputKey>();
         public UnityEvent gameOverEvent = default;
         public string googleForm = string.Empty;
     }

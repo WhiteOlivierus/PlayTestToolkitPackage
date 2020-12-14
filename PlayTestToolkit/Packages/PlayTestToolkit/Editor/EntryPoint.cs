@@ -1,8 +1,10 @@
-﻿using PlayTestToolkit.Runtime;
+﻿using Dutchskull.Utilities.Extensions;
+using PlayTestToolkit.Runtime;
 using PlayTestToolkit.Runtime.Data;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace PlayTestToolkit.Editor
@@ -15,7 +17,7 @@ namespace PlayTestToolkit.Editor
         {
             EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
 
-            IEnumerator<Scene> enumerator = GetAllLoadedScenes().GetEnumerator();
+            IEnumerator<Scene> enumerator = SceneManagementExtension.GetAllLoadedScenes().GetEnumerator();
             enumerator.MoveNext();
             lastScene = enumerator.Current.path;
 
@@ -37,15 +39,15 @@ namespace PlayTestToolkit.Editor
 
         private static void SetupScene(PlayTest playtest)
         {
+            EntryPointSetup setup = GameObject.FindObjectOfType<EntryPointSetup>();
 
-        }
-
-        public static IEnumerable<Scene> GetAllLoadedScenes()
-        {
-            for (int i = 0; i < SceneManager.sceneCount; i++)
+            if (!setup)
             {
-                yield return SceneManager.GetSceneAt(i);
+                Debug.LogError("There is no entry point setup in the entry point scene");
+                return;
             }
+
+            setup.Init(playtest);
         }
     }
 }

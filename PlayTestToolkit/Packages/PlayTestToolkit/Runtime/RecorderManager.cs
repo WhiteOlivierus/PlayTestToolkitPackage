@@ -52,7 +52,8 @@ namespace PlayTestToolkit.Runtime
                 switch (collector.name)
                 {
                     case nameof(InputRecorder):
-                        recorders.Add(new InputRecorder(nameof(InputRecorder), playTestConfig.input.Keys.ToList()));
+                        recorders.Add(new InputRecorder(nameof(InputRecorder), playTestConfig.input.Select(e => e
+                        .key).ToList()));
                         break;
                     default:
                         Debug.LogWarning("No recorders found!");

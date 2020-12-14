@@ -42,7 +42,7 @@ namespace PlayTestToolkit.Editor
         private static void BuildPlayTest(string path, IList<EditorBuildSettingsScene> scenesToBuild)
         {
             BuildTarget activeBuildTarget = EditorUserBuildSettings.activeBuildTarget;
-            BuildPipeline.BuildPlayer(scenesToBuild.ToArray(), path, activeBuildTarget, BuildOptions.None);
+            BuildPipeline.BuildPlayer(scenesToBuild.ToArray(), path, activeBuildTarget, BuildOptions.Development);
         }
 
         private static IList<EditorBuildSettingsScene> GetPlayTestScenes(PlayTest playtest)

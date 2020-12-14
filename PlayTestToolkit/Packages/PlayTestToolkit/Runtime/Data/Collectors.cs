@@ -10,5 +10,10 @@ namespace PlayTestToolkit.Runtime.Data
 
         public bool Equals(Collectors other) =>
             (other.name, other.active) == (name, active);
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
 }
