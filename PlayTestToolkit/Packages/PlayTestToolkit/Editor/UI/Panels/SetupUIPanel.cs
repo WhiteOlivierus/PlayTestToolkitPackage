@@ -43,29 +43,24 @@ namespace PlayTestToolkit.Editor.UI
             if (itteratorEmpty)
                 return;
 
-            do
-            {
-                if (FilterPropertyRenders(serializedProperty))
-                    continue;
-
-                EditorGUILayout.PropertyField(serializedObject.FindProperty(serializedProperty.name), true);
-            }
+            do FilterPropertyRenders(serializedProperty);
             while (serializedProperty.NextVisible(false));
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        private bool FilterPropertyRenders(SerializedProperty serializedProperty)
+        private void FilterPropertyRenders(SerializedProperty serializedProperty)
         {
             switch (serializedProperty.name)
             {
                 case "m_Script":
-                    return true;
+                    break;
                 case "dataCollectors":
                     RenderCollectors(serializedObject);
-                    return true;
+                    break;
                 default:
-                    return false;
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty(serializedProperty.name), true);
+                    break;
             }
         }
 
@@ -77,7 +72,10 @@ namespace PlayTestToolkit.Editor.UI
             {
                 SerializedProperty dataCollector = dataCollectors.GetArrayElementAtIndex(i);
 
-                dataCollector.FindPropertyRelative("active").boolValue = GUILayout.Toggle(dataCollector.FindPropertyRelative("active").boolValue, dataCollector.FindPropertyRelative("name").stringValue);
+                SerializedProperty active = dataCollector.FindPropertyRelative("active");
+                SerializedProperty name = dataCollector.FindPropertyRelative("name");
+
+                active.boolValue = GUILayout.Toggle(active.boolValue, name.stringValue);
             }
         }
 
@@ -92,8 +90,6 @@ namespace PlayTestToolkit.Editor.UI
 
         private void CreateAndBuild()
         {
-            playtest.active = true;
-
             save.Invoke();
 
             CacheManager.ConfigPlayTest(playtest);
@@ -104,7 +100,9 @@ namespace PlayTestToolkit.Editor.UI
                                              "No"))
                 return;
 
-            Builder.Build(playtest);
+            bool buildSucces = Builder.Build(playtest);
+
+            playtest.active = buildSucces;
         }
 
         protected virtual void Create()

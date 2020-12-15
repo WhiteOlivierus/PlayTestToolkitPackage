@@ -104,7 +104,7 @@ namespace PlayTestToolkit.Editor.UI
             GUILayout.Label(playtest.active.ToString());
             GUILayout.Label(fullName);
 
-            RenderButton("Copy", () => PlayTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
+            RenderButton("Copy", () => PlayTestToolkitWindow.SetCurrentState(WindowState.copy, playtest));
 
             EditorGUI.BeginDisabledGroup(playtest.active);
             RenderButton("Edit", () => PlayTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));

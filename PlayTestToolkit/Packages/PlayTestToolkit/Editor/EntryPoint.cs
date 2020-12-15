@@ -39,7 +39,7 @@ namespace PlayTestToolkit.Editor
 
         private static void SetupScene(PlayTest playtest)
         {
-            EntryPointSetup setup = GameObject.FindObjectOfType<EntryPointSetup>();
+            EntryPointSetup setup = Object.FindObjectOfType<EntryPointSetup>();
 
             if (!setup)
             {

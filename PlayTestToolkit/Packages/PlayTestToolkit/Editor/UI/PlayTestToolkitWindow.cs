@@ -56,6 +56,9 @@ namespace PlayTestToolkit.Editor.UI
                 case WindowState.edit:
                     CurrentPanel = new EditUIPanel(this, playtest);
                     break;
+                case WindowState.copy:
+                    CurrentPanel = new CopyUIPanel(this, playtest);
+                    break;
                 default:
                     CurrentPanel = new ManagerUIPanel(this);
                     break;

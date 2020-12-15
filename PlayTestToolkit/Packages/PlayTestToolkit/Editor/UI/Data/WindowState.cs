@@ -4,6 +4,7 @@ namespace PlayTestToolkit.Editor.UI.Data
     {
         manager = 0,
         setup = 1,
-        edit = 2
+        edit = 2,
+        copy = 3
     }
 }

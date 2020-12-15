@@ -21,11 +21,9 @@ public class EntryPointSetup : MonoBehaviour
 #if UNITY_EDITOR
     public PlayTest test;
 
-    [ContextMenu("test")]
-    public void fasdfasdft()
-    {
+    [ContextMenu("TestingInfoPopulation")]
+    public void TestingInfoPopulation() =>
         Init(test);
-    }
 
     public void Init(PlayTest playtest)
     {
@@ -56,6 +54,9 @@ public class EntryPointSetup : MonoBehaviour
             DestroyImmediate(gameObjectList.transform.GetChild(1).gameObject);
 
         GameObject element = gameObjectList.transform.GetChild(0).gameObject;
+
+        if (list.IsNullOrEmpty())
+            return;
 
         SetText(list[0], element);
 
