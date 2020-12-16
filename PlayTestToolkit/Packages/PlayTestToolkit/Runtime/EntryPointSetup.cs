@@ -32,10 +32,10 @@ public class EntryPointSetup : MonoBehaviour
 
         PopulateListObject(playtest.input, tutorialInput);
 
-        PopulateListObject(playtest.dataCollectors, dataCollectors);
+        PopulateListObject(playtest.dataCollectors.collectors, dataCollectors);
 
         startButton.RemoveAllPresistentListener();
-        startButton.AddPersistentListener(LoadPlayTest);
+        startButton.onClick.AddPersistentListener(LoadPlayTest);
     }
 #endif
 

@@ -8,13 +8,13 @@ using UnityEditor.Events;
 
 namespace Dutchskull.Utilities.Extensions
 {
-    public static class ButtonExtension
+    public static class UnityEventExtension
     {
-        public static void AddPersistentListener(this Button button, Action action)
+        public static void AddPersistentListener(this UnityEvent uEvent, Action action)
         {
             MethodInfo targetInfo = UnityEventBase.GetValidMethodInfo(action.Target, action.Method.Name, new Type[0]);
             UnityAction methodDelegate = Delegate.CreateDelegate(typeof(UnityAction), action.Target, targetInfo) as UnityAction;
-            UnityEventTools.AddPersistentListener(button.onClick, methodDelegate);
+            UnityEventTools.AddPersistentListener(uEvent, methodDelegate);
         }
 
         public static void RemoveAllPresistentListener(this Button button)

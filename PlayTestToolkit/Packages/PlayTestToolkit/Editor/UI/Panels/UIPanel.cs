@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PlayTestToolkit.Editor.UI.Data;
+using System;
 using UnityEngine;
 
 namespace PlayTestToolkit.Editor.UI
 {
-    public abstract class UIPanel
+    public abstract class UIPanel : UnityEngine.Object
     {
         protected PlayTestToolkitWindow PlayTestToolkitWindow { get; set; }
 
@@ -19,5 +20,8 @@ namespace PlayTestToolkit.Editor.UI
 
             action.Invoke();
         }
+
+        protected void Cancel() =>
+            PlayTestToolkitWindow.SetCurrentState(WindowState.manager);
     }
 }

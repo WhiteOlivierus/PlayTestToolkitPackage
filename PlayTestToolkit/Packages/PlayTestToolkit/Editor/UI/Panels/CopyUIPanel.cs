@@ -1,6 +1,5 @@
 ﻿using PlayTestToolkit.Runtime.Data;
 using UnityEditor;
-using UnityEngine;
 
 namespace PlayTestToolkit.Editor.UI
 {
@@ -8,16 +7,19 @@ namespace PlayTestToolkit.Editor.UI
     {
         public CopyUIPanel(PlayTestToolkitWindow playTestToolkitWindow, PlayTest playtest) : base(playTestToolkitWindow)
         {
-            this.playtest = Object.Instantiate(playtest);
-            serializedObject = new SerializedObject(this.playtest);
-            save = () => Create();
+            newPlayTest = Instantiate(playtest);
+            newPlayTest.active = false;
+            serializedObject = new SerializedObject(newPlayTest);
+
+            create = () => Create(newPlayTest);
+            createAndBuild = () => CreateAndBuild(newPlayTest);
         }
 
-        protected override void Create()
+        protected override void Create(PlayTest playtest)
         {
             playtest.version++;
 
-            base.Create();
+            base.Create(playtest);
         }
     }
 }

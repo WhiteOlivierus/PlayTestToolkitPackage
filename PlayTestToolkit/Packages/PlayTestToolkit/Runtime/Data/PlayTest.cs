@@ -23,9 +23,14 @@ namespace PlayTestToolkit.Runtime.Data
         public List<SceneAsset> scenesToBuild = new List<SceneAsset>();
 #endif
 
-        public List<Collectors> dataCollectors = new List<Collectors>
+        public Collectors dataCollectors = new Collectors
         {
-            { new Collectors{name = nameof(InputRecorder), active =false} }
+            collectors = new List<Collector> {
+                new Collector {
+                    name = nameof(InputRecorder),
+                    active = false
+                }
+            }
         };
 
         public string tutorialDescription = string.Empty;

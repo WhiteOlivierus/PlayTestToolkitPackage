@@ -14,6 +14,12 @@ namespace PlayTestToolkit.Editor
     {
         public static bool Build(PlayTest playtest)
         {
+            if (!EditorUtility.DisplayDialog("Start build",
+                                 "This will start a build of your game. Are you sure you want to do this now?",
+                                 "Yes",
+                                 "No"))
+                return false;
+
             IList<EditorBuildSettingsScene> scenesToBuild = GetPlayTestScenes(playtest);
 
             scenesToBuild.Insert(0, EntryPoint.Init(playtest));
@@ -32,7 +38,7 @@ namespace PlayTestToolkit.Editor
 
             ZipFile.CreateFromDirectory(folderPath, zipPath);
 
-            return report.summary.totalErrors == 0;
+            return report.summary.result == BuildResult.Succeeded;
         }
 
         private static string CreatePath(string rootFolderName, string versionName, string fileName)

@@ -1,5 +1,4 @@
 ﻿using Dutchskull.Utilities.Extensions;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -54,7 +53,7 @@ namespace PlayTestToolkit.Runtime
 
             AssetDatabase.Refresh();
 
-            U instance = ScriptableObjectSingleton.CreateInstance<U>();
+            U instance = ScriptableObject.CreateInstance<U>();
             AssetDatabase.CreateAsset(instance, $"{GetPath<U>()}.asset");
             AssetDatabase.SaveAssets();
 

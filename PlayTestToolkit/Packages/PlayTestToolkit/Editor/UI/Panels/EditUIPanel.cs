@@ -1,6 +1,5 @@
 ﻿using PlayTestToolkit.Runtime.Data;
 using UnityEditor;
-using UnityEngine;
 
 namespace PlayTestToolkit.Editor.UI
 {
@@ -8,16 +7,19 @@ namespace PlayTestToolkit.Editor.UI
     {
         public EditUIPanel(PlayTestToolkitWindow playTestToolkitWindow, PlayTest playtest) : base(playTestToolkitWindow)
         {
-            this.playtest = Object.Instantiate(playtest);
-            serializedObject = new SerializedObject(this.playtest);
-            save = () => Create();
+            originalPlayTest = playtest;
+            newPlayTest = Instantiate(playtest);
+            serializedObject = new SerializedObject(newPlayTest);
+
+            create = () => Create(newPlayTest);
+            createAndBuild = () => CreateAndBuild(originalPlayTest);
         }
 
-        protected override void Create()
+        protected override void Create(PlayTest playtest)
         {
             SafeAssetHandeling.SaveAsset(playtest);
 
-            cancel.Invoke();
+            Cancel();
         }
     }
 }

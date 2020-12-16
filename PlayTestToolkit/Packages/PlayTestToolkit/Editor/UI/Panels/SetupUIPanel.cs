@@ -1,4 +1,4 @@
-﻿using PlayTestToolkit.Editor.UI.Data;
+﻿using Dutchskull.Utilities.Extensions;
 using PlayTestToolkit.Runtime.Data;
 using System;
 using UnityEditor;
@@ -8,111 +8,71 @@ namespace PlayTestToolkit.Editor.UI
 {
     public class SetupUIPanel : UIPanel
     {
-        protected PlayTest playtest;
+        protected PlayTest originalPlayTest;
+        protected PlayTest newPlayTest;
         protected SerializedObject serializedObject;
 
-        protected Action save;
-        protected Action saveAndBuild;
-        protected Action cancel;
+        protected Action create;
+        protected Action createAndBuild;
 
         public SetupUIPanel(PlayTestToolkitWindow playTestToolkitWindow) : base(playTestToolkitWindow)
         {
-            playtest = ScriptableObject.CreateInstance<PlayTest>();
-            serializedObject = new SerializedObject(playtest);
+            newPlayTest = ScriptableObject.CreateInstance<PlayTest>();
 
-            save = () => Create();
-            saveAndBuild = () => CreateAndBuild();
-            cancel = () => PlayTestToolkitWindow.SetCurrentState(WindowState.manager);
+            // TODO when switching scenes this will clear it self.
+            serializedObject = new SerializedObject(newPlayTest);
+
+            create = () => Create(newPlayTest);
+            createAndBuild = () => CreateAndBuild(newPlayTest);
         }
 
         public override void OnGUI()
         {
             GUILayout.Label("Setup play test");
 
-            RenderProperties();
+            serializedObject.OnGUI();
 
             RenderSaveAndBuild();
-        }
-
-        private void RenderProperties()
-        {
-            SerializedProperty serializedProperty = serializedObject.GetIterator();
-
-            bool itteratorEmpty = !serializedProperty.NextVisible(true);
-
-            if (itteratorEmpty)
-                return;
-
-            do FilterPropertyRenders(serializedProperty);
-            while (serializedProperty.NextVisible(false));
-
-            serializedObject.ApplyModifiedProperties();
-        }
-
-        private void FilterPropertyRenders(SerializedProperty serializedProperty)
-        {
-            switch (serializedProperty.name)
-            {
-                case "m_Script":
-                    break;
-                case "dataCollectors":
-                    RenderCollectors(serializedObject);
-                    break;
-                default:
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty(serializedProperty.name), true);
-                    break;
-            }
-        }
-
-        private void RenderCollectors(SerializedObject serializedObject)
-        {
-            SerializedProperty dataCollectors = serializedObject.FindProperty("dataCollectors");
-
-            for (int i = 0; i < dataCollectors.arraySize; i++)
-            {
-                SerializedProperty dataCollector = dataCollectors.GetArrayElementAtIndex(i);
-
-                SerializedProperty active = dataCollector.FindPropertyRelative("active");
-                SerializedProperty name = dataCollector.FindPropertyRelative("name");
-
-                active.boolValue = GUILayout.Toggle(active.boolValue, name.stringValue);
-            }
         }
 
         private void RenderSaveAndBuild()
         {
             EditorGUILayout.BeginHorizontal();
-            RenderButton("Save", save);
-            RenderButton("Save and build", saveAndBuild);
-            RenderButton("Cancel", cancel);
+            RenderButton("Save", create);
+            RenderButton("Save and build", createAndBuild);
+            RenderButton("Cancel", Cancel);
             EditorGUILayout.EndHorizontal();
         }
 
-        private void CreateAndBuild()
+        protected void CreateAndBuild(PlayTest playtest)
         {
-            save.Invoke();
+            Create(playtest);
 
-            CacheManager.ConfigPlayTest(playtest);
-
-            if (!EditorUtility.DisplayDialog("Start build",
-                                             "This will start a build of your game. Are you sure you want to do this now?",
-                                             "Yes",
-                                             "No"))
-                return;
+            CacheManager.SetConfigPlayTest(playtest);
 
             bool buildSucces = Builder.Build(playtest);
 
+            if (!buildSucces)
+                return;
+
+            playtest = Runtime.CacheManager.GetPlayTestConfig();
+
             playtest.active = buildSucces;
+
+            SafeAssetHandeling.SaveAsset(playtest);
         }
 
-        protected virtual void Create()
+        protected virtual void Create(PlayTest playtest)
         {
             if (string.IsNullOrEmpty(playtest.title))
                 throw new ArgumentNullException("Please give a name to the play test");
 
+            if (playtest.scenesToBuild.IsNullOrEmpty())
+                throw new ArgumentNullException("Please add a scene to test play test");
+
             CacheManager.AddPlayTest(playtest);
 
-            cancel.Invoke();
+            Cancel();
         }
     }
 }

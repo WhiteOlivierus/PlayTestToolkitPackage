@@ -13,7 +13,7 @@ namespace PlayTestToolkit.Runtime
 
         public void Awake()
         {
-            PlayTest playTestConfig = GetPlayTestConfig();
+            PlayTest playTestConfig = CacheManager.GetPlayTestConfig();
 
             Init();
 
@@ -44,7 +44,7 @@ namespace PlayTestToolkit.Runtime
 
         private void InitRecorders(PlayTest playTestConfig)
         {
-            foreach (Collectors collector in playTestConfig.dataCollectors)
+            foreach (Collector collector in playTestConfig.dataCollectors.collectors)
             {
                 if (!collector.active)
                     continue;
@@ -69,16 +69,6 @@ namespace PlayTestToolkit.Runtime
                 output = $"{output}    {recorders[i].GetType().Name} \n";
 
             Debug.Log(output);
-        }
-
-        private static PlayTest GetPlayTestConfig()
-        {
-            PlayTest playTest = Resources.Load<PlayTest>(PlayTestToolkitSettings.PLAY_TEST_CONFIG_FILE);
-
-            if (!playTest)
-                Debug.LogError("No config file found. Please build a play test.");
-
-            return playTest;
         }
     }
 }

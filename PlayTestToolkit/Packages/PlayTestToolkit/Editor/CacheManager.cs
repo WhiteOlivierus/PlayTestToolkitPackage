@@ -57,23 +57,19 @@ namespace PlayTestToolkit.Editor
         {
             string playtestPath = CreatePlayTestPath(playtest);
 
-            playtest.version = collection.playtests.Count();
-
             collection.playtests.Add(playtest);
 
             SafeAssetHandeling.CreateAsset(playtest, playtestPath);
         }
 
-        public static void ConfigPlayTest(PlayTest playtest)
-        {
-            string playtestPath = CreatePlayTestPath(playtest);
-
-            AssetDatabase.CopyAsset(playtestPath, $"{CONFIG_PATH}{CONFIG_FILE}.asset");
-            AssetDatabase.Refresh();
-        }
-
         public static void RemovePlayTest(PlayTest playtest)
         {
+            if (!EditorUtility.DisplayDialog("Remove play test",
+                                 "This will delete this play test configuration permanently. Are you sure you want to do this?",
+                                 "Yes",
+                                 "No"))
+                return;
+
             PlayTestCollection collection = FindCollection(playtest);
 
             string playtestPath = CreatePlayTestPath(playtest);
@@ -99,6 +95,18 @@ namespace PlayTestToolkit.Editor
             return (from selected in Cache.playTestCollections
                     where selected.title == test.title
                     select selected).FirstOrDefault();
+        }
+
+        public static void SetConfigPlayTest(PlayTest playtest)
+        {
+            Cache.config = playtest;
+
+            SafeAssetHandeling.SaveAsset(Cache);
+
+            string playtestPath = CreatePlayTestPath(playtest);
+
+            AssetDatabase.CopyAsset(playtestPath, $"{CONFIG_PATH}{CONFIG_FILE}.asset");
+            AssetDatabase.Refresh();
         }
 
         private static string CreatePath(string[] folders, string fileName) =>

@@ -2,6 +2,7 @@
 using PlayTestToolkit.Runtime;
 using PlayTestToolkit.Runtime.Data;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -21,9 +22,7 @@ namespace PlayTestToolkit.Editor
             enumerator.MoveNext();
             lastScene = enumerator.Current.path;
 
-            // Get play test entry point scene
-            Scene scene = EditorSceneManager.GetSceneByName(PlayTestToolkitSettings.ENTRY_POINT_SCENE);
-            EditorBuildSettingsScene entryPointScene = new EditorBuildSettingsScene(scene.path, true);
+            EditorBuildSettingsScene entryPointScene = GetSceneByName(PlayTestToolkitSettings.ENTRY_POINT_SCENE);
 
             EditorSceneManager.OpenScene(entryPointScene.path, OpenSceneMode.Single);
 
@@ -34,6 +33,17 @@ namespace PlayTestToolkit.Editor
 
             EditorSceneManager.OpenScene(lastScene, OpenSceneMode.Single);
 
+            return entryPointScene;
+        }
+
+        private static EditorBuildSettingsScene GetSceneByName(string name)
+        {
+            string[] scenesGUIDs = AssetDatabase.FindAssets("t:Scene");
+            IEnumerable<string> scenesPaths = scenesGUIDs.Select(AssetDatabase.GUIDToAssetPath);
+            string path = (from s in scenesPaths
+                           where s.Contains(name)
+                           select s).FirstOrDefault();
+            EditorBuildSettingsScene entryPointScene = new EditorBuildSettingsScene(path, true);
             return entryPointScene;
         }
 

@@ -38,7 +38,9 @@ namespace PlayTestToolkit.Editor.UI
 
         public override void OnGUI()
         {
-            RenderButton("Open presistent path", () => System.Diagnostics.Process.Start(Application.persistentDataPath));
+            RenderButton("Open persistent path", () => System.Diagnostics.Process.Start(Application.persistentDataPath));
+            RenderButton("Open builds folder", () => System.Diagnostics.Process.Start($"{Application.dataPath}/../Builds"));
+
             RenderHeader();
 
             EditorGUILayout.BeginHorizontal();
@@ -108,8 +110,10 @@ namespace PlayTestToolkit.Editor.UI
 
             EditorGUI.BeginDisabledGroup(playtest.active);
             RenderButton("Edit", () => PlayTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
-            RenderButton("Share", () => Debug.Log(JsonUtility.ToJson(playtest)));
             EditorGUI.EndDisabledGroup();
+
+            // TODO start a build if non exists, other wise add short URL to clipboard
+            RenderButton("Share", () => Debug.Log(JsonUtility.ToJson(playtest)));
 
             EditorGUI.BeginDisabledGroup(!playtest.active);
             RenderButton("Data", goToData);
