@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using PlayTestBuildsAPI.Models;
 using PlayTestBuildsAPI.Services;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 
 namespace PlayTestBuildsAPI.Controllers
 {
@@ -30,11 +35,39 @@ namespace PlayTestBuildsAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<BuildFile> Post([FromBody] BuildFile buildFile)
+        [DisableRequestSizeLimit]
+        public ActionResult<BuildFile> Post(/*[FromBody] IFormFile file*/)
         {
-            _buildsService.Create(buildFile);
+            HttpResponseMessage result = null;
+            IFormFileCollection files = Request.Form.Files;
 
-            return buildFile;
+            IFormFile file = files.FirstOrDefault();
+
+            if (file == null)
+                return Conflict();
+
+            string uniqueFileName = GetUniqueFileName(file.FileName);
+            string uploads = Path.Combine(Environment.CurrentDirectory, "uploads");
+            string filePath = Path.Combine(uploads, uniqueFileName);
+            file.CopyTo(new FileStream(filePath, FileMode.Create));
+
+            BuildFile buildFile = new BuildFile
+            {
+                FileName = file.FileName,
+                Path = filePath,
+                CreatedOn = new DateTime(),
+            };
+
+            return _buildsService.Create(buildFile);
+        }
+
+        private static string GetUniqueFileName(string fileName)
+        {
+            fileName = Path.GetFileName(fileName);
+            return Path.GetFileNameWithoutExtension(fileName)
+                      + "_"
+                      + Guid.NewGuid().ToString().Substring(0, 4)
+                      + Path.GetExtension(fileName);
         }
 
         [HttpPut("{id}")]
