@@ -3,6 +3,9 @@ version: '3.4'
 services:
   playtestbuildsapi:
     image: ${DOCKER_REGISTRY-}playtestbuildsapi
+    ports:
+        - 8000:80
+        - 8001:443
     build:
       context: .
       dockerfile: PlayTestBuildsAPI/Dockerfile

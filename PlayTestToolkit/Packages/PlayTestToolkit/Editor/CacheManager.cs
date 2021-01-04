@@ -70,6 +70,7 @@ namespace PlayTestToolkit.Editor
                                  "No"))
                 return;
 
+            // TODO playtest points to collection and reverse
             PlayTestCollection collection = FindCollection(playtest);
 
             string playtestPath = CreatePlayTestPath(playtest);
@@ -77,6 +78,7 @@ namespace PlayTestToolkit.Editor
             collection.playtests.Remove(playtest);
             SafeAssetHandeling.RemoveAsset(playtestPath);
 
+            // TODO change too different the if around
             if (!collection.playtests.IsNullOrEmpty())
                 return;
 
@@ -90,10 +92,10 @@ namespace PlayTestToolkit.Editor
             SafeAssetHandeling.RemoveAsset(playtestCacheFolder);
         }
 
-        private static PlayTestCollection FindCollection(PlayTest test)
+        private static PlayTestCollection FindCollection(PlayTest playtest)
         {
             return (from selected in Cache.playTestCollections
-                    where selected.title == test.title
+                    where selected.title == playtest.title
                     select selected).FirstOrDefault();
         }
 

@@ -20,7 +20,7 @@ namespace PlayTestToolkit.Editor.UI
             set => currentPanel = value;
         }
 
-        // TODO don't forget to remove the short cut or change it to something that is not used
+        // TODO don't forget to remove the shortcut or change it to something that is not used
         [MenuItem("Window/Play Test Toolkit %#q")]
         public static void CreateWindow()
         {

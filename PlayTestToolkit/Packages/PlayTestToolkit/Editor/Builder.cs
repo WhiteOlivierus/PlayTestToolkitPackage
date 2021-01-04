@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
+using UnityEngine;
 
 namespace PlayTestToolkit.Editor
 {
@@ -38,7 +39,30 @@ namespace PlayTestToolkit.Editor
 
             ZipFile.CreateFromDirectory(folderPath, zipPath);
 
+            UploadZip(zipPath);
+
             return report.summary.result == BuildResult.Succeeded;
+        }
+
+        private static void UploadZip(string zipPath)
+        {
+            using (FileStream fs = File.OpenRead(zipPath))
+            {
+                FormUpload.FileParameter fileParameter = new FormUpload.FileParameter(FormUpload.ReadToEnd(fs),
+                                                             Path.GetFileName(Path.GetFileName(zipPath)),
+                                                             "application/zip");
+
+                Dictionary<string, object> postParameters = new Dictionary<string, object>();
+                postParameters.Add("zip", fileParameter);
+
+                var response = FormUpload.MultipartFormPost("https://localhost:8001/api/builds",
+                                         string.Empty,
+                                         postParameters,
+                                         string.Empty,
+                                         string.Empty);
+
+                Debug.Log(response.StatusCode);
+            }
         }
 
         private static string CreatePath(string rootFolderName, string versionName, string fileName)
