@@ -10,16 +10,16 @@ namespace PlayTestToolkit.Editor
     {
         private static readonly Encoding ENCODING = Encoding.UTF8;
 
-        public static HttpWebResponse MultipartFormPost(string postUrl, string userAgent, Dictionary<string, object> postParameters, string headerkey, string headervalue)
+        public static HttpWebResponse MultipartFormPost(string postUrl, string action, Dictionary<string, object> postParameters)
         {
             string formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid());
             string contentType = "multipart/form-data; boundary=" + formDataBoundary;
 
             byte[] formData = GetMultipartFormData(postParameters, formDataBoundary);
 
-            return PostForm(postUrl, userAgent, contentType, formData, headerkey, headervalue);
+            return PostForm(postUrl, action, contentType, formData);
         }
-        private static HttpWebResponse PostForm(string postUrl, string userAgent, string contentType, byte[] formData, string headerkey, string headervalue)
+        private static HttpWebResponse PostForm(string postUrl, string action, string contentType, byte[] formData)
         {
             HttpWebRequest request = WebRequest.Create(postUrl) as HttpWebRequest;
 
@@ -27,18 +27,14 @@ namespace PlayTestToolkit.Editor
                 throw new NullReferenceException("request is not a http request");
 
             // Set up the request properties.  
-            request.Method = "POST";
+            request.Method = action;
             request.ContentType = contentType;
-            //request.UserAgent = userAgent;
             request.CookieContainer = new CookieContainer();
             request.ContentLength = formData.Length;
 
             // You could add authentication here as well if needed:  
             // request.PreAuthenticate = true;  
             // request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.MutualAuthRequested;  
-
-            //Add header if needed  
-            //request.Headers.Add(headerkey, headervalue);
 
             // Send the form data to the request.  
             using (Stream requestStream = request.GetRequestStream())

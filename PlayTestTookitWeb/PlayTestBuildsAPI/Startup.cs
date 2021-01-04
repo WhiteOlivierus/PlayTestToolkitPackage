@@ -27,6 +27,7 @@ namespace PlayTestBuildsAPI
             services.AddSingleton((Func<IServiceProvider, IMongoDBSettings>)(sp => sp.GetRequiredService<IOptions<PlayTestBuildsSettings>>().Value));
 
             services.AddSingleton<BuildsService>();
+            services.AddSingleton<FileService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

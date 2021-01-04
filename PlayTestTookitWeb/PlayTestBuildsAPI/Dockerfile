@@ -18,3 +18,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "PlayTestBuildsAPI.dll"]
+
+RUN mkdir -p /builds

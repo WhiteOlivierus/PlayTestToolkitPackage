@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
+using System.Text;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
@@ -20,6 +22,8 @@ namespace PlayTestToolkit.Editor
                                  "Yes",
                                  "No"))
                 return false;
+
+            CacheManager.SetConfigPlayTest(playtest);
 
             IList<EditorBuildSettingsScene> scenesToBuild = GetPlayTestScenes(playtest);
 
@@ -39,13 +43,26 @@ namespace PlayTestToolkit.Editor
 
             ZipFile.CreateFromDirectory(folderPath, zipPath);
 
-            UploadZip(zipPath);
+            // TODO show that it is uploading
+            bool uploadSuccedded = UploadZip(zipPath, out string id);
 
-            return report.summary.result == BuildResult.Succeeded;
+            playtest = Runtime.CacheManager.GetPlayTestConfig();
+
+            if (report.summary.result == BuildResult.Succeeded && uploadSuccedded)
+            {
+                playtest.active = true;
+                playtest.id = id;
+
+                SafeAssetHandeling.SaveAsset(playtest);
+            }
+
+            return false;
         }
 
-        private static void UploadZip(string zipPath)
+        private static bool UploadZip(string zipPath, out string id)
         {
+            HttpWebResponse response;
+
             using (FileStream fs = File.OpenRead(zipPath))
             {
                 FormUpload.FileParameter fileParameter = new FormUpload.FileParameter(FormUpload.ReadToEnd(fs),
@@ -55,14 +72,29 @@ namespace PlayTestToolkit.Editor
                 Dictionary<string, object> postParameters = new Dictionary<string, object>();
                 postParameters.Add("zip", fileParameter);
 
-                var response = FormUpload.MultipartFormPost("https://localhost:8001/api/builds",
-                                         string.Empty,
-                                         postParameters,
-                                         string.Empty,
-                                         string.Empty);
-
-                Debug.Log(response.StatusCode);
+                // TODO add the host Uri to project settings and the extension to the path settings
+                response = FormUpload.MultipartFormPost($"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_BUILDS_ROUTE}",
+                                                        "POST",
+                                                        postParameters);
             }
+
+            Debug.Log(response.StatusCode);
+
+            id = string.Empty;
+
+            if (response.StatusCode != HttpStatusCode.OK)
+                return false;
+
+            Encoding encoding = Encoding.ASCII;
+
+            using (StreamReader reader = new StreamReader(response.GetResponseStream(), encoding))
+            {
+                id = reader.ReadToEnd();
+            }
+
+            Debug.Log(id);
+
+            return true;
         }
 
         private static string CreatePath(string rootFolderName, string versionName, string fileName)

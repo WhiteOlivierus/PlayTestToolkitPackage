@@ -4,7 +4,6 @@ using PlayTestBuildsAPI.Models;
 using PlayTestBuildsAPI.Services;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace PlayTestBuildsAPI.Controllers
@@ -14,38 +13,41 @@ namespace PlayTestBuildsAPI.Controllers
     public class BuildsController : ControllerBase
     {
         private readonly BuildsService _buildsService;
+        private readonly FileService _fileService;
 
-        public BuildsController(BuildsService buildService) =>
+        public BuildsController(BuildsService buildService, FileService fileService)
+        {
             _buildsService = buildService;
+            _fileService = fileService;
+        }
 
         [HttpGet]
         public ActionResult<List<BuildFile>> Get() =>
             _buildsService.Get();
 
         [HttpGet("{id}")]
-        public ActionResult<BuildFile> Get(string id)
+        public ActionResult Get(string id)
         {
             BuildFile buildFile = _buildsService.Get(id);
 
             if (buildFile == null)
                 return NotFound();
 
-            return buildFile;
+            (string fileType, byte[] archiveData) = _fileService.FetechFile(buildFile.Path);
+
+            return File(archiveData, fileType, buildFile.FileName);
         }
 
         [HttpPost]
         [DisableRequestSizeLimit]
-        public ActionResult<BuildFile> Post()
+        public ActionResult<string> Post()
         {
             IFormFile file = Request.Form.Files.FirstOrDefault();
 
             if (file == null)
                 return Conflict();
 
-            string uniqueFileName = GetUniqueFileName(file.FileName);
-            string uploads = Path.Combine(Environment.CurrentDirectory, "uploads");
-            string filePath = Path.Combine(uploads, uniqueFileName);
-            file.CopyTo(new FileStream(filePath, FileMode.Create));
+            string filePath = _fileService.SaveFile(file, "/builds/uploads");
 
             BuildFile buildFile = new BuildFile
             {
@@ -54,30 +56,9 @@ namespace PlayTestBuildsAPI.Controllers
                 CreatedOn = new DateTime(),
             };
 
-            return Ok(_buildsService.Create(buildFile));
+            return Ok(_buildsService.Create(buildFile).Id);
         }
 
-        private static string GetUniqueFileName(string fileName)
-        {
-            fileName = Path.GetFileName(fileName);
-            return Path.GetFileNameWithoutExtension(fileName)
-                      + "_"
-                      + Guid.NewGuid().ToString().Substring(0, 4)
-                      + Path.GetExtension(fileName);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] BuildFile buildFileIn)
-        {
-            BuildFile buildFile = _buildsService.Get(id);
-
-            if (buildFile == null)
-                return NotFound();
-
-            _buildsService.Update(id, buildFileIn);
-
-            return NoContent();
-        }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
@@ -87,6 +68,7 @@ namespace PlayTestBuildsAPI.Controllers
             if (buildFile == null)
                 return NotFound();
 
+            // TODO remove the build file
             _buildsService.Remove(buildFile.Id);
 
             return NoContent();

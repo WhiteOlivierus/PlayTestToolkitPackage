@@ -10,7 +10,7 @@ namespace PlayTestToolkit.Editor
     public static class CacheManager
     {
         private static readonly string CACHE_PATH = PlayTestToolkitSettings.PLAY_TEST_CACHE_PATH;
-        private static readonly string CONFIG_PATH = PlayTestToolkitSettings.PLAY_TEST_CONFIG_PATH;
+        private static readonly string CONFIG_PATH = PlayTestToolkitSettings.PLAY_TEST_RESOURCES_PATH;
         private static readonly string CONFIG_FILE = PlayTestToolkitSettings.PLAY_TEST_CONFIG_FILE;
 
         private static PlayTestToolkitCache cache;
@@ -90,6 +90,9 @@ namespace PlayTestToolkit.Editor
             string playtestCacheFolder = CreatePath(new[] { playtest.title.OnlyLettersAndNumbers() }, string.Empty);
 
             SafeAssetHandeling.RemoveAsset(playtestCacheFolder);
+
+            // TODO remove from the server too
+            //if (playtest.active)
         }
 
         private static PlayTestCollection FindCollection(PlayTest playtest)

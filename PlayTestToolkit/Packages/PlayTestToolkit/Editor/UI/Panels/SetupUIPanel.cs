@@ -48,18 +48,10 @@ namespace PlayTestToolkit.Editor.UI
         {
             Create(playtest);
 
-            CacheManager.SetConfigPlayTest(playtest);
-
             bool buildSucces = Builder.Build(playtest);
 
             if (!buildSucces)
                 return;
-
-            playtest = Runtime.CacheManager.GetPlayTestConfig();
-
-            playtest.active = buildSucces;
-
-            SafeAssetHandeling.SaveAsset(playtest);
         }
 
         protected virtual void Create(PlayTest playtest)

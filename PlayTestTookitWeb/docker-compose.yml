@@ -10,7 +10,7 @@ services:
       context: .
       dockerfile: PlayTestBuildsAPI/Dockerfile
     volumes:
-        - D:\Temp:/app/uploads
+        - D:\Temp:/builds/uploads
 
   mongodb:
     image: mongo

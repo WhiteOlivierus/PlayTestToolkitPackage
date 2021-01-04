@@ -4,6 +4,8 @@ using PlayTestToolkit.Runtime;
 using PlayTestToolkit.Runtime.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using UnityEditor;
 using UnityEngine;
 
@@ -38,14 +40,16 @@ namespace PlayTestToolkit.Editor.UI
 
         public override void OnGUI()
         {
+            // TODO Remove from final product
             RenderButton("Open persistent path", () => System.Diagnostics.Process.Start(Application.persistentDataPath));
             RenderButton("Open builds folder", () => System.Diagnostics.Process.Start($"{Application.dataPath}/../Builds"));
+            RenderButton("Open uploaded builds folder", () => System.Diagnostics.Process.Start($"D:/Temp"));
 
             RenderHeader();
 
             EditorGUILayout.BeginHorizontal();
             RenderButton("Setup play test", () => PlayTestToolkitWindow.SetCurrentState(WindowState.setup));
-            RenderButton("Web interface", () => System.Diagnostics.Process.Start(PlayTestToolkitSettings.WEB_INTERFACE_URL));
+            RenderButton("Web interface", () => System.Diagnostics.Process.Start(PlayTestToolkitSettings.WEB_INTERFACE_URI));
             EditorGUILayout.EndHorizontal();
 
             GUILayout.Label("List of play tests");
@@ -112,16 +116,35 @@ namespace PlayTestToolkit.Editor.UI
             RenderButton("Edit", () => PlayTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
             EditorGUI.EndDisabledGroup();
 
-            // TODO start a build if non exists, other wise add short URL to clipboard
-            RenderButton("Share", () => Debug.Log(JsonUtility.ToJson(playtest)));
 
             EditorGUI.BeginDisabledGroup(!playtest.active);
+            RenderButton("Share", () => GUIUtility.systemCopyBuffer = $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{playtest.id}");
             RenderButton("Data", goToData);
             EditorGUI.EndDisabledGroup();
 
             RenderButton("X", () => CacheManager.RemovePlayTest(playtest));
 
             GUILayout.EndHorizontal();
+        }
+    }
+
+    public class WebHandler
+    {
+        // https://stackoverflow.com/questions/27108264/how-to-properly-make-a-http-web-get-request
+        public static string GetBuildUrl(string id)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{id}");
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                    return reader.ReadToEnd();
+                else
+                    return string.Empty;
+            }
         }
     }
 }
