@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 
 namespace PlayTestBuildsAPI.Controllers
 {
@@ -16,8 +15,8 @@ namespace PlayTestBuildsAPI.Controllers
     {
         private readonly BuildsService _buildsService;
 
-        public BuildsController(BuildsService bookService) =>
-            _buildsService = bookService;
+        public BuildsController(BuildsService buildService) =>
+            _buildsService = buildService;
 
         [HttpGet]
         public ActionResult<List<BuildFile>> Get() =>
@@ -36,12 +35,9 @@ namespace PlayTestBuildsAPI.Controllers
 
         [HttpPost]
         [DisableRequestSizeLimit]
-        public ActionResult<BuildFile> Post(/*[FromBody] IFormFile file*/)
+        public ActionResult<BuildFile> Post()
         {
-            HttpResponseMessage result = null;
-            IFormFileCollection files = Request.Form.Files;
-
-            IFormFile file = files.FirstOrDefault();
+            IFormFile file = Request.Form.Files.FirstOrDefault();
 
             if (file == null)
                 return Conflict();
@@ -58,7 +54,7 @@ namespace PlayTestBuildsAPI.Controllers
                 CreatedOn = new DateTime(),
             };
 
-            return _buildsService.Create(buildFile);
+            return Ok(_buildsService.Create(buildFile));
         }
 
         private static string GetUniqueFileName(string fileName)
@@ -71,14 +67,14 @@ namespace PlayTestBuildsAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] BuildFile buildFileiN)
+        public IActionResult Put(string id, [FromBody] BuildFile buildFileIn)
         {
             BuildFile buildFile = _buildsService.Get(id);
 
             if (buildFile == null)
                 return NotFound();
 
-            _buildsService.Update(id, buildFileiN);
+            _buildsService.Update(id, buildFileIn);
 
             return NoContent();
         }

@@ -21,10 +21,10 @@ namespace PlayTestBuildsAPI.Services
         }
 
         public List<BuildFile> Get() =>
-            _buildFile.Find(book => true).ToList();
+            _buildFile.Find(buildFile => true).ToList();
 
         public BuildFile Get(string id) =>
-            _buildFile.Find(book => book.Id == id).FirstOrDefault();
+            _buildFile.Find(buildFile => buildFile.Id == id).FirstOrDefault();
 
         public BuildFile Create(BuildFile buildFile)
         {
@@ -32,13 +32,13 @@ namespace PlayTestBuildsAPI.Services
             return buildFile;
         }
 
-        public void Update(string id, BuildFile bookIn) =>
-            _buildFile.ReplaceOne(book => book.Id == id, bookIn);
+        public void Update(string id, BuildFile buildFileIn) =>
+            _buildFile.ReplaceOne(buildFile => buildFile.Id == id, buildFileIn);
 
-        public void Remove(BuildFile bookIn) =>
-            _buildFile.DeleteOne(book => book.Id == bookIn.Id);
+        public void Remove(BuildFile buildFileIn) =>
+            _buildFile.DeleteOne(buildFile => buildFile.Id == buildFileIn.Id);
 
         public void Remove(string id) =>
-            _buildFile.DeleteOne(book => book.Id == id);
+            _buildFile.DeleteOne(buildFile => buildFile.Id == id);
     }
 }
