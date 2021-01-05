@@ -21,7 +21,7 @@ namespace PlayTestBuildsAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(string id)
         {
             return "value";
         }
@@ -31,12 +31,15 @@ namespace PlayTestBuildsAPI.Controllers
             Ok(_configService.Create(configFile));
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(string id, ConfigFile configFile)
         {
+            configFile.Id = id;
+            _configService.Update(id, configFile);
+            return Ok(configFile);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
         }
     }

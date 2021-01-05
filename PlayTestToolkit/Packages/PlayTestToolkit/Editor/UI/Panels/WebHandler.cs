@@ -70,35 +70,55 @@ namespace PlayTestToolkit.Editor.Web
 
         public static void UploadPlayTestConfig(PlayTest playtest)
         {
+            if (!string.IsNullOrEmpty(playtest.id))
+                return;
+
             ConfigFile config = new ConfigFile(playtest);
 
             string data = JSONWriter.ToJson(config);
 
+            ConfigFile s = PostJsonData<ConfigFile>(data, $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_CONFIG_ROUTE}");
+            playtest.id = s.Id;
+        }
+
+        public static void UpdatePlayTestConfig(PlayTest playtest)
+        {
+            ConfigFile config = new ConfigFile(playtest);
+
+            string data = JSONWriter.ToJson(config);
+
+            PostJsonData<ConfigFile>(data, $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_CONFIG_ROUTE}/{playtest.id}", "PUT");
+        }
+
+        private static T PostJsonData<T>(string data, string uri, string method = "POST")
+        {
             byte[] dataBytes = Encoding.UTF8.GetBytes(data);
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_CONFIG_ROUTE}");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             request.ContentLength = dataBytes.Length;
             request.ContentType = "application/json";
-            request.Method = "POST";
+            request.Method = method;
 
             using (Stream requestBody = request.GetRequestStream())
             {
                 requestBody.Write(dataBytes, 0, dataBytes.Length);
             }
 
+            string message = string.Empty;
+
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))
             {
-                Debug.Log(reader.ReadToEnd());
+                message = reader.ReadToEnd();
+                Debug.Log(message);
                 response.Dispose();
             }
-        }
+            if (!string.IsNullOrEmpty(message))
+                return JSONParser.FromJson<T>(message);
 
-        internal static void UpdatePlayTestConfig(PlayTest playtest)
-        {
-            UploadPlayTestConfig(playtest);
+            return default;
         }
     }
 }

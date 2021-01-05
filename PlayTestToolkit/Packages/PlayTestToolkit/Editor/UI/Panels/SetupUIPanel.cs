@@ -71,10 +71,10 @@ namespace PlayTestToolkit.Editor.UI
             if (playtest.scenesToBuild.IsNullOrEmpty())
                 throw new ArgumentNullException("Please add a scene to test play test");
 
-            CacheManager.AddPlayTest(playtest);
-
-            // Upload the config
+            // Upload the con-fig
             WebHandler.UploadPlayTestConfig(playtest);
+
+            CacheManager.AddPlayTest(playtest);
 
             Cancel();
         }

@@ -61,9 +61,8 @@ namespace PlayTestToolkit.Editor
 
             SafeAssetHandeling.SaveAsset(playtest);
 
-            return false;
+            return true;
         }
-
 
         private static string CreatePath(string rootFolderName, string versionName, string fileName)
         {
