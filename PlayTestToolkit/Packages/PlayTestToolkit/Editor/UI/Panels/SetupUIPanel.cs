@@ -1,4 +1,5 @@
 ﻿using Dutchskull.Utilities.Extensions;
+using PlayTestToolkit.Editor.Web;
 using PlayTestToolkit.Runtime.Data;
 using System;
 using UnityEditor;
@@ -51,7 +52,10 @@ namespace PlayTestToolkit.Editor.UI
             bool buildSucces = Builder.Build(playtest);
 
             if (buildSucces)
+            {
+                WebHandler.UpdatePlayTestConfig(playtest);
                 return;
+            }
 
             // TODO populate with good error codes
             EditorUtility.DisplayDialog("Error", "Something went wrong.", "Ok");
@@ -59,6 +63,8 @@ namespace PlayTestToolkit.Editor.UI
 
         protected virtual void Create(PlayTest playtest)
         {
+            // TODO add more data validation
+
             if (string.IsNullOrEmpty(playtest.title))
                 throw new ArgumentNullException("Please give a name to the play test");
 
@@ -66,6 +72,9 @@ namespace PlayTestToolkit.Editor.UI
                 throw new ArgumentNullException("Please add a scene to test play test");
 
             CacheManager.AddPlayTest(playtest);
+
+            // Upload the config
+            WebHandler.UploadPlayTestConfig(playtest);
 
             Cancel();
         }

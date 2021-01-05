@@ -1,4 +1,5 @@
-﻿using PlayTestToolkit.Runtime.Data;
+﻿using PlayTestToolkit.Editor.Web;
+using PlayTestToolkit.Runtime.Data;
 using UnityEditor;
 
 namespace PlayTestToolkit.Editor.UI
@@ -17,6 +18,9 @@ namespace PlayTestToolkit.Editor.UI
 
         protected override void Create(PlayTest playtest)
         {
+            // Update the config online
+            WebHandler.UpdatePlayTestConfig(playtest);
+
             SafeAssetHandeling.SaveAsset(playtest);
 
             Cancel();

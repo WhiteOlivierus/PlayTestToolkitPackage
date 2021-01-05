@@ -15,9 +15,10 @@ namespace PlayTestBuildsAPI.Services
             MongoClient client = new MongoClient(settings.ConnectionString);
             IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
 
-            try { _buildFile = database.GetCollection<BuildFile>(settings.CollectionName); }
-            catch { database.CreateCollection(settings.CollectionName); }
-            finally { _buildFile = database.GetCollection<BuildFile>(settings.CollectionName); }
+            string collectionName = DatabaseCollections.Builds.ToString();
+            try { _buildFile = database.GetCollection<BuildFile>(collectionName); }
+            catch { database.CreateCollection(collectionName); }
+            finally { _buildFile = database.GetCollection<BuildFile>(collectionName); }
         }
 
         public List<BuildFile> Get() =>
