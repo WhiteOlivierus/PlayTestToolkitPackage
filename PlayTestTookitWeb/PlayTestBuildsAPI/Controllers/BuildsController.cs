@@ -33,9 +33,9 @@ namespace PlayTestBuildsAPI.Controllers
             if (buildFile == null)
                 return NotFound();
 
-            (string fileType, byte[] archiveData) = _fileService.FetechFile(buildFile.Path);
+            byte[] archiveData = _fileService.FetechFile(buildFile.Path);
 
-            return File(archiveData, fileType, buildFile.FileName);
+            return File(archiveData, "application/zip", buildFile.FileName);
         }
 
         [HttpPost]

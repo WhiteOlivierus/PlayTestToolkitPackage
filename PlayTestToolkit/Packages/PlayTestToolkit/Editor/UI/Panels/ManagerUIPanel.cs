@@ -4,8 +4,6 @@ using PlayTestToolkit.Runtime;
 using PlayTestToolkit.Runtime.Data;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using UnityEditor;
 using UnityEngine;
 
@@ -118,33 +116,17 @@ namespace PlayTestToolkit.Editor.UI
 
 
             EditorGUI.BeginDisabledGroup(!playtest.active);
-            RenderButton("Share", () => GUIUtility.systemCopyBuffer = $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{playtest.id}");
+            RenderButton("Share", () =>
+            {
+                string playtestUrl = $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{playtest.buildId}";
+                GUIUtility.systemCopyBuffer = playtestUrl;
+            });
             RenderButton("Data", goToData);
             EditorGUI.EndDisabledGroup();
 
             RenderButton("X", () => CacheManager.RemovePlayTest(playtest));
 
             GUILayout.EndHorizontal();
-        }
-    }
-
-    public class WebHandler
-    {
-        // https://stackoverflow.com/questions/27108264/how-to-properly-make-a-http-web-get-request
-        public static string GetBuildUrl(string id)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{id}");
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                if (response.StatusCode == HttpStatusCode.OK)
-                    return reader.ReadToEnd();
-                else
-                    return string.Empty;
-            }
         }
     }
 }

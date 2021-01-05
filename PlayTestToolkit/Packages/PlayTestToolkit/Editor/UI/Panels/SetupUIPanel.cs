@@ -50,8 +50,11 @@ namespace PlayTestToolkit.Editor.UI
 
             bool buildSucces = Builder.Build(playtest);
 
-            if (!buildSucces)
+            if (buildSucces)
                 return;
+
+            // TODO populate with good error codes
+            EditorUtility.DisplayDialog("Error", "Something went wrong.", "Ok");
         }
 
         protected virtual void Create(PlayTest playtest)

@@ -12,7 +12,7 @@ namespace PlayTestToolkit.Runtime.Data
     {
         [HideInInspector] [SerializeField] public bool active = false;
         [HideInInspector] [SerializeField] public int version = 0;
-        [HideInInspector] [SerializeField] public string id = string.Empty;
+        [HideInInspector] [SerializeField] public string buildId = string.Empty;
 
         [SerializeField] public string title = string.Empty;
         [SerializeField] public string researchQuestion = string.Empty;

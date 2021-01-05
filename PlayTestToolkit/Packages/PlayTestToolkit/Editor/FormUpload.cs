@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using UnityEditor;
 
 namespace PlayTestToolkit.Editor
 {
@@ -43,7 +44,13 @@ namespace PlayTestToolkit.Editor
                 requestStream.Close();
             }
 
-            return request.GetResponse() as HttpWebResponse;
+            EditorUtility.DisplayProgressBar("Uploading", "Upload of build in progress", 0f);
+
+            HttpWebResponse httpWebResponse = request.GetResponse() as HttpWebResponse;
+
+            EditorUtility.ClearProgressBar();
+
+            return httpWebResponse;
         }
 
         private static byte[] GetMultipartFormData(Dictionary<string, object> postParameters, string boundary)
@@ -111,6 +118,7 @@ namespace PlayTestToolkit.Editor
                 ContentType = contenttype;
             }
         }
+
         public static byte[] ReadToEnd(Stream stream)
         {
             long originalPosition = 0;
