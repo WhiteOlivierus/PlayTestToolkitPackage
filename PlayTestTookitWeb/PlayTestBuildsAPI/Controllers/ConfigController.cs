@@ -10,9 +10,15 @@ namespace PlayTestBuildsAPI.Controllers
     public class ConfigController : ControllerBase
     {
         private readonly ConfigService _configService;
+        private readonly BuildsService _buildsService;
+        private readonly FileService _fileService;
 
-        public ConfigController(ConfigService configService) =>
+        public ConfigController(ConfigService configService, BuildsService buildService, FileService fileService)
+        {
+            _buildsService = buildService;
+            _fileService = fileService;
             _configService = configService;
+        }
 
         [HttpGet]
         public IEnumerable<string> Get()
@@ -39,8 +45,14 @@ namespace PlayTestBuildsAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public IActionResult Delete(string id)
         {
+            ConfigFile configFile = _configService.Get(id);
+            if (!string.IsNullOrEmpty(configFile.BuildId))
+                new BuildsController(_buildsService, _fileService).Delete(configFile.BuildId);
+
+            _configService.Remove(id);
+            return Ok("Delete succesfully");
         }
     }
 }

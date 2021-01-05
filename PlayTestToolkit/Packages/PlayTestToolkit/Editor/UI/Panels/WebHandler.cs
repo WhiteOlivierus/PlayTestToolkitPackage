@@ -11,6 +11,8 @@ namespace PlayTestToolkit.Editor.Web
 {
     public class WebHandler
     {
+        private static readonly string CONFIG_ROUTE = $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_CONFIG_ROUTE}";
+
         // https://stackoverflow.com/questions/27108264/how-to-properly-make-a-http-web-get-request
         public static string GetBuildUrl(string uri, string id)
         {
@@ -77,8 +79,10 @@ namespace PlayTestToolkit.Editor.Web
 
             string data = JSONWriter.ToJson(config);
 
-            ConfigFile s = PostJsonData<ConfigFile>(data, $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_CONFIG_ROUTE}");
-            playtest.id = s.Id;
+            string message = PostJsonData(data, $"{CONFIG_ROUTE}");
+
+            playtest.id = JSONParser.FromJson<ConfigFile>(message).Id;
+            Debug.Log(message);
         }
 
         public static void UpdatePlayTestConfig(PlayTest playtest)
@@ -87,10 +91,17 @@ namespace PlayTestToolkit.Editor.Web
 
             string data = JSONWriter.ToJson(config);
 
-            PostJsonData<ConfigFile>(data, $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_CONFIG_ROUTE}/{playtest.id}", "PUT");
+            string message = PostJsonData(data, $"{CONFIG_ROUTE}/{playtest.id}", "PUT");
+            Debug.Log(message);
         }
 
-        private static T PostJsonData<T>(string data, string uri, string method = "POST")
+        public static void DeletePlayTestConfig(PlayTest playtest)
+        {
+            string message = PostJsonData("", $"{CONFIG_ROUTE}/{playtest.id}", "DELETE");
+            Debug.Log(message);
+        }
+
+        private static string PostJsonData(string data, string uri, string method = "POST")
         {
             byte[] dataBytes = Encoding.UTF8.GetBytes(data);
 
@@ -105,20 +116,12 @@ namespace PlayTestToolkit.Editor.Web
                 requestBody.Write(dataBytes, 0, dataBytes.Length);
             }
 
-            string message = string.Empty;
-
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))
             {
-                message = reader.ReadToEnd();
-                Debug.Log(message);
-                response.Dispose();
+                return reader.ReadToEnd();
             }
-            if (!string.IsNullOrEmpty(message))
-                return JSONParser.FromJson<T>(message);
-
-            return default;
         }
     }
 }

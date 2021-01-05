@@ -21,7 +21,13 @@ namespace PlayTestBuildsAPI.Models
         public int Version { get; set; }
 
         public string TutorialDescription { get; set; }
-        public List<KeyValuePair<string, string>> Input { get; set; }
+        public List<InputKey> Input { get; set; }
         public string GoogleForm { get; set; }
+    }
+
+    public class InputKey
+    {
+        public string key { get; set; }
+        public string instruction { get; set; }
     }
 }

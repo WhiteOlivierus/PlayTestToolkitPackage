@@ -61,9 +61,11 @@ namespace PlayTestToolkit.Runtime.Data
 
             TutorialDescription = playtest.tutorialDescription;
 
-            Input = new List<KeyValuePair<string, string>>();
-            foreach (InputKey item in playtest.input)
-                Input.Add(new KeyValuePair<string, string>(item.key.ToString(), item.instruction));
+            Input = playtest.input;
+
+            //Input = new List<KeyValuePair<string, string>>();
+            //foreach (InputKey item in playtest.input)
+            //    Input.Add(new KeyValuePair<string, string>(item.key.ToString(), item.instruction));
 
             GoogleForm = playtest.googleForm;
         }
@@ -81,7 +83,7 @@ namespace PlayTestToolkit.Runtime.Data
         public int Version { get; set; }
 
         public string TutorialDescription { get; set; }
-        public List<KeyValuePair<string, string>> Input { get; set; }
+        public List<InputKey> Input { get; set; }
         public string GoogleForm { get; set; }
     }
 }

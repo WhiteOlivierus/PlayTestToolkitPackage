@@ -59,8 +59,6 @@ namespace PlayTestToolkit.Editor
             playtest.active = true;
             playtest.buildId = buildId;
 
-            SafeAssetHandeling.SaveAsset(playtest);
-
             return true;
         }
 

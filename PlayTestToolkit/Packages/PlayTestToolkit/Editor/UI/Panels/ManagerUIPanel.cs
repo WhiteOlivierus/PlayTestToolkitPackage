@@ -1,5 +1,6 @@
 ﻿using Dutchskull.Utilities.Extensions;
 using PlayTestToolkit.Editor.UI.Data;
+using PlayTestToolkit.Editor.Web;
 using PlayTestToolkit.Runtime;
 using PlayTestToolkit.Runtime.Data;
 using System;
@@ -124,7 +125,7 @@ namespace PlayTestToolkit.Editor.UI
             RenderButton("Data", goToData);
             EditorGUI.EndDisabledGroup();
 
-            RenderButton("X", () => CacheManager.RemovePlayTest(playtest));
+            RenderButton("X", () => { WebHandler.DeletePlayTestConfig(playtest); CacheManager.RemovePlayTest(playtest); });
 
             GUILayout.EndHorizontal();
         }

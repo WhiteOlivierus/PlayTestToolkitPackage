@@ -11,9 +11,9 @@ namespace PlayTestBuildsAPI.Services
     public class FileService
     {
         public void SaveFiles(List<IFormFile> files, string subDirectory) =>
-            files.ForEach(file => SaveFile(file, subDirectory));
+            files.ForEach(file => Create(file, subDirectory));
 
-        public string SaveFile(IFormFile file, string subDirectory)
+        public string Create(IFormFile file, string subDirectory)
         {
             subDirectory ??= string.Empty;
 
@@ -35,7 +35,7 @@ namespace PlayTestBuildsAPI.Services
             return filePath;
         }
 
-        public byte[] FetechFile(string subDirectory)
+        public byte[] Get(string subDirectory)
         {
             string targetDirectory = Path.GetDirectoryName(subDirectory);
 
@@ -75,6 +75,14 @@ namespace PlayTestBuildsAPI.Services
             }
 
             return ("application/zip", memoryStream.ToArray(), zipName);
+        }
+
+        public void Delete(string path)
+        {
+            path ??= string.Empty;
+
+            if (File.Exists(path))
+                File.Delete(path);
         }
 
         private static string GetUniqueFileName(string fileName)

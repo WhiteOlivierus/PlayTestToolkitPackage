@@ -33,7 +33,7 @@ namespace PlayTestBuildsAPI.Controllers
             if (buildFile == null)
                 return NotFound();
 
-            byte[] archiveData = _fileService.FetechFile(buildFile.Path);
+            byte[] archiveData = _fileService.Get(buildFile.Path);
 
             return File(archiveData, "application/zip", buildFile.FileName);
         }
@@ -47,7 +47,7 @@ namespace PlayTestBuildsAPI.Controllers
             if (file == null)
                 return Conflict();
 
-            string filePath = _fileService.SaveFile(file, "/builds/uploads");
+            string filePath = _fileService.Create(file, "/builds/uploads");
 
             BuildFile buildFile = new BuildFile
             {
@@ -70,6 +70,7 @@ namespace PlayTestBuildsAPI.Controllers
 
             // TODO remove the build file
             _buildsService.Remove(buildFile.Id);
+            _fileService.Delete(buildFile.Path);
 
             return NoContent();
         }

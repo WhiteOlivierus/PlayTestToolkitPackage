@@ -54,6 +54,8 @@ namespace PlayTestToolkit.Editor.UI
             if (buildSucces)
             {
                 WebHandler.UpdatePlayTestConfig(playtest);
+
+                SafeAssetHandeling.SaveAsset(playtest);
                 return;
             }
 
