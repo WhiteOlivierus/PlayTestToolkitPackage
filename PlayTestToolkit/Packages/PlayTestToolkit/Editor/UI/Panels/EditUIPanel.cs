@@ -10,7 +10,7 @@ namespace PlayTestToolkit.Editor.UI
         {
             originalPlayTest = playtest;
             newPlayTest = Instantiate(playtest);
-            serializedObject = new SerializedObject(newPlayTest);
+            serializedObject = new SerializedObject(playtest);
 
             create = () => Create(newPlayTest);
             createAndBuild = () => CreateAndBuild(originalPlayTest);
@@ -18,8 +18,8 @@ namespace PlayTestToolkit.Editor.UI
 
         protected override void Create(PlayTest playtest)
         {
-            // Update the config online
-            WebHandler.UpdatePlayTestConfig(playtest);
+            // Update the con-fig on-line
+            ApiHandler.UpdatePlayTestConfig(playtest);
 
             SafeAssetHandeling.SaveAsset(playtest);
 

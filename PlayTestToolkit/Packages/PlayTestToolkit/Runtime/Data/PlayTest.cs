@@ -16,6 +16,7 @@ namespace PlayTestToolkit.Runtime.Data
 
         [HideInInspector] [SerializeField] public bool active = false;
         [HideInInspector] [SerializeField] public int version = 0;
+        [HideInInspector] [SerializeField] public PlayTestCollection collection = default;
 
         [SerializeField] public string title = string.Empty;
         [SerializeField] public string researchQuestion = string.Empty;
@@ -60,12 +61,7 @@ namespace PlayTestToolkit.Runtime.Data
             Version = playtest.version;
 
             TutorialDescription = playtest.tutorialDescription;
-
             Input = playtest.input;
-
-            //Input = new List<KeyValuePair<string, string>>();
-            //foreach (InputKey item in playtest.input)
-            //    Input.Add(new KeyValuePair<string, string>(item.key.ToString(), item.instruction));
 
             GoogleForm = playtest.googleForm;
         }

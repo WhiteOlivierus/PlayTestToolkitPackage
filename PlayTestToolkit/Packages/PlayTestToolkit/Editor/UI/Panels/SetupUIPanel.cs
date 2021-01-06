@@ -53,7 +53,7 @@ namespace PlayTestToolkit.Editor.UI
 
             if (buildSucces)
             {
-                WebHandler.UpdatePlayTestConfig(playtest);
+                ApiHandler.UpdatePlayTestConfig(playtest);
 
                 SafeAssetHandeling.SaveAsset(playtest);
                 return;
@@ -74,7 +74,7 @@ namespace PlayTestToolkit.Editor.UI
                 throw new ArgumentNullException("Please add a scene to test play test");
 
             // Upload the con-fig
-            WebHandler.UploadPlayTestConfig(playtest);
+            ApiHandler.UploadPlayTestConfig(playtest);
 
             CacheManager.AddPlayTest(playtest);
 

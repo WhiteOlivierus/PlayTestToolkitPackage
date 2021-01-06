@@ -35,10 +35,7 @@ namespace PlayTestToolkit.Editor
 
             // TODO add a flag if the build was success full. So you don't have to build again if upload fails.
             if (report.summary.result != BuildResult.Succeeded)
-            {
-
                 return false;
-            }
 
             string folderPath = CreatePath(playTestTitle, versionName, string.Empty);
             string zipPath = CreatePath(playTestTitle, string.Empty, $"{versionName}.zip");
@@ -48,8 +45,7 @@ namespace PlayTestToolkit.Editor
 
             ZipFile.CreateFromDirectory(folderPath, zipPath);
 
-            // TODO show that it is uploading
-            bool uploadSuccedded = WebHandler.UploadZip(zipPath, out string buildId);
+            bool uploadSuccedded = ApiHandler.UploadZip(zipPath, out string buildId);
 
             playtest = Runtime.CacheManager.GetPlayTestConfig();
 

@@ -48,6 +48,8 @@ namespace PlayTestToolkit.Editor
 
             CreatePlayTestAsset(playtest, selectedCollection);
 
+            playtest.collection = selectedCollection;
+
             SafeAssetHandeling.SaveAsset(selectedCollection);
 
             SafeAssetHandeling.SaveAsset(Cache);
@@ -64,12 +66,6 @@ namespace PlayTestToolkit.Editor
 
         public static void RemovePlayTest(PlayTest playtest)
         {
-            if (!EditorUtility.DisplayDialog("Remove play test",
-                                 "This will delete this play test configuration permanently. Are you sure you want to do this?",
-                                 "Yes",
-                                 "No"))
-                return;
-
             // TODO playtest points to collection and reverse
             PlayTestCollection collection = FindCollection(playtest);
 

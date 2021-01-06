@@ -48,7 +48,8 @@ namespace PlayTestBuildsAPI.Controllers
         public IActionResult Delete(string id)
         {
             ConfigFile configFile = _configService.Get(id);
-            if (!string.IsNullOrEmpty(configFile.BuildId))
+
+            if (configFile != null && !string.IsNullOrEmpty(configFile.BuildId))
                 new BuildsController(_buildsService, _fileService).Delete(configFile.BuildId);
 
             _configService.Remove(id);

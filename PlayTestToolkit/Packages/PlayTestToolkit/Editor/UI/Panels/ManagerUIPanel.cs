@@ -16,6 +16,7 @@ namespace PlayTestToolkit.Editor.UI
         private readonly Action goToData;
 
         private static PlayTestToolkitCache cache;
+
         private static PlayTestToolkitCache Cache
         {
             get
@@ -119,13 +120,23 @@ namespace PlayTestToolkit.Editor.UI
             EditorGUI.BeginDisabledGroup(!playtest.active);
             RenderButton("Share", () =>
             {
-                string playtestUrl = $"{PlayTestToolkitSettings.API_URI}{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{playtest.buildId}";
+                string playtestUrl = $"{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{playtest.buildId}";
                 GUIUtility.systemCopyBuffer = playtestUrl;
             });
             RenderButton("Data", goToData);
             EditorGUI.EndDisabledGroup();
 
-            RenderButton("X", () => { WebHandler.DeletePlayTestConfig(playtest); CacheManager.RemovePlayTest(playtest); });
+            RenderButton("X", () =>
+            {
+                if (!EditorUtility.DisplayDialog("Remove play test",
+                     "This will delete this play test configuration permanently. Are you sure you want to do this?",
+                     "Yes",
+                     "No"))
+                    return;
+
+                CacheManager.RemovePlayTest(playtest);
+                ApiHandler.DeletePlayTestConfig(playtest);
+            });
 
             GUILayout.EndHorizontal();
         }
