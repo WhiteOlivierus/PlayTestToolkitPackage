@@ -28,6 +28,7 @@ namespace PlayTestBuildsAPI
 
             services.AddSingleton<BuildsService>();
             services.AddSingleton<ConfigService>();
+            services.AddSingleton<DataService>();
 
             services.AddSingleton<FileService>();
 

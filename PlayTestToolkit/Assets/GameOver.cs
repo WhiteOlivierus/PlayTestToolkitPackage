@@ -2,11 +2,11 @@
 
 public class GameOver : MonoBehaviour
 {
-    public bool gameOver = false;
-
     private void Update()
     {
-        if (Input.GetKeyDown(""))
-            gameOver = true;
+        if (!Input.GetKeyDown(KeyCode.Escape))
+            return;
+
+        Application.Quit();
     }
 }

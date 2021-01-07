@@ -1,13 +1,20 @@
 ﻿using System;
-using UnityEngine;
+using System.Numerics;
 
 namespace PlayTestToolkit.Runtime.DataRecorders
 {
     [Serializable]
     public class InputObject
     {
-        public float startTime;
-        public float duration;
-        public KeyCode key;
+        public InputObject(float startTime, string key)
+        {
+            this.startTime = startTime;
+            this.key = key;
+        }
+
+        public float startTime = 0;
+        public float duration = 0;
+        public string key = string.Empty;
+        public Vector2 screenSpacePosition = new Vector2();
     }
 }

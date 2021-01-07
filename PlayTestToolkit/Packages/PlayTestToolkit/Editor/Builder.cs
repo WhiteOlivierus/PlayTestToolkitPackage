@@ -1,7 +1,7 @@
 ﻿using Dutchskull.Utilities.Extensions;
-using PlayTestToolkit.Editor.Web;
 using PlayTestToolkit.Runtime;
 using PlayTestToolkit.Runtime.Data;
+using PlayTestToolkit.Runtime.Web;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -37,6 +37,8 @@ namespace PlayTestToolkit.Editor
             if (report.summary.result != BuildResult.Succeeded)
                 return false;
 
+            EditorUtility.DisplayProgressBar("Zipping", "Zipping the build before uploading.", 0f);
+
             string folderPath = CreatePath(playTestTitle, versionName, string.Empty);
             string zipPath = CreatePath(playTestTitle, string.Empty, $"{versionName}.zip");
 
@@ -45,7 +47,13 @@ namespace PlayTestToolkit.Editor
 
             ZipFile.CreateFromDirectory(folderPath, zipPath);
 
+            EditorUtility.ClearProgressBar();
+
+            EditorUtility.DisplayProgressBar("Uploading", "Upload of build in progress.", 0f);
+
             bool uploadSuccedded = ApiHandler.UploadZip(zipPath, out string buildId);
+
+            EditorUtility.ClearProgressBar();
 
             playtest = Runtime.CacheManager.GetPlayTestConfig();
 
@@ -68,7 +76,7 @@ namespace PlayTestToolkit.Editor
         private static BuildReport BuildPlayTest(string path, IList<EditorBuildSettingsScene> scenesToBuild)
         {
             BuildTarget activeBuildTarget = EditorUserBuildSettings.activeBuildTarget;
-            return BuildPipeline.BuildPlayer(scenesToBuild.ToArray(), path, activeBuildTarget, BuildOptions.Development);
+            return BuildPipeline.BuildPlayer(scenesToBuild.ToArray(), path, activeBuildTarget, BuildOptions.AllowDebugging);
         }
 
         private static IList<EditorBuildSettingsScene> GetPlayTestScenes(PlayTest playtest)

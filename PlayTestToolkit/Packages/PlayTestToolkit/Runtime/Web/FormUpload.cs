@@ -5,7 +5,8 @@ using System.Net;
 using System.Text;
 using UnityEditor;
 
-namespace PlayTestToolkit.Editor
+#if UNITY_EDITOR
+namespace PlayTestToolkit.Runtime.Web
 {
     // TODO Not writen by me, have to try and understand
     public static class FormUpload
@@ -24,6 +25,7 @@ namespace PlayTestToolkit.Editor
 
             return PostForm(postUrl, action, contentType, formData);
         }
+
         private static HttpWebResponse PostForm(string postUrl, string action, string contentType, byte[] formData)
         {
             HttpWebRequest request = WebRequest.Create(postUrl) as HttpWebRequest;
@@ -48,11 +50,7 @@ namespace PlayTestToolkit.Editor
                 requestStream.Close();
             }
 
-            EditorUtility.DisplayProgressBar("Uploading", "Upload of build in progress", 0f);
-
             HttpWebResponse httpWebResponse = request.GetResponse() as HttpWebResponse;
-
-            EditorUtility.ClearProgressBar();
 
             return httpWebResponse;
         }
@@ -117,3 +115,4 @@ namespace PlayTestToolkit.Editor
         }
     }
 }
+#endif

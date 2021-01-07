@@ -8,6 +8,7 @@
         public static readonly string API_URI = "https://localhost:8001";
         public static readonly string API_BUILDS_ROUTE = $"{API_URI}/api/builds";
         public static readonly string API_CONFIG_ROUTE = $"{API_URI}/api/config";
+        public static readonly string API_DATA_ROUTE = $"{API_URI}/api/data";
 
         public static readonly string PLAY_TEST_RESOURCES_PATH = $"Assets/Plugins/{PROJECT_TITLE_NO_SPACES}/Runtime/Resources/";
         public static readonly string PLAY_TEST_CACHE_PATH = $"{PLAY_TEST_RESOURCES_PATH}Cache/";

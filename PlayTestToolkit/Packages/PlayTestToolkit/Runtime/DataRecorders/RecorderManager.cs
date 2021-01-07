@@ -1,6 +1,8 @@
 ﻿using DutchSkull.Singleton;
+using Packages.PlayTestToolkit.Runtime.Data;
 using PlayTestToolkit.Runtime.Data;
 using PlayTestToolkit.Runtime.DataRecorders;
+using PlayTestToolkit.Runtime.Web;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,11 +11,15 @@ namespace PlayTestToolkit.Runtime
 {
     public class RecorderManager : Singleton<RecorderManager>
     {
+        private RecordedData recordedData = new RecordedData();
         private readonly List<DataRecorder> recorders = new List<DataRecorder>();
+
+        // TODO maybe set this somewhere globally like in settings so we only need to load the config once
+        private PlayTest playTestConfig;
 
         public void Awake()
         {
-            PlayTest playTestConfig = CacheManager.GetPlayTestConfig();
+            playTestConfig = CacheManager.GetPlayTestConfig();
 
             Init();
 
@@ -30,16 +36,21 @@ namespace PlayTestToolkit.Runtime
 
         public void OnApplicationQuit()
         {
+            Debug.Log("Game closing");
             for (int i = 0; i < recorders.Count; i++)
-                recorders[i].Save();
+                recorders[i].Save(recordedData);
+
+            recordedData.ConfigId = playTestConfig.id;
+
+            ApiHandler.UploadRecordedData(recordedData);
         }
 
-        private static void Init()
+        private void Init()
         {
             InitialRecorder initialRecorder = new InitialRecorder(nameof(InitialRecorder));
 
             initialRecorder.Record();
-            initialRecorder.Save();
+            initialRecorder.Save(recordedData);
         }
 
         private void InitRecorders(PlayTest playTestConfig)
@@ -52,8 +63,7 @@ namespace PlayTestToolkit.Runtime
                 switch (collector.name)
                 {
                     case nameof(InputRecorder):
-                        recorders.Add(new InputRecorder(nameof(InputRecorder), playTestConfig.input.Select(e => e
-                        .key).ToList()));
+                        recorders.Add(new InputRecorder(nameof(InputRecorder), playTestConfig.input.Select(e => e.key).ToList()));
                         break;
                     default:
                         Debug.LogWarning("No recorders found!");

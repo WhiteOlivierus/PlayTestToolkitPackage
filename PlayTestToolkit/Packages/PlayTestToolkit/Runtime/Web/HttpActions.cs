@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text;
 
-namespace PlayTestToolkit.Editor.Web
+namespace PlayTestToolkit.Runtime.Web
 {
     public static class HttpActions
     {

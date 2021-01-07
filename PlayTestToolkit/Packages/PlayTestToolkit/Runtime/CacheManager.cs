@@ -13,6 +13,8 @@ namespace PlayTestToolkit.Runtime
                 if (cache)
                     return cache;
 
+                // TODO check if there isn't a beter fix for this
+                PlayTestToolkitCache.Init();
                 cache = ScriptableSingleton.GetInstance<PlayTestToolkitCache>();
 
                 return cache;

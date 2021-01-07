@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Packages.PlayTestToolkit.Runtime.Data;
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
 
         public abstract void Record();
 
-        public virtual void Save()
+        public virtual void Save(RecordedData recordedData)
         {
             using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
             {

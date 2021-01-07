@@ -1,4 +1,4 @@
-﻿using PlayTestToolkit.Runtime;
+﻿using Packages.PlayTestToolkit.Runtime.Data;
 using PlayTestToolkit.Runtime.Data;
 using System.Collections.Generic;
 using System.IO;
@@ -7,12 +7,12 @@ using System.Text;
 using TinyJson;
 using UnityEngine;
 
-namespace PlayTestToolkit.Editor.Web
+namespace PlayTestToolkit.Runtime.Web
 {
     public class ApiHandler
     {
         private static readonly string API_CONFIG_ROUTE = PlayTestToolkitSettings.API_CONFIG_ROUTE;
-
+#if UNITY_EDITOR
         public static bool UploadZip(string zipPath, out string id)
         {
             HttpWebResponse response;
@@ -47,6 +47,16 @@ namespace PlayTestToolkit.Editor.Web
             Debug.Log(id);
 
             return true;
+        }
+#endif
+        public static void UploadRecordedData(RecordedData recordedData)
+        {
+            string data = JSONWriter.ToJson(recordedData);
+
+            Debug.Log(data);
+            Debug.Log($"{PlayTestToolkitSettings.API_DATA_ROUTE}/{recordedData.ConfigId}");
+            string message = HttpActions.JsonAction(data, $"{PlayTestToolkitSettings.API_DATA_ROUTE}/{recordedData.ConfigId}");
+            Debug.Log(message);
         }
 
         public static void UploadPlayTestConfig(PlayTest playtest)

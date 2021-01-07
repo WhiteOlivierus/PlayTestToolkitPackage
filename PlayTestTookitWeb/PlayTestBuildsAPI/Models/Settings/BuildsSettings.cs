@@ -15,6 +15,7 @@
     public enum DatabaseCollections
     {
         Builds,
-        Configs
+        Configs,
+        Data
     }
 }

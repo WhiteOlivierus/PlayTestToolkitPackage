@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Packages.PlayTestToolkit.Runtime.Data;
+using System;
 using System.IO;
 using TinyJson;
 
@@ -18,11 +19,11 @@ namespace PlayTestToolkit.Runtime.DataRecorders
         public override void Record()
         {
             DateTime value = new DateTime(1970, 1, 1);
-            int totalMilliseconds = (int)DateTime.UtcNow.Subtract(value).TotalMilliseconds;
-            captured.startTime = totalMilliseconds * -1;
+            double totalMilliseconds = (int)DateTime.UtcNow.Subtract(value).TotalMilliseconds;
+            captured.startTime = Math.Abs(totalMilliseconds);
         }
 
-        public override void Save()
+        public override void Save(RecordedData recordedData)
         {
             string json = captured.ToJson();
 
@@ -30,7 +31,9 @@ namespace PlayTestToolkit.Runtime.DataRecorders
             writer.WriteLine(json);
             writer.Flush();
 
-            base.Save();
+            recordedData.StartTime = captured.startTime;
+
+            base.Save(recordedData);
         }
     }
 }

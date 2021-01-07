@@ -1,5 +1,5 @@
-﻿using PlayTestToolkit.Editor.Web;
-using PlayTestToolkit.Runtime.Data;
+﻿using PlayTestToolkit.Runtime.Data;
+using PlayTestToolkit.Runtime.Web;
 using UnityEditor;
 
 namespace PlayTestToolkit.Editor.UI

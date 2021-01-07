@@ -2,6 +2,6 @@
 {
     public class InitialData
     {
-        public int startTime;
+        public double startTime;
     }
 }

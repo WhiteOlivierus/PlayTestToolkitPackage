@@ -1,4 +1,5 @@
 ﻿using Dutchskull.Utilities.Extensions;
+using Packages.PlayTestToolkit.Runtime.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,7 +44,8 @@ namespace PlayTestToolkit.Runtime.DataRecorders
                 if (!Input.GetKeyDown(key))
                     continue;
 
-                pressed.Add(new InputObject { startTime = Time.realtimeSinceStartup, key = key });
+                InputObject InputRecord = new InputObject(Time.realtimeSinceStartup, key.ToString());
+                pressed.Add(InputRecord);
             }
         }
 
@@ -52,7 +54,8 @@ namespace PlayTestToolkit.Runtime.DataRecorders
             for (int i = 0; i < pressed.Count; i++)
             {
                 InputObject key = pressed[i];
-                if (!Input.GetKeyUp(key.key))
+                KeyCode keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), key.key);
+                if (!Input.GetKeyUp(keyCode))
                     continue;
 
                 key.duration = Time.realtimeSinceStartup - key.startTime;
@@ -61,7 +64,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
                 pressed.RemoveAt(i);
             }
         }
-        public override void Save()
+        public override void Save(RecordedData recordedData)
         {
             string json = captured.ToJson();
 
@@ -69,7 +72,9 @@ namespace PlayTestToolkit.Runtime.DataRecorders
             writer.WriteLine(json);
             writer.Flush();
 
-            base.Save();
+            recordedData.Input = captured;
+
+            base.Save(recordedData);
         }
     }
 }

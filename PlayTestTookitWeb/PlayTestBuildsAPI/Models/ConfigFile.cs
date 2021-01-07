@@ -9,9 +9,8 @@ namespace PlayTestBuildsAPI.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-
         public string BuildId { get; set; }
-        public string DataId { get; set; }
+
 
         public string Name { get; set; }
         public string ResearchQuestion { get; set; }
