@@ -91,7 +91,7 @@ namespace PlayTestToolkit.Editor.UI
 
                 // TODO if cache is deleted try to rebuilt the cache other wise reload empty cache
 
-                RenderPlayTest(playtest, $"{playtest.title} V{playtest.version}");
+                RenderPlayTest(playtest, $"{playtest.Title} V{playtest.Version}");
             }
         }
 
@@ -107,20 +107,20 @@ namespace PlayTestToolkit.Editor.UI
         private void RenderPlayTest(PlayTest playtest, string fullName)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Label(playtest.active.ToString());
+            GUILayout.Label(playtest.Active.ToString());
             GUILayout.Label(fullName);
 
             RenderButton("Copy", () => PlayTestToolkitWindow.SetCurrentState(WindowState.copy, playtest));
 
-            EditorGUI.BeginDisabledGroup(playtest.active);
+            EditorGUI.BeginDisabledGroup(playtest.Active);
             RenderButton("Edit", () => PlayTestToolkitWindow.SetCurrentState(WindowState.edit, playtest));
             EditorGUI.EndDisabledGroup();
 
 
-            EditorGUI.BeginDisabledGroup(!playtest.active);
+            EditorGUI.BeginDisabledGroup(!playtest.Active);
             RenderButton("Share", () =>
             {
-                string playtestUrl = $"{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{playtest.buildId}";
+                string playtestUrl = $"{PlayTestToolkitSettings.API_BUILDS_ROUTE}/{playtest.BuildId}";
                 GUIUtility.systemCopyBuffer = playtestUrl;
             });
             RenderButton("Data", goToData);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PlayTestToolkit.Runtime.Data
 {
-    [CustomPropertyDrawer(typeof(Collector))]
+    [CustomPropertyDrawer(typeof(DataCollector))]
     public class CollectorDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -13,7 +13,9 @@ namespace PlayTestToolkit.Runtime.Data
             SerializedProperty active = property.FindPropertyRelative("active");
             SerializedProperty name = property.FindPropertyRelative("name");
 
-            active.boolValue = EditorGUILayout.Toggle(name.stringValue, active.boolValue);
+            active.boolValue = EditorGUI.Toggle(position, name.stringValue, active.boolValue);
+
+            position.y += EditorGUI.GetPropertyHeight(property);
 
             EditorGUI.EndProperty();
         }

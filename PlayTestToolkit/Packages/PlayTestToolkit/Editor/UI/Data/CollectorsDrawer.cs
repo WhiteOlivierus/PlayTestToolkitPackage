@@ -1,9 +1,10 @@
-﻿using UnityEditor;
+﻿using PlayTestToolkit.Runtime.Data;
+using UnityEditor;
 using UnityEngine;
 
-namespace PlayTestToolkit.Runtime.Data
+namespace PlayTestToolkit.Editor.UI
 {
-    [CustomPropertyDrawer(typeof(Collectors))]
+    [CustomPropertyDrawer(typeof(DataCollectors))]
     public class CollectorsDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -11,6 +12,8 @@ namespace PlayTestToolkit.Runtime.Data
             EditorGUI.BeginProperty(position, label, property);
 
             EditorGUI.LabelField(position, property.displayName);
+
+            position.y += EditorGUI.GetPropertyHeight(property);
 
             SerializedProperty dataCollectors = property.FindPropertyRelative("collectors");
 

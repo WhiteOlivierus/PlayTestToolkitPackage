@@ -27,8 +27,8 @@ namespace PlayTestToolkit.Editor
 
             scenesToBuild.Insert(0, EntryPoint.Init(playtest));
 
-            string playTestTitle = playtest.title.OnlyLettersAndNumbers();
-            string versionName = $"{playTestTitle}V{playtest.version}";
+            string playTestTitle = playtest.Title.OnlyLettersAndNumbers();
+            string versionName = $"{playTestTitle}V{playtest.Version}";
 
             string exePath = CreatePath(playTestTitle, versionName, $"{versionName}.exe");
             BuildReport report = BuildPlayTest(exePath, scenesToBuild);
@@ -60,8 +60,8 @@ namespace PlayTestToolkit.Editor
             if (!uploadSuccedded)
                 return false;
 
-            playtest.active = true;
-            playtest.buildId = buildId;
+            playtest.Active = true;
+            playtest.BuildId = buildId;
 
             return true;
         }
@@ -86,7 +86,7 @@ namespace PlayTestToolkit.Editor
             EditorBuildSettingsScene sceneToAdd;
 
             // Get all scenes that have to be build
-            foreach (SceneAsset sceneToBuild in playtest.scenesToBuild)
+            foreach (SceneAsset sceneToBuild in playtest.ScenesToBuild)
             {
                 sceneToAdd = new EditorBuildSettingsScene(AssetDatabase.GetAssetPath(sceneToBuild), true);
                 newSettings.Add(sceneToAdd);

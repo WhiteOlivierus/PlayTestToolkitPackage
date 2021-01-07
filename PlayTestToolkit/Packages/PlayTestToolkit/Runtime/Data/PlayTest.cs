@@ -10,76 +10,81 @@ namespace PlayTestToolkit.Runtime.Data
     [Serializable]
     public class PlayTest : ScriptableObject
     {
-        [HideInInspector] [SerializeField] public string id = string.Empty;
-        [HideInInspector] [SerializeField] public string buildId = string.Empty;
-        [HideInInspector] [SerializeField] public string dataId = string.Empty;
+        [HideInInspector]
+        [SerializeField]
+        private string id = string.Empty;
+        public string Id { get => id; set => id = value; }
 
-        [HideInInspector] [SerializeField] public bool active = false;
-        [HideInInspector] [SerializeField] public int version = 0;
-        [HideInInspector] [SerializeField] public PlayTestCollection collection = default;
+        [HideInInspector]
+        [SerializeField]
+        private string buildId = string.Empty;
+        public string BuildId { get => buildId; set => buildId = value; }
 
-        [SerializeField] public string title = string.Empty;
-        [SerializeField] public string researchQuestion = string.Empty;
-        [SerializeField] public string description = string.Empty;
+        [HideInInspector]
+        [SerializeField]
+        private string dataId = string.Empty;
+        public string DataId { get => dataId; set => dataId = value; }
+
+        [HideInInspector]
+        [SerializeField]
+        private bool active = false;
+        public bool Active { get => active; set => active = value; }
+
+        [HideInInspector]
+        [SerializeField]
+        private int version = 0;
+        public int Version { get => version; set => version = value; }
+
+        [HideInInspector]
+        [SerializeField]
+        private PlayTestCollection collection = default;
+        public PlayTestCollection Collection { get => collection; set => collection = value; }
+
+        [SerializeField]
+        private string title = string.Empty;
+        public string Title { get => title; set => title = value; }
+
+        [SerializeField]
+        private string researchQuestion = string.Empty;
+        public string ResearchQuestion { get => researchQuestion; set => researchQuestion = value; }
+
+        [SerializeField]
+        private string description = string.Empty;
+        public string Description { get => description; set => description = value; }
 
 #if UNITY_EDITOR
-        [SerializeField] public List<SceneAsset> scenesToBuild = new List<SceneAsset>();
+        [SerializeField]
+        private List<SceneAsset> scenesToBuild = new List<SceneAsset>();
+        public List<SceneAsset> ScenesToBuild { get => scenesToBuild; set => scenesToBuild = value; }
 #endif
 
         [SerializeField]
-        public Collectors dataCollectors = new Collectors
+        private DataCollectors dataCollectors = new DataCollectors
         {
-            collectors = new List<Collector> {
-                new Collector {
-                    name = nameof(InputRecorder),
-                    active = false
+            Collectors = new List<DataCollector> {
+                new DataCollector {
+                    Name = nameof(InputRecorder),
+                    Active = false
                 }
             }
         };
+        public DataCollectors DataCollectors { get => dataCollectors; set => dataCollectors = value; }
 
-        [SerializeField] public string tutorialDescription = string.Empty;
-        [SerializeField] public List<InputKey> input = new List<InputKey>();
-        [SerializeField] public UnityEvent gameOverEvent = default;
-        [SerializeField] public string googleForm = string.Empty;
-    }
+        [SerializeField]
+        private string tutorialDescription = string.Empty;
+        public string TutorialDescription { get => tutorialDescription; set => tutorialDescription = value; }
 
-    [Serializable]
-    public class ConfigFile
-    {
-        public ConfigFile(PlayTest playtest)
-        {
-            Id = playtest.id;
+        [SerializeField]
+        private List<InputKey> gameInput = new List<InputKey>();
+        public List<InputKey> GameInput { get => gameInput; set => gameInput = value; }
 
-            BuildId = playtest.buildId;
-            DataId = playtest.dataId;
+        [SerializeField]
+        private UnityEvent gameOverEvent = default;
+        public UnityEvent GameOverEvent { get => gameOverEvent; set => gameOverEvent = value; }
 
-            Name = playtest.title;
-            ResearchQuestion = playtest.researchQuestion;
-            Description = playtest.description;
+        [SerializeField]
+        private string googleForm = string.Empty;
+        public string GoogleForm { get => googleForm; set => googleForm = value; }
 
-            Active = playtest.active;
-            Version = playtest.version;
-
-            TutorialDescription = playtest.tutorialDescription;
-            Input = playtest.input;
-
-            GoogleForm = playtest.googleForm;
-        }
-
-        public string Id { get; set; }
-
-        public string BuildId { get; set; }
-        public string DataId { get; set; }
-
-        public string Name { get; set; }
-        public string ResearchQuestion { get; set; }
-        public string Description { get; set; }
-
-        public bool Active { get; set; }
-        public int Version { get; set; }
-
-        public string TutorialDescription { get; set; }
-        public List<InputKey> Input { get; set; }
-        public string GoogleForm { get; set; }
     }
 }

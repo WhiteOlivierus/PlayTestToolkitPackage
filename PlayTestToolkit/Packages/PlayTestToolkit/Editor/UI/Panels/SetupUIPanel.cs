@@ -67,10 +67,10 @@ namespace PlayTestToolkit.Editor.UI
         {
             // TODO add more data validation
 
-            if (string.IsNullOrEmpty(playtest.title))
+            if (string.IsNullOrEmpty(playtest.Title))
                 throw new ArgumentNullException("Please give a name to the play test");
 
-            if (playtest.scenesToBuild.IsNullOrEmpty())
+            if (playtest.ScenesToBuild.IsNullOrEmpty())
                 throw new ArgumentNullException("Please add a scene to test play test");
 
             // Upload the con-fig

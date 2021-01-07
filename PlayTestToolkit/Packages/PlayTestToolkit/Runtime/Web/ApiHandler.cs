@@ -61,7 +61,7 @@ namespace PlayTestToolkit.Runtime.Web
 
         public static void UploadPlayTestConfig(PlayTest playtest)
         {
-            if (!string.IsNullOrEmpty(playtest.id))
+            if (!string.IsNullOrEmpty(playtest.Id))
                 return;
 
             ConfigFile config = new ConfigFile(playtest);
@@ -71,25 +71,25 @@ namespace PlayTestToolkit.Runtime.Web
             string message = HttpActions.JsonAction(data, API_CONFIG_ROUTE);
             Debug.Log(message);
 
-            playtest.id = JSONParser.FromJson<ConfigFile>(message).Id;
+            playtest.Id = JSONParser.FromJson<ConfigFile>(message).Id;
         }
 
         public static void UpdatePlayTestConfig(PlayTest playtest)
         {
-            if (string.IsNullOrEmpty(playtest.id))
+            if (string.IsNullOrEmpty(playtest.Id))
                 return;
 
             ConfigFile config = new ConfigFile(playtest);
 
             string data = JSONWriter.ToJson(config);
 
-            string message = HttpActions.JsonAction(data, $"{API_CONFIG_ROUTE}/{playtest.id}", "PUT");
+            string message = HttpActions.JsonAction(data, $"{API_CONFIG_ROUTE}/{playtest.Id}", "PUT");
             Debug.Log(message);
         }
 
         public static void DeletePlayTestConfig(PlayTest playtest)
         {
-            string message = HttpActions.JsonAction("", $"{API_CONFIG_ROUTE}/{playtest.id}", "DELETE");
+            string message = HttpActions.JsonAction("", $"{API_CONFIG_ROUTE}/{playtest.Id}", "DELETE");
             Debug.Log(message);
         }
     }

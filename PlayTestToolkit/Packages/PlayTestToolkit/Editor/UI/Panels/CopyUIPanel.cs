@@ -8,7 +8,7 @@ namespace PlayTestToolkit.Editor.UI
         public CopyUIPanel(PlayTestToolkitWindow playTestToolkitWindow, PlayTest playtest) : base(playTestToolkitWindow)
         {
             newPlayTest = Instantiate(playtest);
-            newPlayTest.active = false;
+            newPlayTest.Active = false;
             serializedObject = new SerializedObject(newPlayTest);
 
             create = () => Create(newPlayTest);
@@ -17,10 +17,10 @@ namespace PlayTestToolkit.Editor.UI
 
         protected override void Create(PlayTest playtest)
         {
-            playtest.version = playtest.collection.playtests.Count;
+            playtest.Version = playtest.Collection.playtests.Count;
 
-            playtest.id = string.Empty;
-            playtest.buildId = string.Empty;
+            playtest.Id = string.Empty;
+            playtest.BuildId = string.Empty;
 
             base.Create(playtest);
         }

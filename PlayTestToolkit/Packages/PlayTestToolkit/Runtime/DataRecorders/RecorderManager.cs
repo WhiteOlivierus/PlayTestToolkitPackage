@@ -39,7 +39,7 @@ namespace PlayTestToolkit.Runtime
             for (int i = 0; i < recorders.Count; i++)
                 recorders[i].Save(recordedData);
 
-            recordedData.ConfigId = playTestConfig.id;
+            recordedData.ConfigId = playTestConfig.Id;
 
             ApiHandler.UploadRecordedData(recordedData);
         }
@@ -54,15 +54,15 @@ namespace PlayTestToolkit.Runtime
 
         private void InitRecorders(PlayTest playTestConfig)
         {
-            foreach (Collector collector in playTestConfig.dataCollectors.collectors)
+            foreach (DataCollector collector in playTestConfig.DataCollectors.Collectors)
             {
-                if (!collector.active)
+                if (!collector.Active)
                     continue;
 
-                switch (collector.name)
+                switch (collector.Name)
                 {
                     case nameof(InputRecorder):
-                        recorders.Add(new InputRecorder(nameof(InputRecorder), playTestConfig.input.Select(e => e.key).ToList()));
+                        recorders.Add(new InputRecorder(nameof(InputRecorder), playTestConfig.GameInput.Select(e => e.key).ToList()));
                         break;
                     default:
                         Debug.LogWarning("No recorders found!");

@@ -36,7 +36,7 @@ namespace PlayTestToolkit.Editor
             {
                 PlayTestCollection createdCollection = ScriptableObject.CreateInstance<PlayTestCollection>();
 
-                createdCollection.title = playtest.title;
+                createdCollection.title = playtest.Title;
 
                 string collectionPath = CreateCollectionPath(playtest, createdCollection);
 
@@ -48,7 +48,7 @@ namespace PlayTestToolkit.Editor
 
             CreatePlayTestAsset(playtest, selectedCollection);
 
-            playtest.collection = selectedCollection;
+            playtest.Collection = selectedCollection;
 
             SafeAssetHandeling.SaveAsset(selectedCollection);
 
@@ -83,7 +83,7 @@ namespace PlayTestToolkit.Editor
             Cache.playTestCollections.Remove(collection);
             SafeAssetHandeling.RemoveAsset(collectionPath);
 
-            string playtestCacheFolder = CreatePath(new[] { playtest.title.OnlyLettersAndNumbers() }, string.Empty);
+            string playtestCacheFolder = CreatePath(new[] { playtest.Title.OnlyLettersAndNumbers() }, string.Empty);
 
             SafeAssetHandeling.RemoveAsset(playtestCacheFolder);
 
@@ -94,7 +94,7 @@ namespace PlayTestToolkit.Editor
         private static PlayTestCollection FindCollection(PlayTest playtest)
         {
             return (from selected in Cache.playTestCollections
-                    where selected.title == playtest.title
+                    where selected.title == playtest.Title
                     select selected).FirstOrDefault();
         }
 
@@ -114,9 +114,9 @@ namespace PlayTestToolkit.Editor
             PathUtilitities.PathBuilder(CACHE_PATH, folders, fileName);
 
         private static string CreatePlayTestPath(PlayTest playtest) =>
-            CreatePath(new[] { playtest.title.OnlyLettersAndNumbers() }, $"{playtest.version}.asset");
+            CreatePath(new[] { playtest.Title.OnlyLettersAndNumbers() }, $"{playtest.Version}.asset");
 
         private static string CreateCollectionPath(PlayTest playtest, PlayTestCollection createdCollection) =>
-            CreatePath(new[] { playtest.title.OnlyLettersAndNumbers() }, $"{createdCollection.title}.asset");
+            CreatePath(new[] { playtest.Title.OnlyLettersAndNumbers() }, $"{createdCollection.title}.asset");
     }
 }
