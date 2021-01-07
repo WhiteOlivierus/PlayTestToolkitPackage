@@ -7,11 +7,11 @@ namespace PlayTestToolkit.Runtime.DataRecorders
     public class InputObject
     {
         [SerializeField]
-        private float startTime = 0;
+        private float startTime;
         public float StartTime { get => startTime; set => startTime = value; }
 
         [SerializeField]
-        private float duration = 0;
+        private float duration;
         public float Duration { get => duration; set => duration = value; }
 
         [SerializeField]
