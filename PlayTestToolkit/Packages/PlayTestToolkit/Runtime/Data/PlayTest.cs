@@ -27,12 +27,12 @@ namespace PlayTestToolkit.Runtime.Data
 
         [HideInInspector]
         [SerializeField]
-        private bool active = false;
+        private bool active;
         public bool Active { get => active; set => active = value; }
 
         [HideInInspector]
         [SerializeField]
-        private int version = 0;
+        private int version;
         public int Version { get => version; set => version = value; }
 
         [HideInInspector]
@@ -55,7 +55,7 @@ namespace PlayTestToolkit.Runtime.Data
 #if UNITY_EDITOR
         [SerializeField]
         private List<SceneAsset> scenesToBuild = new List<SceneAsset>();
-        public List<SceneAsset> ScenesToBuild { get => scenesToBuild; set => scenesToBuild = value; }
+        public IList<SceneAsset> ScenesToBuild { get => scenesToBuild; set => scenesToBuild = (List<SceneAsset>)value; }
 #endif
 
         [SerializeField]
@@ -76,7 +76,7 @@ namespace PlayTestToolkit.Runtime.Data
 
         [SerializeField]
         private List<InputKey> gameInput = new List<InputKey>();
-        public List<InputKey> GameInput { get => gameInput; set => gameInput = value; }
+        public IList<InputKey> GameInput { get => gameInput; set => gameInput = (List<InputKey>)value; }
 
         [SerializeField]
         private UnityEvent gameOverEvent = default;

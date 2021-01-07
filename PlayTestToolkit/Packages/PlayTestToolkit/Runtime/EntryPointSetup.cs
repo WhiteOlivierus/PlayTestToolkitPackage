@@ -48,7 +48,7 @@ public class EntryPointSetup : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    private void PopulateListObject<T>(List<T> list, GameObject gameObjectList)
+    private void PopulateListObject<T>(IList<T> list, GameObject gameObjectList)
     {
         while (gameObjectList.transform.childCount > 1)
             DestroyImmediate(gameObjectList.transform.GetChild(1).gameObject);

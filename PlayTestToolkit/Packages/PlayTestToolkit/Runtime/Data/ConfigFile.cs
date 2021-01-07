@@ -39,7 +39,7 @@ namespace PlayTestToolkit.Runtime.Data
         public int Version { get; set; }
 
         public string TutorialDescription { get; set; }
-        public List<InputKey> Input { get; set; }
+        public IList<InputKey> Input { get; set; }
         public string GoogleForm { get; set; }
     }
 }
