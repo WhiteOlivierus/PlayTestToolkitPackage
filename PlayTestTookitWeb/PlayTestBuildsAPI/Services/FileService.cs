@@ -47,15 +47,6 @@ namespace PlayTestBuildsAPI.Services
                                select entry).FirstOrDefault();
 
             return File.ReadAllBytes(filePath);
-
-            using MemoryStream memoryStream = new MemoryStream();
-            using (StreamWriter streamWriter = new StreamWriter(memoryStream))
-            {
-                byte[] fileBytes = File.ReadAllBytes(filePath);
-                streamWriter.Write(fileBytes);
-            }
-
-            return memoryStream.ToArray();
         }
 
         public (string fileType, byte[] archiveData, string archiveName) FetechFiles(string filePath)

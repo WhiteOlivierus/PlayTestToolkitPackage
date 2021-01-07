@@ -4,7 +4,6 @@ using PlayTestBuildsAPI.Models;
 using PlayTestBuildsAPI.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PlayTestBuildsAPI.Controllers
 {
@@ -42,7 +41,7 @@ namespace PlayTestBuildsAPI.Controllers
         [DisableRequestSizeLimit]
         public ActionResult<string> Post()
         {
-            IFormFile file = Request.Form.Files.FirstOrDefault();
+            IFormFile file = Request.Form.Files[0];
 
             if (file == null)
                 return Conflict();

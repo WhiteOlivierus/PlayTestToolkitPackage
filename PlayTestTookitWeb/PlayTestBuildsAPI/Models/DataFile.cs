@@ -14,7 +14,7 @@ namespace PlayTestBuildsAPI.Models
 
         public double StartTime { get; set; }
 
-        public List<InputObject> Input { get; set; } = new List<InputObject>();
+        public IList<InputObject> Input { get; set; } = new List<InputObject>();
     }
 
     public class InputObject

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlayTestBuildsAPI.Models;
 using PlayTestBuildsAPI.Services;
-using System.Collections.Generic;
 
 namespace PlayTestBuildsAPI.Controllers
 {
@@ -21,16 +20,12 @@ namespace PlayTestBuildsAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public IActionResult Get() =>
+            Ok(_configService.Get());
 
         [HttpGet("{id}")]
-        public string Get(string id)
-        {
-            return "value";
-        }
+        public IActionResult Get(string id) =>
+            Ok(_configService.Get(id));
 
         [HttpPost]
         public IActionResult Post(ConfigFile configFile) =>
