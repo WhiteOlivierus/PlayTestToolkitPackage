@@ -11,15 +11,14 @@ namespace PlayTestToolkit.Runtime
 {
     public class RecorderManager : Singleton<RecorderManager>
     {
-        private RecordedData recordedData = new RecordedData();
+        private readonly RecordedData recordedData = new RecordedData();
         private readonly List<DataRecorder> recorders = new List<DataRecorder>();
 
-        // TODO maybe set this somewhere globally like in settings so we only need to load the config once
         private PlayTest playTestConfig;
 
         public void Awake()
         {
-            playTestConfig = CacheManager.GetPlayTestConfig();
+            playTestConfig = PlayTestToolkitSettings.PlayTestConfig;
 
             Init();
 

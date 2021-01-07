@@ -1,4 +1,6 @@
-﻿namespace PlayTestToolkit.Runtime
+﻿using PlayTestToolkit.Runtime.Data;
+
+namespace PlayTestToolkit.Runtime
 {
     public static class PlayTestToolkitSettings
     {
@@ -16,5 +18,19 @@
 
         public static readonly string PLAY_TEST_CONFIG_FILE = "PlayTestConfig";
         public static readonly string ENTRY_POINT_SCENE = "PlayTestEntryPoint";
+
+        private static PlayTest playTestConfig;
+
+        public static PlayTest PlayTestConfig
+        {
+            get
+            {
+                if (playTestConfig != null)
+                    return playTestConfig;
+
+                playTestConfig = CacheManager.GetPlayTestConfig();
+                return playTestConfig;
+            }
+        }
     }
 }

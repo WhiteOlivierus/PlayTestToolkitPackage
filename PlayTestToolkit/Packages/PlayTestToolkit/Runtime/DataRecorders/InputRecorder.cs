@@ -18,7 +18,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
 
         private readonly IList<InputObject> pressed = new List<InputObject>();
 
-        // TODO add a option to only track the game input
+        // TODO Add a option to track all or only the game input
         public InputRecorder(string cacheFileName, IList<KeyCode> lists) : base(AddExtension(cacheFileName))
         {
             if (lists.IsNullOrEmpty())

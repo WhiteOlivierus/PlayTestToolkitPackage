@@ -46,6 +46,8 @@ namespace PlayTestBuildsAPI.Services
                                where entry.Contains(subDirectory)
                                select entry).FirstOrDefault();
 
+            return File.ReadAllBytes(filePath);
+
             using MemoryStream memoryStream = new MemoryStream();
             using (StreamWriter streamWriter = new StreamWriter(memoryStream))
             {
