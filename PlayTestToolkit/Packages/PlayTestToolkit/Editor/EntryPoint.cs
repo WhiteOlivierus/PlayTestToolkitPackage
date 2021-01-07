@@ -10,17 +10,15 @@ using UnityEngine.SceneManagement;
 
 namespace PlayTestToolkit.Editor
 {
-    internal class EntryPoint
+    public static class EntryPoint
     {
-        private static string lastScene;
-
-        internal static EditorBuildSettingsScene Init(PlayTest playtest)
+        public static EditorBuildSettingsScene Init(PlayTest playtest)
         {
             EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
 
             IEnumerator<Scene> enumerator = SceneManagementExtension.GetAllLoadedScenes().GetEnumerator();
             enumerator.MoveNext();
-            lastScene = enumerator.Current.path;
+            string lastScene = enumerator.Current.path;
 
             EditorBuildSettingsScene entryPointScene = GetSceneByName(PlayTestToolkitSettings.ENTRY_POINT_SCENE);
 

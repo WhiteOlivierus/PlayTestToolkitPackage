@@ -21,7 +21,7 @@ namespace PlayTestBuildsAPI.Services
             finally { _dataFile = database.GetCollection<DataFile>(collectionName); }
         }
 
-        public List<DataFile> Get() =>
+        public IList<DataFile> Get() =>
             _dataFile.Find(dataFile => true).ToList();
 
         public DataFile Get(string id) =>

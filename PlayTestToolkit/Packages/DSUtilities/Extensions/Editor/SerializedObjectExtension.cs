@@ -38,14 +38,10 @@ public static class SerializedObjectExtension
 
         do
         {
-            switch (serializedProperty.name)
-            {
-                case "m_Script":
-                    break;
-                default:
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty(serializedProperty.name), true);
-                    break;
-            }
+            if (serializedProperty.name == "m_Script")
+                continue;
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(serializedProperty.name), true);
         }
         while (serializedProperty.NextVisible(false));
 

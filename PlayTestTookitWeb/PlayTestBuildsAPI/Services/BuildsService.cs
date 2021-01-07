@@ -21,7 +21,7 @@ namespace PlayTestBuildsAPI.Services
             finally { _buildFile = database.GetCollection<BuildFile>(collectionName); }
         }
 
-        public List<BuildFile> Get() =>
+        public IList<BuildFile> Get() =>
             _buildFile.Find(buildFile => true).ToList();
 
         public BuildFile Get(string id) =>

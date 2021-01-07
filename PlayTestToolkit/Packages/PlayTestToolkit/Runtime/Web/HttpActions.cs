@@ -7,7 +7,10 @@ namespace PlayTestToolkit.Runtime.Web
     public static class HttpActions
     {
         // https://stackoverflow.com/questions/27108264/how-to-properly-make-a-http-web-get-request
-        public static string JsonAction(string data, string uri, string method = "POST")
+        public static string JsonAction(string data, string uri) =>
+            JsonAction(data, uri, "POST");
+
+        public static string JsonAction(string data, string uri, string method)
         {
             byte[] dataBytes = Encoding.UTF8.GetBytes(data);
 

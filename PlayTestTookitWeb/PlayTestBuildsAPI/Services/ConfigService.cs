@@ -21,7 +21,7 @@ namespace PlayTestBuildsAPI.Services
             finally { _configFile = database.GetCollection<ConfigFile>(collectionName); }
         }
 
-        public List<ConfigFile> Get() =>
+        public IList<ConfigFile> Get() =>
             _configFile.Find(configFile => true).ToList();
 
         public ConfigFile Get(string id) =>
