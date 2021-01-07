@@ -24,7 +24,7 @@ namespace PlayTestToolkit.Runtime
 
         public static PlayTest GetPlayTestConfig()
         {
-            PlayTest playTest = Cache.config;
+            PlayTest playTest = Cache.Config;
 
             if (!playTest)
                 playTest = Resources.Load<PlayTest>(PlayTestToolkitSettings.PLAY_TEST_CONFIG_FILE);

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace PlayTestToolkit.Runtime.Web
 {
-    public class ApiHandler
+    public static class ApiHandler
     {
         private static readonly string API_CONFIG_ROUTE = PlayTestToolkitSettings.API_CONFIG_ROUTE;
 #if UNITY_EDITOR

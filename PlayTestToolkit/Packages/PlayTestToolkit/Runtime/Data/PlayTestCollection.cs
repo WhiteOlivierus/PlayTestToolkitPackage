@@ -7,8 +7,17 @@ namespace PlayTestToolkit.Runtime.Data
     [Serializable]
     public class PlayTestCollection : ScriptableObject
     {
-        public string title = string.Empty;
-        public List<PlayTest> playtests = new List<PlayTest>();
-        public bool fold = true;
+        [SerializeField]
+        private string title = string.Empty;
+        public string Title { get => title; set => title = value; }
+
+        [SerializeField]
+        private List<PlayTest> playtests = new List<PlayTest>();
+        public IList<PlayTest> Playtests { get => playtests; set => playtests = (List<PlayTest>)value; }
+
+        [SerializeField]
+        private bool fold = true;
+        public bool Fold { get => fold; set => fold = value; }
+
     }
 }

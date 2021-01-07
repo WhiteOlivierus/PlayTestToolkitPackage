@@ -8,22 +8,31 @@ using UnityEngine.UI;
 
 public class EntryPointSetup : MonoBehaviour
 {
+    [SerializeField]
+    private Toggle accept = default;
+    [SerializeField]
+    private Button startButton = default;
+
 #if UNITY_EDITOR
-    public TMP_Text description;
-    public TMP_Text tutorialDescription;
-    public GameObject tutorialInput;
-    public GameObject dataCollectors;
+    [SerializeField]
+    private TMP_Text description = default;
+    [SerializeField]
+    private TMP_Text tutorialDescription = default;
+    [SerializeField]
+    private GameObject tutorialInput = default;
+    [SerializeField]
+    private GameObject dataCollectors = default;
 #endif
 
-    public Toggle accept;
-    public Button startButton;
+    public void LoadPlayTest()
+    {
+        if (accept.isOn)
+            SceneManager.LoadScene(1);
+        else
+            accept.GetComponentInChildren<TMP_Text>().color = Color.red;
+    }
 
 #if UNITY_EDITOR
-    public PlayTest test;
-
-    [ContextMenu("TestingInfoPopulation")]
-    public void TestingInfoPopulation() =>
-        Init(test);
 
     public void Init(PlayTest playtest)
     {
@@ -37,17 +46,7 @@ public class EntryPointSetup : MonoBehaviour
         startButton.RemoveAllPresistentListener();
         startButton.onClick.AddPersistentListener(LoadPlayTest);
     }
-#endif
 
-    public void LoadPlayTest()
-    {
-        if (accept.isOn)
-            SceneManager.LoadScene(1);
-        else
-            accept.GetComponentInChildren<TMP_Text>().color = Color.red;
-    }
-
-#if UNITY_EDITOR
     private void PopulateListObject<T>(IList<T> list, GameObject gameObjectList)
     {
         while (gameObjectList.transform.childCount > 1)

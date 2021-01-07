@@ -44,7 +44,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
                 if (!Input.GetKeyDown(key))
                     continue;
 
-                InputObject InputRecord = new InputObject(Time.realtimeSinceStartup, key.ToString());
+                InputObject InputRecord = new InputObject { StartTime = Time.realtimeSinceStartup, Key = key.ToString() };
                 pressed.Add(InputRecord);
             }
         }
@@ -54,11 +54,11 @@ namespace PlayTestToolkit.Runtime.DataRecorders
             for (int i = 0; i < pressed.Count; i++)
             {
                 InputObject key = pressed[i];
-                KeyCode keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), key.key);
+                KeyCode keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), key.Key);
                 if (!Input.GetKeyUp(keyCode))
                     continue;
 
-                key.duration = Time.realtimeSinceStartup - key.startTime;
+                key.Duration = Time.realtimeSinceStartup - key.StartTime;
 
                 captured.Add(key);
                 pressed.RemoveAt(i);

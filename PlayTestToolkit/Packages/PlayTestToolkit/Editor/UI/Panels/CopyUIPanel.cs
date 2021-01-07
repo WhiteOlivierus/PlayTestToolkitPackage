@@ -17,7 +17,7 @@ namespace PlayTestToolkit.Editor.UI
 
         protected override void Create(PlayTest playtest)
         {
-            playtest.Version = playtest.Collection.playtests.Count;
+            playtest.Version = playtest.Collection.Playtests.Count;
 
             playtest.Id = string.Empty;
             playtest.BuildId = string.Empty;

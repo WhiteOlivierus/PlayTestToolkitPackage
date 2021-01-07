@@ -1,7 +1,11 @@
-﻿namespace PlayTestToolkit.Runtime.DataRecorders
+﻿using UnityEngine;
+
+namespace PlayTestToolkit.Runtime.DataRecorders
 {
     public class InitialData
     {
-        public double startTime;
+        [SerializeField]
+        private double startTime;
+        public double StartTime { get => startTime; set => startTime = value; }
     }
 }

@@ -20,7 +20,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
         {
             DateTime value = new DateTime(1970, 1, 1);
             double totalMilliseconds = (int)DateTime.UtcNow.Subtract(value).TotalMilliseconds;
-            captured.startTime = Math.Abs(totalMilliseconds);
+            captured.StartTime = Math.Abs(totalMilliseconds);
         }
 
         public override void Save(RecordedData recordedData)
@@ -31,7 +31,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
             writer.WriteLine(json);
             writer.Flush();
 
-            recordedData.StartTime = captured.startTime;
+            recordedData.StartTime = captured.StartTime;
 
             base.Save(recordedData);
         }

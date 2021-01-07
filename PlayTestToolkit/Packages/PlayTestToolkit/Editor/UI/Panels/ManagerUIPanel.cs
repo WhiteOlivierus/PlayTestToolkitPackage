@@ -54,7 +54,7 @@ namespace PlayTestToolkit.Editor.UI
 
             GUILayout.Label("List of play tests");
 
-            RenderCollections(Cache.playTestCollections);
+            RenderCollections(Cache.PlayTestCollections);
         }
 
         private void RenderHeader()
@@ -63,7 +63,7 @@ namespace PlayTestToolkit.Editor.UI
             GUILayout.Box(headerTexture, GUILayout.ExpandWidth(true));
         }
 
-        private void RenderCollections(List<PlayTestCollection> playTestCollections)
+        private void RenderCollections(IList<PlayTestCollection> playTestCollections)
         {
             if (playTestCollections.IsNullOrEmpty()) return;
 
@@ -73,14 +73,14 @@ namespace PlayTestToolkit.Editor.UI
 
                 RenderCollection(playTestCollection);
 
-                if (!playTestCollection.fold)
+                if (!playTestCollection.Fold)
                     continue;
 
-                RenderPlayTests(playTestCollection.playtests);
+                RenderPlayTests(playTestCollection.Playtests);
             }
         }
 
-        private void RenderPlayTests(List<PlayTest> playTests)
+        private void RenderPlayTests(IList<PlayTest> playTests)
         {
             if (playTests.IsNullOrEmpty())
                 throw new ArgumentNullException(nameof(playTests));
@@ -99,7 +99,7 @@ namespace PlayTestToolkit.Editor.UI
         {
             GUILayout.BeginHorizontal();
 
-            playTestCollection.fold = EditorGUILayout.Foldout(playTestCollection.fold, playTestCollection.title);
+            playTestCollection.Fold = EditorGUILayout.Foldout(playTestCollection.Fold, playTestCollection.Title);
 
             GUILayout.EndHorizontal();
         }

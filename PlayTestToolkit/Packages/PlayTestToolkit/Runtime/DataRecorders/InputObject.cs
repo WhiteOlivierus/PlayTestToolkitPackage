@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Numerics;
+using UnityEngine;
 
 namespace PlayTestToolkit.Runtime.DataRecorders
 {
     [Serializable]
     public class InputObject
     {
-        public InputObject(float startTime, string key)
-        {
-            this.startTime = startTime;
-            this.key = key;
-        }
+        [SerializeField]
+        private float startTime = 0;
+        public float StartTime { get => startTime; set => startTime = value; }
 
-        public float startTime = 0;
-        public float duration = 0;
-        public string key = string.Empty;
-        public Vector2 screenSpacePosition = new Vector2();
+        [SerializeField]
+        private float duration = 0;
+        public float Duration { get => duration; set => duration = value; }
+
+        [SerializeField]
+        private string key = string.Empty;
+        public string Key { get => key; set => key = value; }
+
+        [SerializeField]
+        private System.Numerics.Vector2 screenSpacePosition = new System.Numerics.Vector2();
+        public System.Numerics.Vector2 ScreenSpacePosition { get => screenSpacePosition; set => screenSpacePosition = value; }
     }
 }

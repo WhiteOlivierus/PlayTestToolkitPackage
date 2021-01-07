@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using UnityEditor;
 
 #if UNITY_EDITOR
 namespace PlayTestToolkit.Runtime.Web

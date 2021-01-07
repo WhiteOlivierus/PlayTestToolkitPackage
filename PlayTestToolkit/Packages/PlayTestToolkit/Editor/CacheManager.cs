@@ -36,12 +36,12 @@ namespace PlayTestToolkit.Editor
             {
                 PlayTestCollection createdCollection = ScriptableObject.CreateInstance<PlayTestCollection>();
 
-                createdCollection.title = playtest.Title;
+                createdCollection.Title = playtest.Title;
 
                 string collectionPath = CreateCollectionPath(playtest, createdCollection);
 
                 SafeAssetHandeling.CreateAsset(createdCollection, collectionPath);
-                Cache.playTestCollections.Add(createdCollection);
+                Cache.PlayTestCollections.Add(createdCollection);
 
                 selectedCollection = createdCollection;
             }
@@ -59,7 +59,7 @@ namespace PlayTestToolkit.Editor
         {
             string playtestPath = CreatePlayTestPath(playtest);
 
-            collection.playtests.Add(playtest);
+            collection.Playtests.Add(playtest);
 
             SafeAssetHandeling.CreateAsset(playtest, playtestPath);
         }
@@ -71,16 +71,16 @@ namespace PlayTestToolkit.Editor
 
             string playtestPath = CreatePlayTestPath(playtest);
 
-            collection.playtests.Remove(playtest);
+            collection.Playtests.Remove(playtest);
             SafeAssetHandeling.RemoveAsset(playtestPath);
 
             // TODO change too different the if around
-            if (!collection.playtests.IsNullOrEmpty())
+            if (!collection.Playtests.IsNullOrEmpty())
                 return;
 
             string collectionPath = CreateCollectionPath(playtest, collection);
 
-            Cache.playTestCollections.Remove(collection);
+            Cache.PlayTestCollections.Remove(collection);
             SafeAssetHandeling.RemoveAsset(collectionPath);
 
             string playtestCacheFolder = CreatePath(new[] { playtest.Title.OnlyLettersAndNumbers() }, string.Empty);
@@ -93,14 +93,14 @@ namespace PlayTestToolkit.Editor
 
         private static PlayTestCollection FindCollection(PlayTest playtest)
         {
-            return (from selected in Cache.playTestCollections
-                    where selected.title == playtest.Title
+            return (from selected in Cache.PlayTestCollections
+                    where selected.Title == playtest.Title
                     select selected).FirstOrDefault();
         }
 
         public static void SetConfigPlayTest(PlayTest playtest)
         {
-            Cache.config = playtest;
+            Cache.Config = playtest;
 
             SafeAssetHandeling.SaveAsset(Cache);
 
@@ -117,6 +117,6 @@ namespace PlayTestToolkit.Editor
             CreatePath(new[] { playtest.Title.OnlyLettersAndNumbers() }, $"{playtest.Version}.asset");
 
         private static string CreateCollectionPath(PlayTest playtest, PlayTestCollection createdCollection) =>
-            CreatePath(new[] { playtest.Title.OnlyLettersAndNumbers() }, $"{createdCollection.title}.asset");
+            CreatePath(new[] { playtest.Title.OnlyLettersAndNumbers() }, $"{createdCollection.Title}.asset");
     }
 }
