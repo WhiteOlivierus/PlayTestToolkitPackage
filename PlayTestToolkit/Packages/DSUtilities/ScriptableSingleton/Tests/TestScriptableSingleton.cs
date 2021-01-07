@@ -25,13 +25,13 @@ namespace Tests
 
             string randomstring = Generate.String(20);
 
-            a.test = randomstring;
+            a.Test = randomstring;
 
             AssetDatabase.SaveAssets();
 
             a = ScriptableSingleton.GetInstance<DerivedClassA>();
 
-            Assert.AreEqual(a.test, randomstring);
+            Assert.AreEqual(a.Test, randomstring);
         }
 
         [Test, Order(2)]
