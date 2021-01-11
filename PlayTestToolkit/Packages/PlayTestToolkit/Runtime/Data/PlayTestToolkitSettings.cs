@@ -1,13 +1,15 @@
 ﻿using PlayTestToolkit.Runtime.Data;
+using UnityEditor;
 
 namespace PlayTestToolkit.Runtime
 {
+    [InitializeOnLoad]
     public static class PlayTestToolkitSettings
     {
         public static readonly string PROJECT_TITLE_NO_SPACES = "PlayTestToolkit";
         public static readonly string PROJECT_TITLE = "Play Test Toolkit";
         public static readonly string WEB_INTERFACE_URI = "http://google.com";
-        public static readonly string API_URI = "https://localhost:8001";
+        public static readonly string API_URI = "https://34.90.156.99";
         public static readonly string API_BUILDS_ROUTE = $"{API_URI}/api/builds";
         public static readonly string API_CONFIG_ROUTE = $"{API_URI}/api/config";
         public static readonly string API_DATA_ROUTE = $"{API_URI}/api/data";
@@ -32,5 +34,6 @@ namespace PlayTestToolkit.Runtime
                 return playTestConfig;
             }
         }
+
     }
 }

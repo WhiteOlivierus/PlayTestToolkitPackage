@@ -31,6 +31,15 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
       - ME_CONFIG_MONGODB_SERVER=mongodb
 
+  playtestwebui:
+    image: ${DOCKER_REGISTRY-}playtestwebui
+    ports:
+        - 80:80
+        - 443:443
+    build:
+      context: .
+      dockerfile: PlayTestWebUI/Dockerfile
+
 volumes:
   mongo-data:
     driver: local

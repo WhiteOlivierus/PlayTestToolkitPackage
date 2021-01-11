@@ -35,7 +35,7 @@ namespace PlayTestToolkit.Runtime.Web
 
         public static string Get(string uri, string id)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{uri}/{id}");
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())

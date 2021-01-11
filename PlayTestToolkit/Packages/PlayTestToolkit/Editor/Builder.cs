@@ -15,39 +15,41 @@ namespace PlayTestToolkit.Editor
     {
         public static bool Build(PlayTest playtest)
         {
-            if (!EditorUtility.DisplayDialog("Start build",
-                                 "This will start a build of your game. Are you sure you want to do this now?",
-                                 "Yes",
-                                 "No"))
-                return false;
+            string zipPath = playtest.ZipPath;
 
-            CacheManager.SetConfigPlayTest(playtest);
+            if (string.IsNullOrEmpty(zipPath))
+            {
 
-            IList<EditorBuildSettingsScene> scenesToBuild = GetPlayTestScenes(playtest);
+                if (!EditorUtility.DisplayDialog("Start build",
+                                     "This will start a build of your game. Are you sure you want to do this now?",
+                                     "Yes",
+                                     "No"))
+                    return false;
 
-            scenesToBuild.Insert(0, EntryPoint.Init(playtest));
+                IList<EditorBuildSettingsScene> scenesToBuild = InitializeBuild(playtest);
 
-            string playTestTitle = playtest.Title.OnlyLettersAndNumbers();
-            string versionName = $"{playTestTitle}V{playtest.Version}";
+                string playTestTitle = playtest.Title.OnlyLettersAndNumbers();
+                string versionName = $"{playTestTitle}V{playtest.Version}";
 
-            string exePath = CreatePath(playTestTitle, versionName, $"{versionName}.exe");
-            BuildReport report = BuildPlayTest(exePath, scenesToBuild);
+                string exePath = CreatePath(playTestTitle, versionName, $"{versionName}.exe");
 
-            // TODO add a flag if the build was success full. So you don't have to build again if upload fails.
-            if (report.summary.result != BuildResult.Succeeded)
-                return false;
+                if (!BuildPlayTest(exePath, scenesToBuild))
+                    return false;
 
-            EditorUtility.DisplayProgressBar("Zipping", "Zipping the build before uploading.", 0f);
+                EditorUtility.DisplayProgressBar("Zipping", "Zipping the build before uploading.", 0f);
 
-            string folderPath = CreatePath(playTestTitle, versionName, string.Empty);
-            string zipPath = CreatePath(playTestTitle, string.Empty, $"{versionName}.zip");
+                string folderPath = CreatePath(playTestTitle, versionName, string.Empty);
+                zipPath = CreatePath(playTestTitle, string.Empty, $"{versionName}.zip");
 
-            if (File.Exists(zipPath))
-                File.Delete(zipPath);
+                if (File.Exists(zipPath))
+                    File.Delete(zipPath);
 
-            ZipFile.CreateFromDirectory(folderPath, zipPath);
+                ZipFile.CreateFromDirectory(folderPath, zipPath);
 
-            EditorUtility.ClearProgressBar();
+                playtest.ZipPath = zipPath;
+
+                EditorUtility.ClearProgressBar();
+            }
 
             EditorUtility.DisplayProgressBar("Uploading", "Upload of build in progress.", 0f);
 
@@ -66,6 +68,16 @@ namespace PlayTestToolkit.Editor
             return true;
         }
 
+        private static IList<EditorBuildSettingsScene> InitializeBuild(PlayTest playtest)
+        {
+            CacheManager.SetConfigPlayTest(playtest);
+
+            IList<EditorBuildSettingsScene> scenesToBuild = GetPlayTestScenes(playtest);
+
+            scenesToBuild.Insert(0, EntryPoint.Init(playtest));
+            return scenesToBuild;
+        }
+
         private static string CreatePath(string rootFolderName, string versionName, string fileName)
         {
             return PathUtilitities.PathBuilder(PlayTestToolkitSettings.PLAY_TEST_BUILD_PATH,
@@ -73,10 +85,12 @@ namespace PlayTestToolkit.Editor
                                                $"{fileName}");
         }
 
-        private static BuildReport BuildPlayTest(string path, IList<EditorBuildSettingsScene> scenesToBuild)
+        private static bool BuildPlayTest(string exePath, IList<EditorBuildSettingsScene> scenesToBuild)
         {
             BuildTarget activeBuildTarget = EditorUserBuildSettings.activeBuildTarget;
-            return BuildPipeline.BuildPlayer(scenesToBuild.ToArray(), path, activeBuildTarget, BuildOptions.AllowDebugging);
+            BuildReport report = BuildPipeline.BuildPlayer(scenesToBuild.ToArray(), exePath, activeBuildTarget, BuildOptions.None);
+
+            return report.summary.result == BuildResult.Succeeded;
         }
 
         private static IList<EditorBuildSettingsScene> GetPlayTestScenes(PlayTest playtest)

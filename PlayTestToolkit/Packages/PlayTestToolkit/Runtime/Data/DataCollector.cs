@@ -1,23 +1,24 @@
-﻿using System;
+﻿using PlayTestToolkit.Runtime.DataRecorders;
+using System;
 using UnityEngine;
 
 namespace PlayTestToolkit.Runtime.Data
 {
     [Serializable]
-    public struct DataCollector : IEquatable<DataCollector>
+    public class DataCollector
     {
         [SerializeField]
-        private string name;
-        public string Name { get => name; set => name = value; }
+        private BaseRecorder recorder;
+        public BaseRecorder Recorder { get => recorder; set => recorder = value; }
 
         [SerializeField]
         private bool active;
         public bool Active { get => active; set => active = value; }
 
         public bool Equals(DataCollector other) =>
-            (other.Name, other.Active) == (Name, Active);
+            (other.Recorder, other.Active) == (Recorder, Active);
 
         public override string ToString() =>
-            Name;
+            nameof(Recorder);
     }
 }

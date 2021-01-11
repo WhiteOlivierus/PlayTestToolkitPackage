@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PlayTestBuildsAPI.Models;
 using PlayTestBuildsAPI.Services;
 using System;
-using System.Collections.Generic;
 
 namespace PlayTestBuildsAPI.Controllers
 {
@@ -21,8 +20,8 @@ namespace PlayTestBuildsAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<BuildFile>> Get() =>
-            _buildsService.Get();
+        public ActionResult Get() =>
+            Ok(_buildsService.Get());
 
         [HttpGet("{id}")]
         public ActionResult Get(string id)

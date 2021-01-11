@@ -3,6 +3,8 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+RUN mkdir -p /usr/builds
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["PlayTestBuildsAPI/PlayTestBuildsAPI.csproj", "PlayTestBuildsAPI/"]
@@ -17,6 +19,10 @@ RUN dotnet publish "PlayTestBuildsAPI.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+COPY ["PlayTestBuildsAPI/Certificates/servercert.pfx", "/https/servercert.pfx"]
+COPY ["PlayTestBuildsAPI/Certificates/cacert.crt", "/usr/local/share/ca-certificates/cacert.crt"]
+RUN update-ca-certificates
+
 ENTRYPOINT ["dotnet", "PlayTestBuildsAPI.dll"]
 
-RUN mkdir -p /builds

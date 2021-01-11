@@ -74,9 +74,13 @@ namespace PlayTestToolkit.Editor.UI
                 throw new ArgumentNullException("Please add a scene to test play test");
 
             // Upload the con-fig
-            ApiHandler.UploadPlayTestConfig(playtest);
-
-            CacheManager.AddPlayTest(playtest);
+            try { ApiHandler.UploadPlayTestConfig(playtest); }
+            catch
+            {
+                // TODO give a good error                
+                Debug.LogWarning("Could not connect to server.");
+            }
+            finally { CacheManager.AddPlayTest(playtest); }
 
             Cancel();
         }

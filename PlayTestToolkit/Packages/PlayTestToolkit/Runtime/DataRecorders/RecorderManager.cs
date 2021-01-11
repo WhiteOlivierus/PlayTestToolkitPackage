@@ -12,7 +12,7 @@ namespace PlayTestToolkit.Runtime
     public class RecorderManager : Singleton<RecorderManager>
     {
         private readonly RecordedData recordedData = new RecordedData();
-        private readonly List<DataRecorder> recorders = new List<DataRecorder>();
+        private readonly List<BaseRecorder> recorders = new List<BaseRecorder>();
 
         private PlayTest playTestConfig;
 
@@ -54,15 +54,15 @@ namespace PlayTestToolkit.Runtime
 
         private void InitRecorders(PlayTest playTestConfig)
         {
-            foreach (DataCollector collector in playTestConfig.DataCollectors.Collectors)
+            foreach (BaseRecorder collector in playTestConfig.Recorders)
             {
                 if (!collector.Active)
                     continue;
 
-                switch (collector.Name)
+                switch (collector)
                 {
-                    case nameof(InputRecorder):
-                        recorders.Add(new InputRecorder(nameof(InputRecorder), playTestConfig.GameInput.Select(e => e.Key).ToList()));
+                    case InputRecorder recorder:
+                        recorders.Add(new InputRecorder(playTestConfig.GameInput.Select(e => e.Key).ToList()));
                         break;
                     default:
                         Debug.LogWarning("No recorders found!");

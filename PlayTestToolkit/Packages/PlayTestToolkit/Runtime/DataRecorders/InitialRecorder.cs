@@ -5,7 +5,7 @@ using TinyJson;
 
 namespace PlayTestToolkit.Runtime.DataRecorders
 {
-    public class InitialRecorder : DataRecorder
+    public class InitialRecorder : BaseRecorder
     {
         private const string FORMAT_EXTENSION = ".json";
 

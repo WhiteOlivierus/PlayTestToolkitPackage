@@ -24,8 +24,10 @@ namespace PlayTestToolkit.Runtime.Web
 
                 FormUpload.FileParameter fileParameter = new FormUpload.FileParameter(fileBytes, filename, "application/zip");
 
-                Dictionary<string, object> postParameters = new Dictionary<string, object>();
-                postParameters.Add("zip", fileParameter);
+                Dictionary<string, object> postParameters = new Dictionary<string, object>
+                {
+                    { "zip", fileParameter }
+                };
 
                 response = FormUpload.MultipartFormPost(PlayTestToolkitSettings.API_BUILDS_ROUTE, "POST", postParameters);
             }

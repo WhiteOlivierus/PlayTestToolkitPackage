@@ -9,25 +9,24 @@ using UnityEngine;
 
 namespace PlayTestToolkit.Runtime.DataRecorders
 {
-    public class InputRecorder : DataRecorder
+    [Serializable]
+    public class InputRecorder : BaseRecorder
     {
-        private const string FORMAT_EXTENSION = ".json";
-
         private readonly IList<InputObject> captured = new List<InputObject>();
         private readonly IList<KeyCode> keys = new List<KeyCode>();
 
         private readonly IList<InputObject> pressed = new List<InputObject>();
 
         // TODO Add a option to track all or only the game input
-        public InputRecorder(string cacheFileName, IList<KeyCode> lists) : base(AddExtension(cacheFileName))
+        public InputRecorder() : this(default) { }
+
+        public InputRecorder(IList<KeyCode> lists) : base(nameof(InputRecorder))
         {
             if (lists.IsNullOrEmpty())
                 keys = Enum.GetValues(typeof(KeyCode)).OfType<KeyCode>().ToList();
             else
                 keys = lists;
         }
-        private static string AddExtension(string cacheFileName) =>
-            cacheFileName + FORMAT_EXTENSION;
 
         public override void Record()
         {

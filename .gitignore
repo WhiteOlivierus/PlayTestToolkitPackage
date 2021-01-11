@@ -104,3 +104,4 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 /Documentation/html
+/PlayTestTookitWeb/PlayTestBuildsAPI/Certificates

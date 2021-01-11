@@ -11,9 +11,9 @@ namespace PlayTestToolkit.Runtime.Data
             EditorGUI.BeginProperty(position, label, property);
 
             SerializedProperty active = property.FindPropertyRelative("active");
-            SerializedProperty name = property.FindPropertyRelative("name");
+            SerializedProperty recorder = property.FindPropertyRelative("recorder");
 
-            active.boolValue = EditorGUI.Toggle(position, name.stringValue, active.boolValue);
+            active.boolValue = EditorGUI.Toggle(position, recorder.objectReferenceValue.ToString(), active.boolValue);
 
             position.y += EditorGUI.GetPropertyHeight(property);
 

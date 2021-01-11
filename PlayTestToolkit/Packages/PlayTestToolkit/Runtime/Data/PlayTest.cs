@@ -59,16 +59,11 @@ namespace PlayTestToolkit.Runtime.Data
 #endif
 
         [SerializeField]
-        private DataCollectors dataCollectors = new DataCollectors
+        private DataRecorders recorders = new DataRecorders
         {
-            Collectors = new List<DataCollector> {
-                new DataCollector {
-                    Name = nameof(InputRecorder),
-                    Active = false
-                }
-            }
+            Collectors = { new InputRecorder() }
         };
-        public DataCollectors DataCollectors { get => dataCollectors; set => dataCollectors = value; }
+        public IList<BaseRecorder> Recorders { get => recorders.Collectors; set => recorders.Collectors = (List<BaseRecorder>)value; }
 
         [SerializeField]
         private string tutorialDescription = string.Empty;
@@ -86,5 +81,9 @@ namespace PlayTestToolkit.Runtime.Data
         private string googleForm = string.Empty;
         public string GoogleForm { get => googleForm; set => googleForm = value; }
 
+        [HideInInspector]
+        [SerializeField]
+        private string zipPath;
+        public string ZipPath { get => zipPath; set => zipPath = value; }
     }
 }
