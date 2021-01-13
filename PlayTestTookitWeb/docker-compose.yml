@@ -18,7 +18,7 @@ services:
     depends_on:
         - playtestbuildsapi
     ports:
-        - 5000:80
+        - 1:80
     build:
       context: .
       dockerfile: PlayTestWebUI/Dockerfile
@@ -29,7 +29,7 @@ services:
     depends_on:
         - mongodb
     ports:
-        - 8000:80
+        - 2:80
     build:
       context: .
       dockerfile: PlayTestBuildsAPI/Dockerfile

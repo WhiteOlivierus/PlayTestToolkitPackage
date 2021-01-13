@@ -10,7 +10,7 @@ namespace PlayTestWebUI.Pages
 {
     public partial class Index
     {
-        private List<ConfigFile> projects = new List<ConfigFile>();
+        private List<ConfigFile> projects;
 
         protected override async Task OnInitializedAsync() => await GetProjects();
 
@@ -18,7 +18,7 @@ namespace PlayTestWebUI.Pages
         {
             using HttpClient client = new HttpClient
             {
-                BaseAddress = new("http://PlayTestBuildsAPI/")
+                BaseAddress = new("http://PlayTestBuildsAPI:80")
             };
 
             client.DefaultRequestHeaders.Accept.Clear();

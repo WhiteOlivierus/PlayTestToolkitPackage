@@ -5,4 +5,8 @@
 
 Welcome to your new app.
 
-@projects
+@if(projects != null){
+    foreach(var item in projects){
+        <p>@item.Id</p>
+    }
+}
