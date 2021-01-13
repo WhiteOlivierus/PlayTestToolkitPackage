@@ -105,3 +105,4 @@ msbuild.wrn
 .vs/
 /Documentation/html
 /PlayTestTookitWeb/PlayTestBuildsAPI/Certificates
+/PlayTestTookitWeb/%USERPROFILE%/.aspnet/https

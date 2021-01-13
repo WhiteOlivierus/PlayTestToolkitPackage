@@ -20,9 +20,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-COPY ["PlayTestBuildsAPI/Certificates/servercert.pfx", "/https/servercert.pfx"]
-COPY ["PlayTestBuildsAPI/Certificates/cacert.crt", "/usr/local/share/ca-certificates/cacert.crt"]
-RUN update-ca-certificates
-
 ENTRYPOINT ["dotnet", "PlayTestBuildsAPI.dll"]
 
