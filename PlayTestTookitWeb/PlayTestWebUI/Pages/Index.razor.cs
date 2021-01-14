@@ -1,6 +1,7 @@
-﻿using PlayTestBuildsAPI.Models;
+﻿using PlayTestWebUI.Models;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -10,11 +11,13 @@ namespace PlayTestWebUI.Pages
 {
     public partial class Index
     {
-        private List<ConfigFile> projects;
+        private IList<ConfigFile> Projects { get; set; } = new List<ConfigFile>();
 
-        protected override async Task OnInitializedAsync() => await GetProjects();
+        private bool HasProjects { get => Projects.Any(); }
 
-        private async Task GetProjects()
+        protected override async Task OnInitializedAsync() => await RefreshProjects();
+
+        private async Task RefreshProjects()
         {
             using HttpClient client = new HttpClient
             {
@@ -29,7 +32,9 @@ namespace PlayTestWebUI.Pages
                 return;
 
             Stream stream = await response.Content.ReadAsStreamAsync();
-            projects = await JsonSerializer.DeserializeAsync<List<ConfigFile>>(stream);
+            Projects = await JsonSerializer.DeserializeAsync<IList<ConfigFile>>(stream);
+
+            StateHasChanged();
         }
     }
 }

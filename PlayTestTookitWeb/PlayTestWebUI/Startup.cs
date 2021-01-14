@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace PlayTestWebUI
 {
@@ -23,7 +24,12 @@ namespace PlayTestWebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddHttpClient();
+
+            services.AddHttpClient("api", client =>
+            {
+                client.BaseAddress = new Uri("http://PlayTestBuildsAPI:80");
+            });
+
             services.AddServerSideBlazor();
 
             if (!Env.IsDevelopment())

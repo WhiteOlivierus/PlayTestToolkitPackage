@@ -5,8 +5,14 @@
 
 Welcome to your new app.
 
-@if(projects != null){
-    foreach(var item in projects){
-        <p>@item.Id</p>
+@if (!HasProjects)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach(var project in Projects)
+    {
+        <p>@project.Id</p>
     }
 }
