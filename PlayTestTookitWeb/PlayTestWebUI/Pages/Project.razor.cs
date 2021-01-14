@@ -1,4 +1,5 @@
-﻿using PlayTestWebUI.Models;
+﻿using Microsoft.AspNetCore.Components;
+using PlayTestWebUI.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,11 +10,13 @@ using System.Threading.Tasks;
 
 namespace PlayTestWebUI.Pages
 {
-    public partial class Index
+    public partial class Project : ComponentBase
     {
-        private IList<ConfigFile> Projects { get; set; } = new List<ConfigFile>();
+        [Parameter] public string Title { get; set; }
 
-        private bool HasProjects { get => Projects.Any(); }
+        private IList<ConfigFile> Playtests { get; set; } = new List<ConfigFile>();
+
+        private bool HasPlaytests { get => Playtests.Any(); }
 
         protected override async Task OnInitializedAsync() => await RefreshProjects();
 
@@ -26,13 +29,13 @@ namespace PlayTestWebUI.Pages
 
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = await client.GetAsync("/api/config");
+            HttpResponseMessage response = await client.GetAsync($"/api/config");
 
             if (!response.IsSuccessStatusCode)
                 return;
 
             Stream stream = await response.Content.ReadAsStreamAsync();
-            Projects = await JsonSerializer.DeserializeAsync<IList<ConfigFile>>(stream);
+            Playtests = await JsonSerializer.DeserializeAsync<IList<ConfigFile>>(stream);
         }
     }
 }

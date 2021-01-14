@@ -1,5 +1,4 @@
 ﻿@page "/"
-@inject HttpClient Http
 
 <h1>Hello, world!</h1>
 
@@ -13,6 +12,7 @@ else
 {
     @foreach(var project in Projects)
     {
-        <p>@project.Id</p>
+        <br>
+        <a href="/project/@project.Id">@project.Name</a>
     }
 }
