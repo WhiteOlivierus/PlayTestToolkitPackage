@@ -1,8 +1,8 @@
-﻿ @page "/project/{Title}"
+﻿ @page "/playtest/{Title}"
 
 <h3>@Title</h3>
 
-@if (!HasPlaytests)
+@if (!HasData)
 {
     <p><em>Loading...</em></p>
 }
@@ -19,15 +19,10 @@ else
         </tr>
       </thead>
       <tbody>
-    @foreach(var project in Playtests)
+    @foreach(var project in Data)
     {
         <tr>
-          <td>@project.Active</td>
-          <td>@project.Name</td>
-          <td>@project.Version</td>
-          <td>@project.ResearchQuestion</td>
-          <td>@project.Description</td>
-          <td><a href="/playtest/@project.Id">Go to data</a></td>
+          <td>@project.StartTime</td>
         </tr>
     }
       </tbody>
