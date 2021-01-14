@@ -12,6 +12,10 @@ namespace PlayTestWebUI.Models
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        [JsonPropertyName("projectName")]
+        public string ProjectName { get; set; }
+
         [JsonPropertyName("researchQuestion")]
         public string ResearchQuestion { get; set; }
         [JsonPropertyName("description")]

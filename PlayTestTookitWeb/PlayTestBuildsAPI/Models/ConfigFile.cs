@@ -13,6 +13,7 @@ namespace PlayTestBuildsAPI.Models
 
 
         public string Name { get; set; }
+        public string ProjectName { get; set; }
         public string ResearchQuestion { get; set; }
         public string Description { get; set; }
 

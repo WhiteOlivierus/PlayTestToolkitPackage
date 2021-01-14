@@ -35,7 +35,15 @@ namespace PlayTestWebUI.Pages
                 return;
 
             Stream stream = await response.Content.ReadAsStreamAsync();
-            Playtests = await JsonSerializer.DeserializeAsync<IList<ConfigFile>>(stream);
+            IList<ConfigFile> AllPlaytest = await JsonSerializer.DeserializeAsync<IList<ConfigFile>>(stream);
+
+            foreach (ConfigFile playtest in AllPlaytest)
+            {
+                if (playtest.ProjectName == Title)
+                    Playtests.Add(playtest);
+            }
+
+            Playtests = Playtests.OrderBy(r => r.Version).ToList();
         }
     }
 }

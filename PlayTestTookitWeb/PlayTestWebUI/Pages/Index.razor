@@ -10,9 +10,9 @@ Welcome to your new app.
 }
 else
 {
-    @foreach(var project in Projects)
+    @foreach(var projectName in ProjectNames)
     {
         <br>
-        <a href="/project/@project.Id">@project.Name</a>
+        <a href="/project/@projectName">@projectName</a>
     }
 }

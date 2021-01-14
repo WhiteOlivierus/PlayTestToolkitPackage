@@ -11,9 +11,9 @@ namespace PlayTestWebUI.Pages
 {
     public partial class Index
     {
-        private IList<ConfigFile> Projects { get; set; } = new List<ConfigFile>();
+        private IList<string> ProjectNames { get; set; } = new List<string>();
 
-        private bool HasProjects { get => Projects.Any(); }
+        private bool HasProjects { get => ProjectNames.Any(); }
 
         protected override async Task OnInitializedAsync() => await RefreshProjects();
 
@@ -32,7 +32,10 @@ namespace PlayTestWebUI.Pages
                 return;
 
             Stream stream = await response.Content.ReadAsStreamAsync();
-            Projects = await JsonSerializer.DeserializeAsync<IList<ConfigFile>>(stream);
+            IList<ConfigFile> Projects = await JsonSerializer.DeserializeAsync<IList<ConfigFile>>(stream);
+
+            ProjectNames = (from project in Projects
+                            select project.ProjectName).Distinct().ToList();
         }
     }
 }

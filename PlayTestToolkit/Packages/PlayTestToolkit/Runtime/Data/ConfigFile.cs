@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace PlayTestToolkit.Runtime.Data
 {
@@ -14,6 +15,7 @@ namespace PlayTestToolkit.Runtime.Data
             DataId = playtest.DataId;
 
             Name = playtest.Title;
+            ProjectName = GetProjectName();
             ResearchQuestion = playtest.ResearchQuestion;
             Description = playtest.Description;
 
@@ -32,6 +34,7 @@ namespace PlayTestToolkit.Runtime.Data
         public string DataId { get; set; }
 
         public string Name { get; set; }
+        public string ProjectName { get; set; }
         public string ResearchQuestion { get; set; }
         public string Description { get; set; }
 
@@ -41,5 +44,12 @@ namespace PlayTestToolkit.Runtime.Data
         public string TutorialDescription { get; set; }
         public IList<InputKey> Input { get; set; }
         public string GoogleForm { get; set; }
+
+        // TODO clean up later
+        private string GetProjectName()
+        {
+            string[] s = Application.dataPath.Split('/');
+            return s[s.Length - 2];
+        }
     }
 }
