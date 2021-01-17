@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Components;
 using PlayTestWebUI.Models;
 using System.Collections.Generic;
 using System.IO;
@@ -12,13 +13,27 @@ namespace PlayTestWebUI.Pages
 {
     public partial class Playtest : ComponentBase
     {
-        [Parameter] public string Title { get; set; }
+        [Inject]
+        private ISessionStorageService SessionStorage { get; set; }
+
+        private ConfigFile Config { get; set; }
+
+        private string PlaytestName { get; set; }
 
         private IList<DataFile> Data { get; set; } = new List<DataFile>();
 
         private bool HasData { get => Data.Any(); }
 
-        protected override async Task OnInitializedAsync() => await RefreshProjects();
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (!firstRender)
+                return;
+
+            Config = await SessionStorage.GetItemAsync<ConfigFile>("SelectedConfig");
+            PlaytestName = $"{Config.ProjectName} - {Config.Name}";
+            //await RefreshProjects();
+            StateHasChanged();
+        }
 
         private async Task RefreshProjects()
         {
@@ -29,7 +44,7 @@ namespace PlayTestWebUI.Pages
 
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = await client.GetAsync($"/api/data/{Title}");
+            HttpResponseMessage response = await client.GetAsync($"/api/data/{Config.Id}");
 
             if (!response.IsSuccessStatusCode)
                 return;

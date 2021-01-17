@@ -1,4 +1,6 @@
-﻿using PlayTestWebUI.Models;
+﻿using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Components;
+using PlayTestWebUI.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +13,12 @@ namespace PlayTestWebUI.Pages
 {
     public partial class Index
     {
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        private ISessionStorageService SessionStorage { get; set; }
+
         private IList<string> ProjectNames { get; set; } = new List<string>();
 
         private bool HasProjects { get => ProjectNames.Any(); }
@@ -36,6 +44,13 @@ namespace PlayTestWebUI.Pages
 
             ProjectNames = (from project in Projects
                             select project.ProjectName).Distinct().ToList();
+        }
+
+        private void NavigateTo(string projectName)
+        {
+            SessionStorage.SetItemAsync("SelectedProject", projectName);
+
+            NavigationManager.NavigateTo("/project", true);
         }
     }
 }

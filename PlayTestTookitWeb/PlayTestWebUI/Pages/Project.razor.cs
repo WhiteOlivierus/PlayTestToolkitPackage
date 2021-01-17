@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Components;
 using PlayTestWebUI.Models;
 using System.Collections.Generic;
 using System.IO;
@@ -12,13 +13,28 @@ namespace PlayTestWebUI.Pages
 {
     public partial class Project : ComponentBase
     {
-        [Parameter] public string Title { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
 
-        private IList<ConfigFile> Playtests { get; set; } = new List<ConfigFile>();
+        [Inject]
+        private ISessionStorageService SessionStorage { get; set; }
 
-        private bool HasPlaytests { get => Playtests.Any(); }
+        private string ProjectName { get; set; }
 
-        protected override async Task OnInitializedAsync() => await RefreshProjects();
+        private IList<ConfigFile> Configs { get; set; } = new List<ConfigFile>();
+
+        private bool HasPlaytests { get => Configs.Any(); }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (!firstRender)
+                return;
+
+            ProjectName = await SessionStorage.GetItemAsync<string>("SelectedProject");
+            await RefreshProjects();
+
+            StateHasChanged();
+        }
 
         private async Task RefreshProjects()
         {
@@ -39,11 +55,18 @@ namespace PlayTestWebUI.Pages
 
             foreach (ConfigFile playtest in AllPlaytest)
             {
-                if (playtest.ProjectName == Title)
-                    Playtests.Add(playtest);
+                if (playtest.ProjectName == ProjectName)
+                    Configs.Add(playtest);
             }
 
-            Playtests = Playtests.OrderBy(r => r.Version).ToList();
+            Configs = Configs.OrderBy(r => r.Version).ToList();
+        }
+
+        private void NavigateTo(ConfigFile config)
+        {
+            SessionStorage.SetItemAsync("SelectedConfig", config);
+
+            NavigationManager.NavigateTo("/playtest", true);
         }
     }
 }

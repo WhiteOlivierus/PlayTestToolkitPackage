@@ -13,6 +13,6 @@ else
     @foreach(var projectName in ProjectNames)
     {
         <br>
-        <a href="/project/@projectName">@projectName</a>
+        <button class="btn btn-primary" @onclick="() => NavigateTo(projectName)">@projectName</button>
     }
 }

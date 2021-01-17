@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -24,6 +25,11 @@ namespace PlayTestWebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.AddBlazoredSessionStorage(config =>
+            {
+                config.JsonSerializerOptions.WriteIndented = true;
+            });
 
             services.AddHttpClient("api", client =>
             {
