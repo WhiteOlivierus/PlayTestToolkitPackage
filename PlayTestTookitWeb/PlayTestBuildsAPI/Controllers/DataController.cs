@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PlayTestBuildsAPI.Models;
+﻿using Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using PlayTestBuildsAPI.Services;
 
 namespace PlayTestBuildsAPI.Controllers

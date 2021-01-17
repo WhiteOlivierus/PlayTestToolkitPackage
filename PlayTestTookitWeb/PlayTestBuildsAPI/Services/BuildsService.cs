@@ -1,6 +1,6 @@
-﻿using MongoDB.Driver;
-using PlayTestBuildsAPI.Models;
-using PlayTestBuildsAPI.Models.Settings;
+﻿using Data.Models;
+using Data.Models.Settings;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 

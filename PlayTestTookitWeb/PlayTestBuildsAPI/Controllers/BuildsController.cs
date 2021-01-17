@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PlayTestBuildsAPI.Models;
 using PlayTestBuildsAPI.Services;
 using System;
 

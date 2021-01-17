@@ -1,4 +1,4 @@
-﻿namespace PlayTestBuildsAPI.Models.Settings
+﻿namespace Data.Models.Settings
 {
     public class PlayTestBuildsSettings : IMongoDBSettings
     {
