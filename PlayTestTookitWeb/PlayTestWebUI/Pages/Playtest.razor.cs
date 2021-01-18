@@ -1,6 +1,7 @@
 ﻿using Blazored.SessionStorage;
 using Data.Models;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace PlayTestWebUI.Pages
 
             Config = await SessionStorage.GetItemAsync<ConfigFile>("SelectedConfig");
             PlaytestName = $"{Config.ProjectName} - {Config.Name}";
-            //await RefreshProjects();
+            await RefreshProjects();
             StateHasChanged();
         }
 
@@ -52,5 +53,8 @@ namespace PlayTestWebUI.Pages
             Stream stream = await response.Content.ReadAsStreamAsync();
             Data = await JsonSerializer.DeserializeAsync<IList<DataFile>>(stream);
         }
+
+        private string GetDate(double time) =>
+            (new DateTime(1970, 1, 1)).AddMilliseconds(time).ToString();
     }
 }

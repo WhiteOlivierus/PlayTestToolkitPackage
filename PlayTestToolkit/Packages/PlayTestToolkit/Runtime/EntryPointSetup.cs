@@ -10,10 +10,10 @@ public class EntryPointSetup : MonoBehaviour
 {
     [SerializeField]
     private Toggle accept = default;
-    [SerializeField]
-    private Button startButton = default;
 
 #if UNITY_EDITOR
+    [SerializeField]
+    private Button startButton = default;
     [SerializeField]
     private TMP_Text description = default;
     [SerializeField]

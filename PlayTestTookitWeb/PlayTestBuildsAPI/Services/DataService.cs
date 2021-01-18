@@ -24,8 +24,8 @@ namespace PlayTestBuildsAPI.Services
         public IList<DataFile> Get() =>
             _dataFile.Find(dataFile => true).ToList();
 
-        public DataFile Get(string id) =>
-            _dataFile.Find(dataFile => dataFile.ConfigId == id).FirstOrDefault();
+        public IList<DataFile> Get(string id) =>
+            _dataFile.Find(dataFile => dataFile.ConfigId == id).ToList();
 
         public DataFile Create(DataFile dataFile)
         {

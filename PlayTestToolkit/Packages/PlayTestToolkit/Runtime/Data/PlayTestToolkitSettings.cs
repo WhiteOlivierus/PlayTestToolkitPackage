@@ -3,7 +3,9 @@ using UnityEditor;
 
 namespace PlayTestToolkit.Runtime
 {
+#if UNITY_EDITOR
     [InitializeOnLoad]
+#endif
     public static class PlayTestToolkitSettings
     {
         public static readonly string PROJECT_TITLE_NO_SPACES = "PlayTestToolkit";
