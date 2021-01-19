@@ -14,15 +14,11 @@ namespace PlayTestToolkit.Editor.UI
             bool active = property.FindPropertyRelative("active").boolValue;
             string recorderName = property.FindPropertyRelative("recorderName").stringValue;
 
-            active = EditorGUI.Toggle(position, new GUIContent(recorderName), active);
+            active = EditorGUI.Toggle(position, recorderName, active);
+
+            property.FindPropertyRelative("active").boolValue = active;
 
             EditorGUI.EndProperty();
-
-        }
-
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return 15;
         }
     }
 }

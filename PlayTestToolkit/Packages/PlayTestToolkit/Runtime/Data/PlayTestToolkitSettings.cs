@@ -11,7 +11,7 @@ namespace PlayTestToolkit.Runtime
         public static readonly string PROJECT_TITLE_NO_SPACES = "PlayTestToolkit";
         public static readonly string PROJECT_TITLE = "Play Test Toolkit";
         public static readonly string WEB_INTERFACE_URI = "http://google.com";
-        public static readonly string API_URI = "http://localhost";
+        public static readonly string API_URI = "http://35.204.115.91";
         public static readonly string API_BUILDS_ROUTE = $"{API_URI}/api/builds";
         public static readonly string API_CONFIG_ROUTE = $"{API_URI}/api/config";
         public static readonly string API_DATA_ROUTE = $"{API_URI}/api/data";

@@ -11,8 +11,6 @@ namespace PlayTestToolkit.Editor.UI
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            EditorGUI.LabelField(position, new GUIContent(property.displayName));
-
             SerializedProperty dataCollectors = property.FindPropertyRelative("collectors");
 
             for (int i = 0; i < dataCollectors.arraySize; i++)
@@ -21,9 +19,5 @@ namespace PlayTestToolkit.Editor.UI
             EditorGUI.EndProperty();
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return 15;
-        }
     }
 }
