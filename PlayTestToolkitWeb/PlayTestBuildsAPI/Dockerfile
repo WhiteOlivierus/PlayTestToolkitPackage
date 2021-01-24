@@ -8,6 +8,7 @@ RUN mkdir -p /usr/builds
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["PlayTestBuildsAPI/PlayTestBuildsAPI.csproj", "PlayTestBuildsAPI/"]
+COPY ["DataModels/", "Data/"]
 RUN dotnet restore "PlayTestBuildsAPI/PlayTestBuildsAPI.csproj"
 COPY . .
 WORKDIR "/src/PlayTestBuildsAPI"
@@ -21,4 +22,3 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 ENTRYPOINT ["dotnet", "PlayTestBuildsAPI.dll"]
-

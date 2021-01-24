@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Data.Models
 {
@@ -11,7 +10,5 @@ namespace Data.Models
         public float Duration { get; set; }
         [JsonPropertyName("key")]
         public string Key { get; set; }
-        [JsonPropertyName("screenSpacePosition")]
-        public Vector2 ScreenSpacePosition { get; set; }
     }
 }
