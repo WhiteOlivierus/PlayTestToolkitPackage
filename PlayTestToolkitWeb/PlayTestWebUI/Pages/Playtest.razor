@@ -1,5 +1,7 @@
 ﻿ @page "/playtest"
 
+<h1>Play Test Data</h1>
+
 <h3>@PlaytestName</h3>
 
 @if (!HasData)
@@ -9,27 +11,41 @@
 else
 {
     <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>StartTime</th>
-          <th>Input</th>
-        </tr>
-      </thead>
-      <tbody>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>StartTime</th>
+                <th>Input</th>
+            </tr>
+        </thead>
+        <tbody>
     @foreach(var project in Data)
     {
         <tr>
           <td>@project.Id</td>
           <td>@GetDate(project.StartTime)</td>
 
-          @foreach(var input in project.Input)    
-          {
-            <td>@input</td>
-          }
-
+            <table>
+                <thead>
+                    <tr>
+                        <th>Start time</th>
+                        <th>Duration</th>
+                        <th>Key</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @foreach(var input in project.Input)    
+                        {
+                            <td>@input.StartTime</td>
+                            <td>@input.Duration</td>
+                            <td>@input.Key</td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
         </tr>
     }
-      </tbody>
+        </tbody>
     </table>
 }
