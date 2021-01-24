@@ -15,6 +15,9 @@ WORKDIR "/src/PlayTestBuildsAPI"
 RUN dotnet build "PlayTestBuildsAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
+WORKDIR /src
+COPY ["DataModels/", "Data/"]
+WORKDIR "/src/PlayTestBuildsAPI"
 RUN dotnet publish "PlayTestBuildsAPI.csproj" -c Release -o /app/publish
 
 FROM base AS final

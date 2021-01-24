@@ -13,6 +13,9 @@ WORKDIR "/src/PlayTestWebUI"
 RUN dotnet build "PlayTestWebUI.csproj" -c Release -o /app/build
 
 FROM build AS publish
+WORKDIR /src
+COPY ["DataModels/", "Data/"]
+WORKDIR "/src/PlayTestWebUI"
 RUN dotnet publish "PlayTestWebUI.csproj" -c Release -o /app/publish
 
 FROM base AS final

@@ -19,33 +19,33 @@ else
             </tr>
         </thead>
         <tbody>
-    @foreach(var project in Data)
-    {
-        <tr>
-          <td>@project.Id</td>
-          <td>@GetDate(project.StartTime)</td>
+            @foreach(var project in Data)
+            {
+                <tr>
+                  <td>@project.Id</td>
+                  <td>@GetDate(project.StartTime)</td>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Start time</th>
-                        <th>Duration</th>
-                        <th>Key</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        @foreach(var input in project.Input)    
-                        {
-                            <td>@input.StartTime</td>
-                            <td>@input.Duration</td>
-                            <td>@input.Key</td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
-        </tr>
-    }
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Start time</th>
+                                <th>Duration</th>
+                                <th>Key</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var input in project.Input)    
+                            {
+                                <tr>
+                                    <td>@input.StartTime</td>
+                                    <td>@input.Duration</td>
+                                    <td>@input.Key</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </tr>
+            }
         </tbody>
     </table>
 }
