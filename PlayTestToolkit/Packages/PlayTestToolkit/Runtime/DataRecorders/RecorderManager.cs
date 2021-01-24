@@ -11,6 +11,8 @@ namespace PlayTestToolkit.Runtime
 {
     public class RecorderManager : Singleton<RecorderManager>
     {
+        private static System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace();
+
         private readonly RecordedData recordedData = new RecordedData();
         private readonly List<BaseRecorder> recorders = new List<BaseRecorder>();
 
@@ -46,7 +48,7 @@ namespace PlayTestToolkit.Runtime
 
         private void Init()
         {
-            InitialRecorder initialRecorder = new InitialRecorder(nameof(InitialRecorder));
+            BaseRecorder initialRecorder = new InitialRecorder();
 
             initialRecorder.Record();
             initialRecorder.Save(recordedData);

@@ -2,13 +2,14 @@
   "scopedRegistries": [
     {
       "name": "Dutchskull",
-      "url": "https://unitypackages.dutchskull.com",
+      "url": "http://34.123.210.240:4873",
       "scopes": [
         "com.dutchskull"
       ]
     }
   ],
   "dependencies": {
+    "com.dutchskull.projectsettings": "1.1.1",
     "com.dutchskull.singletons": "1.0.0",
     "com.unity.ide.vscode": "1.2.3",
     "com.unity.test-framework": "1.1.19",

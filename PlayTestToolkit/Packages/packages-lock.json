@@ -4,14 +4,26 @@
       "version": "file:PlayTestToolkit",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.dutchskull.utilities": "0.0.1",
+        "com.dutchskull.singletons": "1.0.0",
+        "com.unity.textmeshpro": "2.1.3",
+        "com.dutchskull.projectsettings": "1.1.1"
+      }
+    },
+    "com.dutchskull.projectsettings": {
+      "version": "1.1.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "http://34.123.210.240:4873"
     },
     "com.dutchskull.singletons": {
       "version": "1.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://unitypackages.dutchskull.com"
+      "url": "http://34.123.210.240:4873"
     },
     "com.dutchskull.utilities": {
       "version": "file:DSUtilities",
