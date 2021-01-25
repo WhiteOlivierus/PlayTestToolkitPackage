@@ -18,8 +18,6 @@ namespace PlayTestToolkit.Runtime.DataRecorders
         private string key = string.Empty;
         public string Key { get => key; set => key = value; }
 
-        [SerializeField]
-        private System.Numerics.Vector2 screenSpacePosition = new System.Numerics.Vector2();
-        public System.Numerics.Vector2 ScreenSpacePosition { get => screenSpacePosition; set => screenSpacePosition = value; }
+        // TODO add the screen space location to track that
     }
 }

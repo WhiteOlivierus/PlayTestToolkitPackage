@@ -1,7 +1,7 @@
 {
   "name": "com.dutchskull.playtesttoolkit",
   "displayName": "Play Test Toolkit",
-  "version": "0.0.5",
+  "version": "0.0.8",
   "unity": "2018.4",
   "description": "Play test setup made easy!",
   "type": "tool",
@@ -17,6 +17,6 @@
     "com.dutchskull.utilities": "0.0.1",
     "com.dutchskull.singletons": "1.0.0",
     "com.unity.textmeshpro": "2.1.3",
-    "com.dutchskull.projectsettings": "1.1.1"
+    "com.dutchskull.projectsettings": "1.1.2"
   }
 }
