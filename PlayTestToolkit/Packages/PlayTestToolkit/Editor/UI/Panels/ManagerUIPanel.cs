@@ -35,7 +35,7 @@ namespace PlayTestToolkit.Editor.UI
         {
             headerTexture = Resources.Load<Texture>(PlayTestToolkitSettings.PROJECT_TITLE_NO_SPACES);
 
-            goToData = () => Debug.Log("Go to web for data");
+            goToData = () => Application.OpenURL(PlayTestToolkitSettings.API_URI);
         }
 
         public override void OnGUI()

@@ -7,15 +7,9 @@ namespace PlayTestToolkit.Runtime.DataRecorders
 {
     public class InitialRecorder : BaseRecorder
     {
-        private const string FORMAT_EXTENSION = ".json";
-
         private readonly InitialData captured = new InitialData();
 
-        public InitialRecorder(string cacheFileName) : base(AddExtension(cacheFileName)) { }
-
-        private static string AddExtension(string cacheFileName) =>
-            cacheFileName + FORMAT_EXTENSION;
-
+        public InitialRecorder() : base(nameof(InitialRecorder)) { }
         public override void Record()
         {
             DateTime value = new DateTime(1970, 1, 1);

@@ -59,6 +59,7 @@ namespace PlayTestToolkit.Runtime.Data
 #endif
 
         [SerializeField]
+        [Header("Recorders")]
         private DataRecorders recorders = new DataRecorders
         {
             Collectors = { new InputRecorder() }

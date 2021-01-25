@@ -6,6 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["PlayTestWebUI/PlayTestWebUI.csproj", "PlayTestWebUI/"]
+COPY ["DataModels/", "Data/"]
 RUN dotnet restore "PlayTestWebUI/PlayTestWebUI.csproj"
 COPY . .
 WORKDIR "/src/PlayTestWebUI"
