@@ -1,5 +1,7 @@
 # Installation
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/92c55316441c4cac929a0cb8018af70a)](https://app.codacy.com/gh/WhiteOlivierus/PlayTestToolkitPackage?utm_source=github.com&utm_medium=referral&utm_content=WhiteOlivierus/PlayTestToolkitPackage&utm_campaign=Badge_Grade_Settings)
+
 The first 3 steps in this process are a little involved. So this should be done by a developer.
 Or if you host your own server you should be able to do this.
 
