@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d9fe9eca2ed34f989d83498adab3f041)](https://www.codacy.com/gh/WhiteOlivierus/PlayTestToolkitPackage/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=WhiteOlivierus/PlayTestToolkitPackage&amp;utm_campaign=Badge_Grade)
+
 # Installation
 
 The first 3 steps in this process are a little involved. So this should be done by a developer.
