@@ -22,24 +22,24 @@ MonoBehaviour:
     m_IsDefault: 1
   - m_Id: scoped:Dutchskull
     m_Name: Dutchskull
-    m_Url: http://34.123.210.240:4873
+    m_Url: http://www.unitypackages.dutchskull.com
     m_Scopes:
     - com.dutchskull
     m_IsDefault: 0
-  m_UserSelectedRegistryName: 
+  m_UserSelectedRegistryName: Dutchskull
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
     m_ErrorMessage: 
     m_Original:
       m_Id: scoped:Dutchskull
       m_Name: Dutchskull
-      m_Url: http://34.123.210.240:4873
+      m_Url: http://www.unitypackages.dutchskull.com
       m_Scopes:
       - com.dutchskull
       m_IsDefault: 0
     m_Modified: 0
     m_Name: Dutchskull
-    m_Url: http://34.123.210.240:4873
+    m_Url: http://www.unitypackages.dutchskull.com
     m_Scopes:
     - com.dutchskull
     m_SelectedScopeIndex: 0

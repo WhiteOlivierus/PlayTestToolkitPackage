@@ -12,9 +12,7 @@ namespace PlayTestToolkit.Runtime.DataRecorders
         public InitialRecorder() : base(nameof(InitialRecorder)) { }
         public override void Record()
         {
-            DateTime value = new DateTime(1970, 1, 1);
-            double totalMilliseconds = (int)DateTime.UtcNow.Subtract(value).TotalMilliseconds;
-            captured.StartTime = Math.Abs(totalMilliseconds);
+            captured.StartTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         }
 
         public override void Save(RecordedData recordedData)

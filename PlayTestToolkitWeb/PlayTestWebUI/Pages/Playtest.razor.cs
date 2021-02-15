@@ -15,6 +15,9 @@ namespace PlayTestWebUI.Pages
     public partial class Playtest : ComponentBase
     {
         [Inject]
+        private NavigationManager NavigationManager { get; set; }
+
+        [Inject]
         private ISessionStorageService SessionStorage { get; set; }
 
         private ConfigFile Config { get; set; }
@@ -55,7 +58,16 @@ namespace PlayTestWebUI.Pages
             Data = await JsonSerializer.DeserializeAsync<IList<DataFile>>(stream);
         }
 
-        private string GetDate(double time) =>
-            (new DateTime(1970, 1, 1)).AddMilliseconds(time).ToString();
+        private string GetDate(double time)
+        {
+            DateTime dateTime = new DateTime(1970, 1, 1);
+            DateTime dateTime1 = dateTime.AddMilliseconds(time);
+            return dateTime1.ToString();
+        }
+
+        private void Export(DataFile project)
+        {
+            NavigationManager.NavigateTo($"api/data/{Config.Id}/{project.Id}/1", true);
+        }
     }
 }

@@ -2,7 +2,7 @@
   "scopedRegistries": [
     {
       "name": "Dutchskull",
-      "url": "http://34.123.210.240:4873",
+      "url": "http://www.unitypackages.dutchskull.com",
       "scopes": [
         "com.dutchskull"
       ]
