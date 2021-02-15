@@ -4,6 +4,7 @@
 
 <h3>@PlaytestName</h3>
 
+
 @if (!HasData)
 {
     <p><em>Loading...</em></p>
@@ -44,6 +45,11 @@ else
                             }
                         </tbody>
                     </table>
+                    <td>
+                        <button class="btn btn-primary" @onclick="@(e => Export(@project))">
+                            Export to csv
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>

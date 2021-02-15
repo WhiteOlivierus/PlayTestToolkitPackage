@@ -1,6 +1,10 @@
-﻿using Data.Models;
+﻿using CsvHelper;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using PlayTestBuildsAPI.Services;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 
 namespace PlayTestBuildsAPI.Controllers
 {
@@ -24,6 +28,32 @@ namespace PlayTestBuildsAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id) =>
             Ok(_dataService.Get(id));
+
+
+        [HttpGet("{configId}/{projectId}/{export}")]
+        public IActionResult Get(string configId, string projectId, string export)
+        {
+            DataFile project = _dataService.Get(configId).Where((s) => s.Id == projectId).First();
+
+            if (export == "1" && project != null)
+            {
+                var ms = new MemoryStream();
+                var sr = new StreamWriter(ms);
+                var csv = new CsvWriter(sr, CultureInfo.InvariantCulture);
+
+                csv.WriteHeader<DataFile>();
+                csv.WriteHeader<InputObject>();
+
+                csv.WriteRecord(project);
+                csv.WriteRecords(project.Input);
+
+                sr.Flush();
+
+                return File(ms.ToArray(), "text/csv", $"{project.Id}.csv");
+            }
+            else
+                return Conflict();
+        }
 
         [HttpPost("{id}")]
         public IActionResult Post(string id, DataFile dataFile)

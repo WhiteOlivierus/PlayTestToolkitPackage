@@ -16,14 +16,14 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
-      "url": "http://34.123.210.240:4873"
+      "url": "http://www.unitypackages.dutchskull.com"
     },
     "com.dutchskull.singletons": {
       "version": "1.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "http://34.123.210.240:4873"
+      "url": "http://www.unitypackages.dutchskull.com"
     },
     "com.dutchskull.utilities": {
       "version": "file:DSUtilities",
