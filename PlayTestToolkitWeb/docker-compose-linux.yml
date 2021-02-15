@@ -8,7 +8,7 @@ services:
       - playtestbuildsapi
       - playtestwebui
     volumes:
-      - /Nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
     restart: on-failure
@@ -46,8 +46,6 @@ services:
   mongo-express:
     container_name: Mongo-Express
     image: mongo-express
-    depends_on:
-      - mongodb
     ports:
       - 8081:8081
     environment:
