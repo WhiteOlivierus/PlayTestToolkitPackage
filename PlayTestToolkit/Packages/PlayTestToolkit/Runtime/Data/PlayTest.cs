@@ -74,10 +74,12 @@ namespace PlayTestToolkit.Runtime.Data
         private List<InputKey> gameInput = new List<InputKey>();
         public IList<InputKey> GameInput { get => gameInput; set => gameInput = (List<InputKey>)value; }
 
+        [HideInInspector]
         [SerializeField]
         private UnityEvent gameOverEvent = default;
         public UnityEvent GameOverEvent { get => gameOverEvent; set => gameOverEvent = value; }
 
+        [HideInInspector]
         [SerializeField]
         private string googleForm = string.Empty;
         public string GoogleForm { get => googleForm; set => googleForm = value; }

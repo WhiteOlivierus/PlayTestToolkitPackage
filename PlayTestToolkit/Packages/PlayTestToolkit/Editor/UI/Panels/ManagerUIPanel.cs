@@ -13,6 +13,7 @@ namespace PlayTestToolkit.Editor.UI
     public class ManagerUIPanel : UIPanel
     {
         private readonly Texture headerTexture;
+        private readonly PlayTestToolkitWindow playTestToolkitWindow;
         private readonly Action goToData;
 
         private static PlayTestToolkitCache cache;
@@ -33,7 +34,12 @@ namespace PlayTestToolkit.Editor.UI
 
         public ManagerUIPanel(PlayTestToolkitWindow playTestToolkitWindow) : base(playTestToolkitWindow)
         {
-            headerTexture = Resources.Load<Texture>(PlayTestToolkitSettings.PROJECT_TITLE_NO_SPACES);
+            if (EditorGUIUtility.isProSkin)
+                headerTexture = Resources.Load<Texture>($"{PlayTestToolkitSettings.PROJECT_TITLE_NO_SPACES}_White");
+            else
+                headerTexture = Resources.Load<Texture>($"{PlayTestToolkitSettings.PROJECT_TITLE_NO_SPACES}_Black");
+
+            this.playTestToolkitWindow = playTestToolkitWindow;
 
             goToData = () => Application.OpenURL(PlayTestToolkitSettings.API_URI);
         }
@@ -41,15 +47,15 @@ namespace PlayTestToolkit.Editor.UI
         public override void OnGUI()
         {
             // TODO Remove from final product
-            RenderButton("Open persistent path", () => System.Diagnostics.Process.Start(Application.persistentDataPath));
-            RenderButton("Open builds folder", () => System.Diagnostics.Process.Start($"{Application.dataPath}/../Builds"));
-            RenderButton("Open uploaded builds folder", () => System.Diagnostics.Process.Start($"D:/Temp"));
+            // RenderButton("Open persistent path", () => System.Diagnostics.Process.Start(Application.persistentDataPath));
+            // RenderButton("Open builds folder", () => System.Diagnostics.Process.Start($"{Application.dataPath}/../Builds"));
+            // RenderButton("Open uploaded builds folder", () => System.Diagnostics.Process.Start($"D:/Temp"));
 
             RenderHeader();
 
             EditorGUILayout.BeginHorizontal();
             RenderButton("Setup play test", () => PlayTestToolkitWindow.SetCurrentState(WindowState.setup));
-            RenderButton("Web interface", () => System.Diagnostics.Process.Start(PlayTestToolkitSettings.WEB_INTERFACE_URI));
+            RenderButton("Web interface", () => Application.OpenURL(PlayTestToolkitSettings.API_URI));
             EditorGUILayout.EndHorizontal();
 
             GUILayout.Label("List of play tests");
@@ -60,7 +66,8 @@ namespace PlayTestToolkit.Editor.UI
         private void RenderHeader()
         {
             //TODO Resize image function or just give the box a solid color
-            GUILayout.Box(headerTexture, GUILayout.ExpandWidth(true));
+            float height = headerTexture.height / (headerTexture.width / playTestToolkitWindow.position.width);
+            GUILayout.Label(headerTexture, GUILayout.Height(height));
         }
 
         private void RenderCollections(IList<PlayTestCollection> playTestCollections)
