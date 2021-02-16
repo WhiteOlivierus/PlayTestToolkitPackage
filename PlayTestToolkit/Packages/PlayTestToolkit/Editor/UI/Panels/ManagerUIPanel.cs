@@ -78,6 +78,9 @@ namespace PlayTestToolkit.Editor.UI
             {
                 PlayTestCollection playTestCollection = playTestCollections[i];
 
+                if (playTestCollection == null)
+                    continue;
+
                 RenderCollection(playTestCollection);
 
                 if (!playTestCollection.Fold)

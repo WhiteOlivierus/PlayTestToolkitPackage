@@ -1,6 +1,7 @@
 ﻿using Dutchskull.Utilities.Extensions;
 using PlayTestToolkit.Runtime.Data;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,9 @@ using UnityEngine.UI;
 
 public class EntryPointSetup : MonoBehaviour
 {
+    [SerializeField]
+    private PlayTest test = default;
+
     [SerializeField]
     private Toggle accept = default;
 
@@ -24,6 +28,12 @@ public class EntryPointSetup : MonoBehaviour
     private GameObject dataCollectors = default;
 #endif
 
+    [ContextMenu("test")]
+    public void Test()
+    {
+        Init(test);
+    }
+
     public void LoadPlayTest()
     {
         if (accept.isOn)
@@ -36,16 +46,19 @@ public class EntryPointSetup : MonoBehaviour
 
     public void Init(PlayTest playtest)
     {
-        description.text = playtest.Description;
-        tutorialDescription.text = playtest.TutorialDescription;
+        description.text = Empty(playtest.Description);
+        tutorialDescription.text = Empty(playtest.TutorialDescription);
 
         PopulateListObject(playtest.GameInput, tutorialInput);
 
-        PopulateListObject(playtest.Recorders, dataCollectors);
+        var recorders = playtest.Recorders.Where((s) => s.Active).ToList();
+        PopulateListObject(recorders, dataCollectors);
 
         startButton.RemoveAllPresistentListener();
         startButton.onClick.AddPersistentListener(LoadPlayTest);
     }
+
+    private static string Empty(string value) => string.IsNullOrEmpty(value) ? "" : value;
 
     private void PopulateListObject<T>(IList<T> list, GameObject gameObjectList)
     {
@@ -55,7 +68,10 @@ public class EntryPointSetup : MonoBehaviour
         GameObject element = gameObjectList.transform.GetChild(0).gameObject;
 
         if (list.IsNullOrEmpty())
+        {
+            SetText("", element);
             return;
+        }
 
         SetText(list[0], element);
 
@@ -72,7 +88,7 @@ public class EntryPointSetup : MonoBehaviour
     {
         TMP_Text text = instance.GetComponentInChildren<TMP_Text>();
 
-        text.text = element.ToString();
+        text.text = Empty(element.ToString());
     }
 #endif
 }

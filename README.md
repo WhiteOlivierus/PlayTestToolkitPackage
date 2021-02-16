@@ -124,6 +124,9 @@ Now we are all done to start setting up play tests.
 [Video tutorial](https://www.youtube.com/watch?v=RbgRParF7BM)
 
 ## Setting up play test
+
+**Note:** Make sure your game closes gracefully, by calling `OnApplicationQuit`. `Alt+F4` will not send data to the servers yet.
+
 ### Step 1
 In the Play Test Toolkit window in unity you can press the `Setup a play test` button. Here you can fill in the information needed to make a play test.
 When you don't want to build directly after this, you can just press `save` and edit it later again.

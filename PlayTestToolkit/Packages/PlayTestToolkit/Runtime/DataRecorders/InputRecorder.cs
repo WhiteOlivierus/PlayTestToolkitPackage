@@ -22,10 +22,10 @@ namespace PlayTestToolkit.Runtime.DataRecorders
 
         public InputRecorder(IList<KeyCode> lists) : base(nameof(InputRecorder))
         {
-            if (lists.IsNullOrEmpty())
-                keys = Enum.GetValues(typeof(KeyCode)).OfType<KeyCode>().ToList();
-            else
-                keys = lists;
+            // if (lists.IsNullOrEmpty())
+            keys = Enum.GetValues(typeof(KeyCode)).OfType<KeyCode>().ToList();
+            // else
+            // keys = lists;
         }
 
         public override void Record()

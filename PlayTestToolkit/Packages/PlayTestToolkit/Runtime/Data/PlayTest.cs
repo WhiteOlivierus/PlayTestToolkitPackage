@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace PlayTestToolkit.Runtime.Data
 {
-    [Serializable]
+    [CreateAssetMenu(fileName = "Data", menuName = "Play test", order = 1)]
     public class PlayTest : ScriptableObject
     {
         [HideInInspector]
