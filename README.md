@@ -5,6 +5,16 @@
 The first 3 steps in this process are a little involved. So this should be done by a developer.
 Or if you host your own server you should be able to do this.
 
+## Tutorials
+
+[Setup Server](#Setup-server)
+
+**Note:** If you don't have a server or don't want to set one up, you can use [www.playtesttookit.dutchskull.com](www.playtesttookit.dutchskull.com). Dont use for actual projects, only for tying out play test toolkit.
+
+[Setup Unity](#Setup-Unity)
+
+[Setting up play test](#Setting-up-play-test)
+
 ## Setup server
 
 [Video tutorial](https://www.youtube.com/watch?v=LhiNf0C7AEU)
@@ -69,9 +79,24 @@ cd PlayTestToolkit/PlayTestTookitWeb/Nginx/nginx.config
 
 ## Setup Unity
 
+You can use the video tutorial in combination with the written explanation if you are not able to figure things out.
+
 [Video tutorial](https://www.youtube.com/watch?v=d6hDHxiAikA)
 
-### Step 1
+### Step 1 
+
+First we have to add the registry for play test toolkit to your Unity project. This step can be done in various ways depending on your Unity version. So choose the Unity version you are using.
+
+### Step 1 - Unity 2019 and up
+
+Go to `Edit > Project Settings`. In the `Project Settings` window, find the tab `Package Manager`. Here you will have a place you can add scoped registries.
+
+
+Here you can add a scope registry. You can do this by pressing the plus in the right column. Fill the new scoped registry like illustrated in the image down bellow. Don't forget to press apply after filling in these fields.
+
+![Package Manager Config](/Documentation/PackageManagerSetup.png "Package Manager Config")
+
+### Step 1 - Unity 2018 and below
 
 Go to your unity project folder and find the folder called `Packages`.
 In this folder you will find a file called `manifest.json`.
@@ -102,6 +127,8 @@ This can be done by going to `Window/Package Manager`.
 When the package manager is opened you can look in the left corner of the window to find a drop down with the text `Unity Registry`.
 In this list that appears when you click on it, there should be a entry that says `My Registries` and you can select that.
 
+![Package Manager Registries](/Documentation/PackageManagerMyRegistries.png "Package Manager Registries")
+
 **Note:** If you don't see `My Registries` you need to go back to step one of [Setup Unity](#Setup-Unity).
 
 Here you will find the `Play Test Toolkit` package, and like any other package you can select it and install the package.
@@ -117,6 +144,10 @@ Here there will be a entry that says `Play Test Toolkit`.
 When you go to that tab it will show a empty field for a web url.
 This is where you will add the `server IP` or `sub domain` to the web side of `Play Test Toolkit`.
 
+**Note:** If you didn't setup your own server you can use the current one in the image below. This means that everybody can access the play test's you are uploading there, so only use it to checkout the tool.
+
+![Play Test Toolkit Settings](/Documentation/PlayTestTookitSettings.png "Play Test Toolkit Settings")
+
 Now we are all done to start setting up play tests.
 
 # Usage
@@ -128,11 +159,23 @@ Now we are all done to start setting up play tests.
 **Note:** Make sure your game closes gracefully, by calling `OnApplicationQuit`. `Alt+F4` will not send data to the servers yet.
 
 ### Step 1
+
 In the Play Test Toolkit window in unity you can press the `Setup a play test` button. Here you can fill in the information needed to make a play test.
 When you don't want to build directly after this, you can just press `save` and edit it later again.
 If you would like to make a build press the `save and build` button. This will build your play test and upload it to the server.
+
 ## Sharing play test
+
 In the Play Test Toolkit window in unity you can press the `share` button. This will copy a link too the shareable build.
 
 ## Seeing collected data
+
 Go to the web interface using your `server IP`. Then you can navigate too the play test which you want to look at it's data.
+
+## Exporting data
+
+You can export the data you have collected to a .CSV and import that in your spreadsheet editor of choice. The format for this document is like this.
+
+| StartTimeDate | Key | StartTime | Duration |
+| --- | --- | --- | --- |
+| Date and time recorded | The key that was pressed  | The time the key was pressed relative to the start time | How long the key was press |
