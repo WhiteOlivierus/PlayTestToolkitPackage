@@ -2,6 +2,7 @@
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using PlayTestBuildsAPI.Services;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -41,11 +42,29 @@ namespace PlayTestBuildsAPI.Controllers
                 var sr = new StreamWriter(ms);
                 var csv = new CsvWriter(sr, CultureInfo.InvariantCulture);
 
-                csv.WriteHeader<DataFile>();
-                csv.WriteHeader<InputObject>();
+                csv.WriteField("StartTimeDate");
+                csv.WriteField("Key");
+                csv.WriteField("StartTime");
+                csv.WriteField("Duration");
+                csv.NextRecord();
 
-                csv.WriteRecord(project);
-                csv.WriteRecords(project.Input);
+                bool first = false;
+
+                foreach (var item in project.Input)
+                {
+                    if (!first)
+                    {
+                        csv.WriteField(GetDate(project.StartTime));
+                        first = true;
+                    }
+                    else
+                        csv.WriteField(" ");
+
+                    csv.WriteField(item.Key);
+                    csv.WriteField(item.StartTime);
+                    csv.WriteField(item.Duration);
+                    csv.NextRecord();
+                }
 
                 sr.Flush();
 
@@ -67,6 +86,13 @@ namespace PlayTestBuildsAPI.Controllers
             _dataService.Create(dataFile);
 
             return Ok();
+        }
+
+        private string GetDate(double time)
+        {
+            DateTime dateTime = new DateTime(1970, 1, 1);
+            DateTime dateTime1 = dateTime.AddMilliseconds(time);
+            return dateTime1.ToString();
         }
     }
 }
